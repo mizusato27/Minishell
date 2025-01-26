@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/01/26 15:24:41 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/01/26 15:44:15 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(void)
         //標準入力した文字列の履歴を残す
 		if (*line)
 			add_history(line);
-		interpret(line, &status);
+		// interpret(line, &status);
 		// TODO: intepret line as a command
 		free(line);
 	}
