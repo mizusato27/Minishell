@@ -6,14 +6,14 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/01/26 15:31:14 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/01/26 16:32:32 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include "libft/libft.h"
+# include "libft/libft.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
