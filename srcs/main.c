@@ -27,7 +27,7 @@ int	main(void)
         //標準入力した文字列の履歴を残す
 		if (*line)
 			add_history(line);
-		// interpret(line, &status);
+		interpret(line);
 		// TODO: intepret line as a command
 		free(line);
 	}

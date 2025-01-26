@@ -23,7 +23,10 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+//error.c
 void    malloc_error();
 
+//exec.c
+int interpret(char *line);
 
 #endif
