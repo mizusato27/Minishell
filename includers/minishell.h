@@ -23,4 +23,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 
+void    malloc_error();
+
+
 #endif

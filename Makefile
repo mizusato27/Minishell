@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
-SRCS		= $(addprefix $(SRCS_DIR)/, main.c)
+SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
