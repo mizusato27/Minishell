@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:45:34 by mizusato          #+#    #+#             */
-/*   Updated: 2024/05/01 18:38:20 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:57:02 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ static char	*alloc_word(char const *s, char c)
 {
 	char	*str;
 	int		len;
-	int		result_cpy;
+	// int		result_cpy;
 
 	len = calculate_wordlen(s, c);
 	str = (char *)malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	result_cpy = ft_strlcpy(str, s, len + 1);
+	ft_strlcpy(str, s, len + 1);
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/01/26 17:24:13 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/04 14:15:25 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
 NAME		= minishell
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I includers/ -I libft/
+CFLAGS		= -Wall -Wextra -Werror -I includers/
 LDFLAGS     = -lreadline
 
 LIBFT       = libft/libft.a
