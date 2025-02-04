@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 11:54:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/04 21:49:00 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*line;
+	int		status;
 
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
@@ -27,7 +28,7 @@ int	main(void)
         //標準入力した文字列の履歴を残す
 		if (*line)
 			add_history(line);
-		interpret(line);
+		interpret(line, &status);
 		// TODO: intepret line as a command
 		free(line);
 	}
