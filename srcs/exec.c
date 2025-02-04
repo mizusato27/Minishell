@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 16:39:08 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/04 18:44:52 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,33 @@ char	*ft_strncpy(char *dest, char *src, size_t n)
 	return (dest);
 }
 
+char	*construct_path(char path[PATH_MAX], const char *filename, char *env, char *end)
+{
+	int		cpy_len;
+
+	if (end)
+		cpy_len = end - env;
+	else
+		cpy_len = ft_strlen(env);
+	ft_bzero(path, PATH_MAX);
+	ft_strncpy(path, env, cpy_len);
+	ft_strlcat(path, "/", PATH_MAX);
+	ft_strlcat(path, filename, PATH_MAX);
+	return (ft_strdup(path));
+}
+
 char	*find_executable(const char *filename)
 {
 	char	path[PATH_MAX];
 	char	*env;
-	char	*end;
+	char	*path_end;
 	char	*result;
 
 	env = getenv("PATH");
 	while (*env)
 	{
-		ft_bzero(path, PATH_MAX);
-		end = ft_strchr(env, ':');
-		if (end)
-			ft_strncpy(path, env, end - env);
-		else
-			ft_strncpy(path, env, ft_strlen(env));
-		ft_strlcat(path, "/", PATH_MAX);
-		ft_strlcat(path, filename, PATH_MAX);
+		path_end = ft_strchr(env, ':');
+		construct_path(path, filename, env, path_end);
 		if (access(path, X_OK) == 0)
 		{
 			result = ft_strdup(path);
@@ -51,9 +60,9 @@ char	*find_executable(const char *filename)
 				malloc_error("strdup: malloc error");
 			return (result);
 		}
-		if (end == NULL)
+		if (path_end == NULL)
 			break ;
-		env = end + 1;
+		env = path_end + 1;
 	}
 	return (NULL);
 }
@@ -91,6 +100,11 @@ int	interpret(char *line)
 	int		status;
 	char	*arg[2];
 
+	if (ft_strncmp(line, "exit", 4) == 0)
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	arg[0] = line;
 	arg[1] = NULL;
 	execute(arg);
