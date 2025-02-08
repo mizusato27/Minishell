@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 21:49:00 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/05 00:06:09 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ int	main(void)
 		// TODO: intepret line as a command
 		free(line);
 	}
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

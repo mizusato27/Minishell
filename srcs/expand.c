@@ -1,0 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
+/*   Updated: 2025/02/08 12:51:41 by ynihei           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "minishell.h"
+
+void	todo(char *message)
+{
+	printf("TODO: %s\n", message);
+}
+
+void	append_char(char **s, char c)
+{
+	size_t	size;
+	char	*new;
+	
+	size = APPEND_CHAR_SIZE + END_CHAR_SIZE;
+	if (*s)
+		size += ft_strlen(*s);
+	new = malloc(size);
+	if (new == NULL)
+		error(ER_MALLOC);
+	if (*s)
+		ft_strlcpy(new, *s, size);
+	new[size - 2] = c;
+	new[size - 1] = '\0';
+	if (*s)
+		free(*s);
+	*s = new;
+}
+void	quote_removal(t_token *token)
+{
+	char	*new_word;
+	char	*word;
+	char	quote_flag;
+	
+	if (token == NULL || token->kind != TK_WORD || token->word == NULL)
+		return ;
+	word = token->word;
+	new_word = NULL;
+	while (*word && !is_metacharacter(*word))
+	{
+		if (*word == SINGLE_QUOTE || *word == DOUBLE_QUOTE)
+		{
+			quote_flag = *word;
+			// skip quote
+			word++;
+			while (*word != quote_flag)
+			{
+				if (*word == '\0')
+					todo("Unclosed quote");
+				append_char(&new_word, *word++);
+			}
+			// skip quote
+			word++;
+		}
+		else
+			append_char(&new_word, *word++);
+	}
+	free(token->word);
+	if (!new_word)
+		new_word = ft_strdup("");
+	token->word = new_word;
+	quote_removal(token->next);
+}
+
+void	expand(t_token *token)
+{
+	quote_removal(token);
+}

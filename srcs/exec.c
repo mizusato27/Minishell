@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 21:47:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 12:47:42 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_strncpy(char *dest, char *src, size_t n)
 	return (dest);
 }
 
+//PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
 static char	*construct_path(char path[PATH_MAX], const char *filename, char *env, char *end)
 {
 	int		cpy_len;
@@ -81,6 +82,8 @@ static char	*construct_path(char path[PATH_MAX], const char *filename, char *env
 	return (ft_strdup(path));
 }
 
+//:はディレクトリの終わりを指す
+//PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
 static char	*find_executable(const char *filename)
 {
 	char	path[PATH_MAX];
@@ -152,6 +155,8 @@ static int	execute(char *args[])
 // 	return (status);
 // }
 
+//stat_locは終了ステータスを格納する変数
+//syntax_errorは構文エラーがあるかどうかを格納する変数
 void	interpret(char *line, int *stat_loc)
 {
 	t_token	*tok;
@@ -164,7 +169,7 @@ void	interpret(char *line, int *stat_loc)
 		*stat_loc = ERROR_TOKENIZE;
 	else
 	{
-		// expand(tok);
+		expand(tok);
 		argv = token_list_to_argv(tok);
 		*stat_loc = execute(argv);
 		free_argv(argv);
