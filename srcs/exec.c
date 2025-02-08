@@ -6,12 +6,13 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 12:47:42 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 21:20:24 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//いったんコピペ、どうせ後でいらなくなる
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
 	char **new_argv;
@@ -39,6 +40,7 @@ char	**tail_recursive(t_token *tok, int nargs, char **argv)
 	return (tail_recursive(tok->next, nargs + 1, argv));
 }
 
+//いったんコピペ、どうせ後でいらなくなる
 char	**token_list_to_argv(t_token *tok)
 {
 	char	**argv;

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 21:40:08 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 19:54:30 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,41 +27,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 }
 
 //制御演算子かどうかのチェック
-bool	is_operator(char c)
-{
-	char	*operators;
-	int		i;
-
-	i = 0;
-	operators = OPERATORS;
-	while (operators[i])
-	{
-		if (operators[i] == c)
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-//制御演算子の全て
-static void	init_operators(char *operators[10])
-{
-	operators[0] = "||";
-	operators[1] = "&";
-	operators[2] = "&&";
-	operators[3] = ";";
-	operators[4] = ";;";
-	operators[5] = "(";
-	operators[6] = ")";
-	operators[7] = "|";
-	operators[8] = "\n";
-	operators[9] = "<<";
-	operators[10] = ">>";
-	operators[11] = "<";
-	operators[12] = ">";
-	operators[13] = NULL;
-}
-
+//j < sizeof(operators) / sizeof(*operators)は制御演算子の数だけチェック
 t_token	*operator(int *i, char *line)
 {
 	size_t	j;
@@ -70,16 +36,13 @@ t_token	*operator(int *i, char *line)
 
 	init_operators(operators);
 	j = 0;
-	//制御演算子の数だけチェック
 	while (j < sizeof(operators) / sizeof(*operators))
 	{
-		//どの制御演算子かチェック
 		if (which_op(line, operators[j]))
 		{
 			op = ft_strdup(operators[j]);
 			if (op == NULL)
 				error(ER_MALLOC_STRDUP);
-			//制御演算子（op）の長さだけ元のiを進める
 			*i += ft_strlen(op);
 			return (new_token(op, TK_OP));
 		}
@@ -89,20 +52,18 @@ t_token	*operator(int *i, char *line)
 	return (NULL);
 }
 
-t_token	*word(int *i, char *line)
+//文字列をトークンに分割
+int	parse_word_length(char *line)
 {
-	char	*word;
 	char	quote_flag;
 	int		j;
 
 	j = 0;
-	//メタ文字（tokenの終わりを示す文字）まで続ける
 	while (line[j] && !is_metacharacter(line[j]))
 	{
 		if (line[j] == SINGLE_QUOTE || line[j] == DOUBLE_QUOTE)
 		{
 			quote_flag = line[j];
-			// skip quote
 			j++;
 			while (line[j] && line[j] != quote_flag)
 				j++;
@@ -111,13 +72,23 @@ t_token	*word(int *i, char *line)
 				tokenize_error("Unclosed quote", &j, line);
 				break ;
 			}
-			// skip quote
 			else
 				j++;
 		}
 		else
 			j++;
 	}
+	return (j);
+}
+
+//単語を取得
+//メタ文字（tokenの終わりを示す文字）まで続ける
+t_token	*word(int *i, char *line)
+{
+	char	*word;
+	int		j;
+
+	j = parse_word_length(line);
 	word = malloc(j + 1);
 	if (word == NULL)
 		error(ER_MALLOC);

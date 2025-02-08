@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 12:51:41 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 21:20:58 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	todo(char *message)
 	printf("TODO: %s\n", message);
 }
 
+//文字列の最後に文字を追加
 void	append_char(char **s, char c)
 {
 	size_t	size;
@@ -36,6 +37,8 @@ void	append_char(char **s, char c)
 		free(*s);
 	*s = new;
 }
+
+//クォートを削除
 void	quote_removal(t_token *token)
 {
 	char	*new_word;
@@ -51,7 +54,6 @@ void	quote_removal(t_token *token)
 		if (*word == SINGLE_QUOTE || *word == DOUBLE_QUOTE)
 		{
 			quote_flag = *word;
-			// skip quote
 			word++;
 			while (*word != quote_flag)
 			{
@@ -59,7 +61,6 @@ void	quote_removal(t_token *token)
 					todo("Unclosed quote");
 				append_char(&new_word, *word++);
 			}
-			// skip quote
 			word++;
 		}
 		else

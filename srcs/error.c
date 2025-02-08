@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/04 21:41:26 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 19:48:26 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	err_exit(const char *location, const char *msg, int status)
     exit(status);
 }
 
-
+//構文エラーがある場合に単語の最後までスキップ
 void	tokenize_error(const char *location, int *j, char *line)
 {
 	syntax_error = true;

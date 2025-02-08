@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 12:48:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/08 19:38:47 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ t_token	*tokenize(char *arg);
 bool	is_blank(char c);
 bool	is_metacharacter(char c);
 bool	which_op(const char *s, const char *op);
+bool	is_operator(char c);
+void	init_operators(char *operators[14]);
 
 //destructor.c
 void	free_token(t_token *tok);
