@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 21:20:24 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 07:54:58 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void	interpret(char *line, int *stat_loc)
 {
 	t_token	*tok;
 	char	**argv;
+	t_node	*node;
 
 	tok = tokenize(line);
 	if (tok->kind == TK_EOF)
@@ -171,10 +172,12 @@ void	interpret(char *line, int *stat_loc)
 		*stat_loc = ERROR_TOKENIZE;
 	else
 	{
-		expand(tok);
-		argv = token_list_to_argv(tok);
+		node = parse(tok);
+		expand(node);
+		argv = token_list_to_argv(node->args);
 		*stat_loc = execute(argv);
 		free_argv(argv);
+		free_node(node);
 	}
 	free_token(tok);
 }

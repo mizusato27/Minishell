@@ -144,4 +144,5 @@ assert 'cat <<EOF\nhello\nworld'
 assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
 echo
 
+
 cleanup

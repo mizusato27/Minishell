@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 19:38:47 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 07:54:31 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ struct s_node {
 	t_node		*next;
 };
 
-
 //error.c
 void    malloc_error();
 void	err_exit(const char *location, const char *msg, int status);
@@ -89,10 +88,11 @@ void	interpret(char *line, int *stat_loc);
 char	*ft_strncpy(char *dest, char *src, size_t n);
 
 //expand.c
-void	expand(t_token *token);
+void	expand(t_node *node);
 
 //tokenize.c
 t_token	*tokenize(char *arg);
+t_token	*new_token(char *word, t_token_kind kind);
 
 //tokenize_helper.c
 bool	is_blank(char c);
@@ -102,7 +102,11 @@ bool	is_operator(char c);
 void	init_operators(char *operators[14]);
 
 //destructor.c
+void	free_node(t_node *node);
 void	free_token(t_token *tok);
 void	free_argv(char **argv);
+
+//parse.c
+t_node	*parse(t_token *tok);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 21:20:58 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 01:45:44 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	append_char(char **s, char c)
 }
 
 //クォートを削除
-void	quote_removal(t_token *token)
+void	remove_quote(t_token *token)
 {
 	char	*new_word;
 	char	*word;
@@ -70,10 +70,18 @@ void	quote_removal(t_token *token)
 	if (!new_word)
 		new_word = ft_strdup("");
 	token->word = new_word;
-	quote_removal(token->next);
+	remove_quote(token->next);
 }
 
-void	expand(t_token *token)
+void	expand_quote_removal(t_node *node)
 {
-	quote_removal(token);
+	if (node == NULL)
+		return ;
+	remove_quote(node->args);
+	expand_quote_removal(node->next);
+}
+
+void	expand(t_node *node)
+{
+	expand_quote_removal(node);
 }
