@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 20:56:05 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 21:34:47 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	parse_error(const char *location, t_token **rest, t_token *tok)
 	write(2, location, ft_strlen(location));
 	write(2, "\n", 1);
 	while (tok && !at_eof(tok))
-	{
 		tok = tok->next;
-	}
 	*rest = tok;
 }
 
