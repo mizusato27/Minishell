@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 07:54:58 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 12:29:20 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,10 @@ char	**token_list_to_argv(t_token *tok)
 	return (tail_recursive(tok, 0, argv));
 }
 
-char	*ft_strncpy(char *dest, char *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i] && n > i)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
 //PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
-static char	*construct_path(char path[PATH_MAX], const char *filename, char *env, char *end)
+//lsが来たときの例: /bin:/usr/binの中から最初の「:」までを取り出す
+//そこにlsをくっつけて、そのパスが実行可能かどうかを確認する
+static void construct_path(char path[PATH_MAX], const char *filename, char *env, char *end)
 {
 	int		cpy_len;
 
@@ -81,7 +69,6 @@ static char	*construct_path(char path[PATH_MAX], const char *filename, char *env
 	ft_strncpy(path, env, cpy_len);
 	ft_strlcat(path, "/", PATH_MAX);
 	ft_strlcat(path, filename, PATH_MAX);
-	return (ft_strdup(path));
 }
 
 //:はディレクトリの終わりを指す
@@ -139,23 +126,6 @@ static int	execute(char *args[])
 		wait(&status);
 	return (WEXITSTATUS(status));
 }
-
-// int	interpret(char *line)
-// {
-// 	int		status;
-// 	char	*arg[2];
-
-// 	if (ft_strncmp(line, "exit", 4) == 0)
-// 	{
-// 		printf("exit\n");
-// 		exit(0);
-// 	}
-// 	arg[0] = line;
-// 	arg[1] = NULL;
-// 	execute(arg);
-// 	status = 1;
-// 	return (status);
-// }
 
 //stat_locは終了ステータスを格納する変数
 //syntax_errorは構文エラーがあるかどうかを格納する変数

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 01:45:44 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 09:19:28 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,9 @@ void	expand(t_node *node)
 {
 	expand_quote_removal(node);
 }
+
+// int main()
+// {
+	
+// 	return (0);
+// }

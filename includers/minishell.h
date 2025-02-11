@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 07:54:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 08:27:15 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	tokenize_error(const char *location, int *j, char *line);
 //exec.c
 // int		interpret(char *line);
 void	interpret(char *line, int *stat_loc);
-char	*ft_strncpy(char *dest, char *src, size_t n);
 
 //expand.c
 void	expand(t_node *node);
@@ -108,5 +107,8 @@ void	free_argv(char **argv);
 
 //parse.c
 t_node	*parse(t_token *tok);
+
+//utils.c
+char	*ft_strncpy(char *dest, char *src, size_t n);
 
 #endif

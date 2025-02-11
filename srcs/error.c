@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 19:48:26 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 12:33:46 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 bool	syntax_error = false;
 
-void	err_exit(const char *location, const char *msg, int status)
+//コマンドがなかったときに、エラーメッセージを表示して終了
+void	err_exit(const char *cmd, const char *msg, int status)
 {
     write(2, "minishell: ", 11);
-    write(2, location, strlen(location));
+    write(2, cmd, strlen(cmd));
     write(2, ": ", 2);
     write(2, msg, ft_strlen(msg));
     write(2, "\n", 1);

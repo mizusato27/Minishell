@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 19:54:30 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/09 09:13:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,11 @@ t_token	*tokenize(char *arg)
 // 	t_token *token = tokenize(s);
 // 	t_token *tmp;
 
-// 	while (token)
+// 	tmp = token;
+// 	while (tmp)
 // 	{
-// 		printf("word:%s,type:%d\n", token->word, token->kind);
-// 		free(token->word);
-// 		tmp = token;
-// 		token = token->next;
-// 		free(tmp);
+// 		printf("word:%s,type:%d\n", tmp->word, tmp->kind);
+// 		tmp = tmp->next;
 // 	}
+// 	free_token(token);
 // }
