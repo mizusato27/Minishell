@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 09:13:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 20:41:35 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*operator(int *i, char *line)
 		}
 		j++;
 	}
-	// assert_error("Unexpected operator");
+	error("Unexpected operator");
 	return (NULL);
 }
 
@@ -97,6 +97,7 @@ t_token	*word(int *i, char *line)
 	return (new_token(word, TK_WORD));
 }
 
+//head.nextに最初のトークンを格納
 t_token	*tokenize(char *arg)
 {
 	t_token	head;
@@ -118,7 +119,10 @@ t_token	*tokenize(char *arg)
 		else if (!is_metacharacter(arg[i]))
 			token->next = word(&i, arg + i);
 		else
+		{
 			tokenize_error("Unexpected Token", &i, arg);
+			return (NULL);
+		}
 		token = token->next;
 	}
 	token->next = new_token(NULL, TK_EOF);

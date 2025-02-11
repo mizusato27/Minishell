@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 12:29:20 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 20:40:13 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	interpret(char *line, int *stat_loc)
 	t_node	*node;
 
 	tok = tokenize(line);
-	if (tok->kind == TK_EOF)
+	if (!tok || tok->kind == TK_EOF)
 		;
 	else if (syntax_error)
 		*stat_loc = ERROR_TOKENIZE;

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 23:43:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 07:50:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 19:30:40 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ t_node	*parse(t_token *tok)
 	node = new_node(ND_SIMPLE_CMD);
 	while (tok && !at_eof(tok))
 	{
+		// printf("tok:%d\n",tok->kind);
 		if (tok->kind == TK_WORD)
 		{
 			append_tok(&node->args, tokdup(tok));
 			tok = tok->next;
 		}
-		// else
-		// 	parse_error("Unexpected Token", &tok, tok);
+		else
+			parse_error("Unexpected Token", &tok, tok);
 	}
 	return (node);
 }

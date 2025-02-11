@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 08:27:15 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 13:21:29 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 
+//externは複数のファイルで使う変数を宣言するときに使う
 extern bool	syntax_error;
 # define CHILD_PROCESS 0
 # define APPEND_CHAR_SIZE 1
@@ -81,6 +82,7 @@ void    malloc_error();
 void	err_exit(const char *location, const char *msg, int status);
 void	error(char *msg);
 void	tokenize_error(const char *location, int *j, char *line);
+void	parse_error(const char *location, t_token **rest, t_token *tok);
 
 //exec.c
 // int		interpret(char *line);
@@ -106,6 +108,7 @@ void	free_token(t_token *tok);
 void	free_argv(char **argv);
 
 //parse.c
+bool	at_eof(t_token *tok);
 t_node	*parse(t_token *tok);
 
 //utils.c

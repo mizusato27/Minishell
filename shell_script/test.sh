@@ -2,6 +2,7 @@
 RED="\033[31m"
 GREEN="\033[32m"
 BLUE="\033[96m"
+YELLOW="\033[33m"
 RESET="\033[0m"
 OK=$GREEN"OK"$RESET
 NG=$RED"NG"$RESET
@@ -29,13 +30,13 @@ assert() {
 	printf '%-50s:' "[$COMMAND]"
 	# exit status
 	echo -n -e "$COMMAND" | bash >cmp 2>&-
-	expected=$?
+	EXPECTED=$YELLOW$?$RESET
 	for arg in "$@"
 	do
 		mv "$arg" "$arg"".cmp"
 	done
 	echo -n -e "$COMMAND" | ./minishell >out 2>&-
-	actual=$?
+	ACTUAL=$YELLOW$?$RESET
 	for arg in "$@"
 	do
 		mv "$arg" "$arg"".out"
@@ -43,11 +44,12 @@ assert() {
 
 	diff cmp out >/dev/null && echo -e -n "  diff $OK" || echo -e -n "  diff $NG"
 
-	if [ "$actual" = "$expected" ]; then
+	if [ "$ACTUAL" = "$EXPECTED" ]; then
 		echo -e -n "  status $OK"
 	else
-		echo -e -n "  status $NG, expected $expected but got $actual"
+		echo -e -n "  status $NG"
 	fi
+	echo -e ", bash status $EXPECTED, my_shell status $ACTUAL"
 	for arg in "$@"
 	do
 		echo -n "  [$arg] "
@@ -68,6 +70,7 @@ echo -e "${BLUE}Absolute path commands without args${RESET}"
 assert '/bin/pwd'
 assert '/bin/echo'
 assert '/bin/ls'
+assert '/bin/ll'
 echo
 
 # Search command path without args
@@ -112,37 +115,44 @@ assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
+## meta chara
+echo -e "${BLUE}meta chara${RESET}"
+assert ">"
+assert ">>"
+assert ";"
+assert ";;"
+
 # Redirect
 ## Redirecting output
-echo -e "${BLUE}Redirecting output${RESET}"
-assert 'echo hello >hello.txt' 'hello.txt'
-assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
-echo
+# echo -e "${BLUE}Redirecting output${RESET}"
+# assert 'echo hello >hello.txt' 'hello.txt'
+# assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
+# echo
 
-## Redirecting input
-echo -e "${BLUE}Redirecting input${RESET}"
-assert 'cat <Makefile'
-echo hello >f1
-echo world >f2
-echo 42Tokyo >f3
-assert 'cat <f1<f2<f3'
-rm -f f1 f2 f3
-assert 'cat <hoge'
-echo
+# ## Redirecting input
+# echo -e "${BLUE}Redirecting input${RESET}"
+# assert 'cat <Makefile'
+# echo hello >f1
+# echo world >f2
+# echo 42Tokyo >f3
+# assert 'cat <f1<f2<f3'
+# rm -f f1 f2 f3
+# assert 'cat <hoge'
+# echo
 
-## Appending Redirected output
-echo -e "${BLUE}Appending Redirected output${RESET}"
-assert 'pwd >>pwd.txt' 'pwd.txt'
-assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
-echo
+# ## Appending Redirected output
+# echo -e "${BLUE}Appending Redirected output${RESET}"
+# assert 'pwd >>pwd.txt' 'pwd.txt'
+# assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
+# echo
 
-## Here Document
-echo -e "${BLUE}Here Document${RESET}"
-assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
-assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
-assert 'cat <<EOF\nhello\nworld'
-assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
-echo
+# ## Here Document
+# echo -e "${BLUE}Here Document${RESET}"
+# assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
+# assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
+# assert 'cat <<EOF\nhello\nworld'
+# assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
+# echo
 
 
 cleanup

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 12:33:46 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 20:56:05 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	syntax_error = false;
 
-//コマンドがなかったときに、エラーメッセージを表示して終了
+// //コマンドがなかったときに、エラーメッセージを表示して終了
 void	err_exit(const char *cmd, const char *msg, int status)
 {
     write(2, "minishell: ", 11);
@@ -26,12 +26,35 @@ void	err_exit(const char *cmd, const char *msg, int status)
 }
 
 //構文エラーがある場合に単語の最後までスキップ
-void	tokenize_error(const char *location, int *j, char *line)
+void	tokenize_error(const char *location, int *i, char *line)
 {
 	syntax_error = true;
-	dprintf(STDERR_FILENO, "minishell: syntax error near %s\n", location);
-	while (line[*j])
-		(*j)++;
+	write(2, "minishell: ", 11);
+	write(2, "syntax error near ", 18);
+	write(2, location, ft_strlen(location));
+	write(2, "\n", 1);
+	// perror_prefix();
+	// dprintf(STDERR_FILENO, "minishell: syntax error near %s\n", location);
+	// printf("i:%d\n",*i);
+	while (line[*i])
+		(*i)++;
+}
+
+void	parse_error(const char *location, t_token **rest, t_token *tok)
+{
+	syntax_error = true;
+	// perror_prefix();
+	write(2, "minishell: ", 11);
+	write(2, "syntax error near unexpected token `", 37);
+	write(2, tok->word, ft_strlen(tok->word));
+	write(2, "' in ", 5);
+	write(2, location, ft_strlen(location));
+	write(2, "\n", 1);
+	while (tok && !at_eof(tok))
+	{
+		tok = tok->next;
+	}
+	*rest = tok;
 }
 
 void	error(char *msg)
