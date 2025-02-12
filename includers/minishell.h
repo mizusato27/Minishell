@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 13:21:29 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 23:08:53 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <signal.h>
 
 #ifndef PATH_MAX
 # define PATH_MAX 10000

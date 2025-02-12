@@ -6,17 +6,34 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 21:35:30 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/11 23:08:36 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void handle_sigint(int sig)
+{
+    (void)sig; // 引数のsigは使用しない
+    write(1, "\nminishell$ ", 12); // Ctrl-Cで新しいプロンプトを表示
+}
+
+void handle_sigquit(int sig)
+{
+    (void)sig; // Ctrl-\で何もしない
+}
 
 int	main(void)
 {
 	char	*line;
 	int		status;
 
+	// Ctrl-Cでプロンプトを新しい行に表示
+    signal(SIGINT, handle_sigint);
+    // Ctrl-\で何もしない（デフォルト動作を無効にする）
+    signal(SIGQUIT, handle_sigquit);
+    // Ctrl-Dでシェルを終了する
+    signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない	
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
 	while (1)
