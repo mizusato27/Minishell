@@ -6,12 +6,13 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/01/26 17:24:13 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/11 20:40:48 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
-SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c)
+SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
+				destructor.c parse.c utils.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
@@ -19,7 +20,9 @@ OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
 NAME		= minishell
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I includers/ -I libft/
+CFLAGS		= -Wall -Wextra -Werror -I includers/
+# CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address -I includers/
+# CFLAGS		= -I includers/
 LDFLAGS     = -lreadline
 
 LIBFT       = libft/libft.a
