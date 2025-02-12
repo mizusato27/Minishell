@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 23:08:53 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/13 00:36:50 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define ER_SYNTAX_ERROR "syntax error"
 # define ER_FORK "fork error"
 # define ER_EXECVE "execve error"
-# define ER_ACCESS "command not found"	
+# define ER_ACCESS "command not found"
 # define ER_MALLOC "malloc error"
 
 # define OPERATORS "|&;()\n"
@@ -48,6 +48,8 @@ extern bool	syntax_error;
 # define APPEND_CHAR_SIZE 1
 # define END_CHAR_SIZE 1
 # define ERROR_TOKENIZE 258
+# define ERROR_PARSE 258
+# define ERROR_OPEN_REDIR 1// <-----
 
 typedef struct s_token		t_token;
 enum						e_token_kind
@@ -69,13 +71,26 @@ struct						s_token
 
 enum e_node_kind {
 	ND_SIMPLE_CMD,
+	ND_REDIR_OUT,// <-----
+	ND_REDIR_IN,
+	ND_REDIR_APPEND,
+	ND_REDIR_HEREDOC,
 };
 typedef enum e_node_kind	t_node_kind;
 typedef struct s_node	t_node;
 struct s_node {
-	t_token		*args;
+	// t_token		*args;
 	t_node_kind	kind;
 	t_node		*next;
+	// CMD <---------------
+	t_token		*args;
+	t_node		*redirects;
+	// REDIR
+	int			targetfd;
+	t_token		*filename;
+	t_token		*delimiter;
+	int			filefd;
+	int			stashed_targetfd;
 };
 
 //error.c
@@ -114,5 +129,9 @@ t_node	*parse(t_token *tok);
 
 //utils.c
 char	*ft_strncpy(char *dest, char *src, size_t n);
+
+int		redirect(t_node *node);
+char	**token_list_to_argv(t_token *tok);
+char	*find_executable(const char *filename);
 
 #endif

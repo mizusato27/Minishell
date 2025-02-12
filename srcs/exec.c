@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 20:40:13 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/13 00:36:44 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void construct_path(char path[PATH_MAX], const char *filename, char *env,
 
 //:はディレクトリの終わりを指す
 //PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
-static char	*find_executable(const char *filename)
+char	*find_executable(const char *filename)
 {
 	char	path[PATH_MAX];
 	char	*env;
@@ -99,40 +99,40 @@ static char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-// F_OK: ファイルが存在するか
-//execveは成功したら戻ってこない
-static int	execute(char *args[])
-{
-	int		pid;
-	int		status;
-	char	*path;
-	char 	*cmd;
+// // F_OK: ファイルが存在するか
+// //execveは成功したら戻ってこない
+// static int	execute(char *args[])
+// {
+// 	int		pid;
+// 	int		status;
+// 	char	*path;
+// 	char 	*cmd;
 
-	pid = fork();
-	cmd = args[0];
-	path = cmd;
-	if (pid < 0)
-		error(ER_FORK);
-	else if (pid == CHILD_PROCESS)
-	{
-		if (ft_strchr(path, '/') == NULL)
-			path = find_executable(path);
-		if (path == NULL || access(path, F_OK) < 0)
-			err_exit(cmd, ER_ACCESS, 127);
-		execve(path, args, NULL);
-		error(ER_EXECVE);
-	}
-	else
-		wait(&status);
-	return (WEXITSTATUS(status));
-}
+// 	pid = fork();
+// 	cmd = args[0];
+// 	path = cmd;
+// 	if (pid < 0)
+// 		error(ER_FORK);
+// 	else if (pid == CHILD_PROCESS)
+// 	{
+// 		if (ft_strchr(path, '/') == NULL)
+// 			path = find_executable(path);
+// 		if (path == NULL || access(path, F_OK) < 0)
+// 			err_exit(cmd, ER_ACCESS, 127);
+// 		execve(path, args, NULL);
+// 		error(ER_EXECVE);
+// 	}
+// 	else
+// 		wait(&status);
+// 	return (WEXITSTATUS(status));
+// }
 
 //stat_locは終了ステータスを格納する変数
 //syntax_errorは構文エラーがあるかどうかを格納する変数
 void	interpret(char *line, int *stat_loc)
 {
 	t_token	*tok;
-	char	**argv;
+	// char	**argv;
 	t_node	*node;
 
 	tok = tokenize(line);
@@ -143,10 +143,17 @@ void	interpret(char *line, int *stat_loc)
 	else
 	{
 		node = parse(tok);
-		expand(node);
-		argv = token_list_to_argv(node->args);
-		*stat_loc = execute(argv);
-		free_argv(argv);
+		// expand(node);
+		// argv = token_list_to_argv(node->args);
+		// *stat_loc = execute(argv);
+		// free_argv(argv);
+		if (syntax_error)
+			*stat_loc = ERROR_PARSE;
+		else
+		{
+			expand(node);
+			*stat_loc = redirect(node);// <- step9
+		}
 		free_node(node);
 	}
 	free_token(tok);
