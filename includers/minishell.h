@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/13 00:36:50 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:43:14 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,10 @@ t_node	*parse(t_token *tok);
 //utils.c
 char	*ft_strncpy(char *dest, char *src, size_t n);
 
+// 修正
 int		redirect(t_node *node);
 char	**token_list_to_argv(t_token *tok);
 char	*find_executable(const char *filename);
+void	todo(char *message);
 
 #endif

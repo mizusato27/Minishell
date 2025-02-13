@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/13 00:36:44 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:48:02 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,10 @@ char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-// // F_OK: ファイルが存在するか
-// //execveは成功したら戻ってこない
+// excute関数 -> redirect関数に相当
+
+// F_OK: ファイルが存在するか
+//execveは成功したら戻ってこない
 // static int	execute(char *args[])
 // {
 // 	int		pid;
@@ -136,7 +138,9 @@ void	interpret(char *line, int *stat_loc)
 	t_node	*node;
 
 	tok = tokenize(line);
-	if (!tok || tok->kind == TK_EOF)
+	// if (!tok || tok->kind == TK_EOF)
+	// 	;
+	if (at_eof(tok))
 		;
 	else if (syntax_error)
 		*stat_loc = ERROR_TOKENIZE;
@@ -152,7 +156,7 @@ void	interpret(char *line, int *stat_loc)
 		else
 		{
 			expand(node);
-			*stat_loc = redirect(node);// <- step9
+			*stat_loc = redirect(node);// <--- 修正
 		}
 		free_node(node);
 	}

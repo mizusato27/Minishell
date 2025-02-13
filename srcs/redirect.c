@@ -7,11 +7,26 @@
 
 #include <string.h>
 
+// --------------------エラー関数(作り方参照)--------------------
 #define ERROR_PREFIX "minishell: "
 
 static void	perror_prefix(void)
 {
 	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
+}
+
+void	fatal_error(const char *msg)
+{
+	perror_prefix();
+	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	exit(1);
+}
+
+void	assert_error(const char *msg)
+{
+	perror_prefix();
+	dprintf(STDERR_FILENO, "Assert Error: %s\n", msg);
+	exit(255);
 }
 
 void	xperror(const char *location)
@@ -20,17 +35,61 @@ void	xperror(const char *location)
 	perror(location);
 }
 
+// --------------------redirect関連--------------------
+
+char	*search_path(const char *filename)// <--- 削除予定
+{
+	char	path[PATH_MAX];
+	char	*value;
+	char	*end;
+
+	value = getenv("PATH");
+	while (*value)
+	{
+		// /bin:/usr/bin
+		//     ^
+		//     end
+		bzero(path, PATH_MAX);
+		end = strchr(value, ':');
+		if (end)
+			strncpy(path, value, end - value);
+		else
+			strlcpy(path, value, PATH_MAX);
+		strlcat(path, "/", PATH_MAX);
+		strlcat(path, filename, PATH_MAX);
+		if (access(path, X_OK) == 0)
+		{
+			char	*dup;
+
+			dup = strdup(path);
+			if (dup == NULL)
+				fatal_error("strdup");
+			return (dup);
+		}
+		if (end == NULL)
+			return (NULL);
+		value = end + 1;
+	}
+	return (NULL);
+}
+
+void	validate_access(const char *path, const char *filename)
+{
+	if (path == NULL)
+		err_exit(filename, "command not found", 127);
+	if (access(path, F_OK) < 0)
+		err_exit(filename, "command not found", 127);
+}
+
 int	stash_fd(int fd)
 {
 	int	stash;
 
 	stash = fcntl(fd, F_DUPFD, 10);
 	if (stash < 0)
-		// fatal_error("");
-		error("");
+		fatal_error("");
 	if (close(fd) < 0)
-		// fatal_error("");
-		error("");
+		fatal_error("");
 	return (stash);
 }
 
@@ -41,8 +100,7 @@ int	read_here_document(const char *delimiter)// delimiter:区切り文字
 
 	// パイプを作成
 	if (pipe(pipe_fd) < 0)
-		// fatal_error("pipe");
-		error("");
+		fatal_error("pipe");
 	// 区切り文字が入力されるまでループ
 	while (1)
 	{
@@ -87,8 +145,7 @@ int	open_redirect_file(t_node *redirects)
 	else if (redirects->kind == ND_REDIR_HEREDOC)
 		redirects->filefd = read_here_document(redirects->delimiter->word);
 	else
-		// assert_error("open_redir_file");
-		error("");
+		assert_error("open_redir_file");
 	if (redirects->filefd < 0)
 	{
 		xperror(redirects->filename->word);
@@ -114,8 +171,7 @@ void	do_redirect(t_node *redirects)
 //   - dup2 で filefd を targetfd にコピー
 //     （例：標準出力をファイルにリダイレクト）
 	else
-		// assert_error("do_redirect");
-		error("");
+		assert_error("do_redirect");
 	do_redirect(redirects->next);
 }
 
@@ -129,35 +185,36 @@ int	execute_cmd(t_node *node)
 
 	pid = fork();
 	if (pid < 0)
-		// fatal_error("fork");
-		error("");
+		fatal_error("fork");
 // 	子プロセス（pid == 0）の場合：
 // - トークンリストを argv 配列に変換
 // - パスにスラッシュが含まれていない場合は PATH を検索
 // - 実行権限をチェック（validate_access）
 // - execve でコマンドを実行
 // - execve が失敗した場合はエラー処理
-	else if (pid == CHILD_PROCESS)
+	else if (pid == 0)
 	{
 		// child process
 		argv = token_list_to_argv(node->args);
 		path = argv[0];
 		if (strchr(path, '/') == NULL)
-			// path = search_path(path);
-			path = find_executable(path);
-		if (path == NULL || access(path, F_OK) < 0)
-			// err_exit(path, ER_ACCESS, 127);
-			error("");
+			path = search_path(path);// <--- 後にfind_executableに修正予定
+		validate_access(path, argv[0]);
 		execve(path, argv, environ);
-		// fatal_error("execve");
-		error("");
+		fatal_error("execve");
 	}
 // 	親プロセスの場合：
 // - 子プロセスの終了を待機（wait）
 // - 終了ステータスを返す
-	else// parent process
+	// else
+	// {
+	// 	// parent process
+	// 	wait(&wstatus);
+	// 	return (WEXITSTATUS(wstatus));
+	// }
+	else
 		wait(&wstatus);
-	return (WEXITSTATUS(wstatus));
+		return (WEXITSTATUS(wstatus));
 }
 
 // リダイレクトを元に戻す関数
@@ -178,8 +235,7 @@ void	reset_redirect(t_node *redirects)
 //   - リダイレクト先（targetfd）を閉じる
 //   - 保存しておいた元のファイルディスクリプタを復元
 	else
-		// assert_error("reset_redirect");
-		error("");
+		assert_error("reset_redirect");
 }
 
 int	redirect(t_node *node)
@@ -193,33 +249,3 @@ int	redirect(t_node *node)
 	reset_redirect(node->redirects);
 	return (cmd_status);
 }
-
-// 以下は"minishellの作り方"の関数
-// void	interpret(char *line, int *stat_loc)
-// {
-// 	t_token	*tok;
-// 	t_node	*node;
-
-// 	tok = tokenize(line);
-// 	if (at_eof(tok))
-// 		;
-// 	else if (syntax_error)
-// 		*stat_loc = ERROR_TOKENIZE;
-// 	else
-// 	{
-// 		node = parse(tok);
-// 		// expand(node);
-// 		// argv = token_list_to_argv(node->args);
-// 		// *stat_loc = exec(argv);
-// 		// free_argv(argv);
-// 		if (syntax_error)
-// 			*stat_loc = ERROR_PARSE;
-// 		else
-// 		{
-// 			expand(node);
-// 			*stat_loc = ft_redirect(node);// <- step9
-// 		}
-// 		free_node(node);
-// 	}
-// 	free_tok(tok);
-// }
