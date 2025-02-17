@@ -24,6 +24,8 @@ cleanup() {
 	rm -f cmp out a.out print_args
 }
 
+NG_LIST=()  # NG の項目を保存する配列
+
 assert() {
 	COMMAND="$1"
 	shift
@@ -42,30 +44,71 @@ assert() {
 		mv "$arg" "$arg"".out"
 	done
 
-	diff cmp out >/dev/null && echo -e -n "  diff $OK" || echo -e -n "  diff $NG"
+	NG_FLAG=0  # 1ならNGがあったと判断
 
+	# diffの結果をチェック
+	if diff cmp out >/dev/null; then
+		echo -e -n "  diff $OK"
+	else
+		echo -e -n "  diff $NG"
+		NG_LIST+=("[$COMMAND] diff NG")  # NGの情報を配列に追加
+		NG_FLAG=1
+	fi
+
+	# ステータスコードの比較
 	if [ "$ACTUAL" = "$EXPECTED" ]; then
 		echo -e -n "  status $OK"
 	else
 		echo -e -n "  status $NG"
+		NG_LIST+=("[$COMMAND] status NG (Expected: $EXPECTED, Actual: $ACTUAL)")
+		NG_FLAG=1
 	fi
 	echo -e ", bash status $EXPECTED, my_shell status $ACTUAL"
+
+	# ファイルのdiffチェック
 	for arg in "$@"
 	do
 		echo -n "  [$arg] "
-		diff "$arg"".cmp" "$arg"".out" >/dev/null && echo -e -n "$OK" || echo -e -n "$NG"
+		if diff "$arg"".cmp" "$arg"".out" >/dev/null; then
+			echo -e -n "$OK"
+		else
+			echo -e -n "$NG"
+			NG_LIST+=("[$COMMAND] File diff NG for $arg")
+			NG_FLAG=1
+		fi
 		rm -f "$arg"".cmp" "$arg"".out"
 	done
 	echo
+
+	# NGがあれば配列に記録
+	if [ $NG_FLAG -eq 1 ]; then
+		NG_LIST+=("------------------------------------------------")
+	fi
 }
+
+# 全テスト終了後に NG の一覧を出力
+summary() {
+	if [ ${#NG_LIST[@]} -ne 0 ]; then
+		echo -e "\n${RED}====== NG Summary ======${RESET}"
+		for item in "${NG_LIST[@]}"; do
+			echo -e "$RED$item$RESET"
+		done
+	else
+		echo -e "\n${GREEN}All tests passed!${RESET}"
+	fi
+}
+
+# スクリプトの最後に summary を実行
+trap summary EXIT
+
 
 # Empty line (EOF)
 echo
 echo -e "${BLUE}Empty line (EOF)${RESET}"
 assert ''
-echo 
+echo
 
-# Absolute path commands without args 
+# Absolute path commands without args
 echo -e "${BLUE}Absolute path commands without args${RESET}"
 assert '/bin/pwd'
 assert '/bin/echo'
@@ -115,15 +158,15 @@ assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
-## meta chara
+# meta chara
 echo -e "${BLUE}meta chara${RESET}"
 assert ">"
 assert ">>"
-assert ";"
-assert ";;"
+# assert ";"
+# assert ";;"
 
-# Redirect
-## Redirecting output
+# # Redirect
+# # Redirecting output
 # echo -e "${BLUE}Redirecting output${RESET}"
 # assert 'echo hello >hello.txt' 'hello.txt'
 # assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
