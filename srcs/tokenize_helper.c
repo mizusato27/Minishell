@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/17 20:19:37 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/17 21:57:28 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	is_redirection_operator(const char *s)
 	size_t				i = 0;				
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (startswith(s, operators[i]))
+		if (which_op(s, operators[i]))
 			return (true);
 		i++;
 	}
