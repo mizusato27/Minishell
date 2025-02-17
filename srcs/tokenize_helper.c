@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/08 19:38:42 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/17 20:19:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	is_blank(char c)
 //メタ文字のチェック
 bool	is_metacharacter(char c)
 {
+	if (is_blank(c))
+		return (true);
 	return (c && ft_strchr("|&;()<> \t\n", c));
 }
 
@@ -64,4 +66,18 @@ void	init_operators(char *operators[14])
 	operators[11] = "<";
 	operators[12] = ">";
 	operators[13] = NULL;
+}
+
+//とりあえず置いておく
+bool	is_redirection_operator(const char *s)
+{
+	static char	*const operators[] = {">", "<", ">>", "<<"};
+	size_t				i = 0;				
+	while (i < sizeof(operators) / sizeof(*operators))
+	{
+		if (startswith(s, operators[i]))
+			return (true);
+		i++;
+	}
+	return (false);
 }
