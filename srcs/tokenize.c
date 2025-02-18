@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/17 20:16:54 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:12:50 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_token	*tokenize(char *arg)
 			i++;
 		if (!arg[i])
 			break;
-		else if (is_operator(arg[i]))
+		else if (is_operator(&arg[i]))// <--- modified
 			token->next = operator(&i, arg + i);
 		else if (!is_metacharacter(arg[i]) && arg[i])
 			token->next = word(&i, arg + i);

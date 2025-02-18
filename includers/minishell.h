@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/13 15:43:14 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:13:38 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ t_token	*new_token(char *word, t_token_kind kind);
 bool	is_blank(char c);
 bool	is_metacharacter(char c);
 bool	which_op(const char *s, const char *op);
-bool	is_operator(char c);
+// bool	is_operator(char c);
+bool	is_operator(const char *s);
 void	init_operators(char *operators[14]);
 
 //destructor.c

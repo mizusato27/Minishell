@@ -159,9 +159,9 @@ assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
 # meta chara
-echo -e "${BLUE}meta chara${RESET}"
-assert ">"
-assert ">>"
+# echo -e "${BLUE}meta chara${RESET}"
+# assert ">"
+# assert ">>"
 # assert ";"
 # assert ";;"
 

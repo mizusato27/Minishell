@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/17 21:57:28 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:14:20 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,35 @@ bool	which_op(const char *s, const char *op)
 }
 
 //制御演算子かどうかのチェック
-bool	is_operator(char c)
-{
-	char	*operators;
-	int		i;
+// bool	is_operator(char c)
+// {
+// 	char	*operators;
+// 	int		i;
 
+// 	i = 0;
+// 	operators = OPERATORS;
+// 	while (operators[i])
+// 	{
+// 		if (operators[i] == c)
+// 			return (true);
+// 		i++;
+// 	}
+// 	return (false);
+// }
+bool	is_operator(const char *s)
+{
+	char *operators[14];
+	int i;
+
+	init_operators(operators);
 	i = 0;
-	operators = OPERATORS;
 	while (operators[i])
 	{
-		if (operators[i] == c)
-			return (true);
+		if (which_op(s, operators[i]))
+			return true;
 		i++;
 	}
-	return (false);
+	return false;
 }
 
 //制御演算子の生成
@@ -72,7 +87,7 @@ void	init_operators(char *operators[14])
 bool	is_redirection_operator(const char *s)
 {
 	static char	*const operators[] = {">", "<", ">>", "<<"};
-	size_t				i = 0;				
+	size_t				i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
 		if (which_op(s, operators[i]))
