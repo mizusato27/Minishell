@@ -165,37 +165,37 @@ assert ">>"
 # assert ";"
 # assert ";;"
 
-# # Redirect
-# # Redirecting output
-# echo -e "${BLUE}Redirecting output${RESET}"
-# assert 'echo hello >hello.txt' 'hello.txt'
-# assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
-# echo
+# Redirect
+# Redirecting output
+echo -e "${BLUE}Redirecting output${RESET}"
+assert 'echo hello >hello.txt' 'hello.txt'
+assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
+echo
 
-# ## Redirecting input
-# echo -e "${BLUE}Redirecting input${RESET}"
-# assert 'cat <Makefile'
-# echo hello >f1
-# echo world >f2
-# echo 42Tokyo >f3
-# assert 'cat <f1<f2<f3'
-# rm -f f1 f2 f3
-# assert 'cat <hoge'
-# echo
+## Redirecting input
+echo -e "${BLUE}Redirecting input${RESET}"
+assert 'cat <Makefile'
+echo hello >f1
+echo world >f2
+echo 42Tokyo >f3
+assert 'cat <f1<f2<f3'
+rm -f f1 f2 f3
+assert 'cat <hoge'
+echo
 
-# ## Appending Redirected output
-# echo -e "${BLUE}Appending Redirected output${RESET}"
-# assert 'pwd >>pwd.txt' 'pwd.txt'
-# assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
-# echo
+## Appending Redirected output
+echo -e "${BLUE}Appending Redirected output${RESET}"
+assert 'pwd >>pwd.txt' 'pwd.txt'
+assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
+echo
 
-# ## Here Document
-# echo -e "${BLUE}Here Document${RESET}"
-# assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
-# assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
-# assert 'cat <<EOF\nhello\nworld'
-# assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
-# echo
+## Here Document
+echo -e "${BLUE}Here Document${RESET}"
+assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
+assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
+assert 'cat <<EOF\nhello\nworld'
+assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
+echo
 
 
 cleanup

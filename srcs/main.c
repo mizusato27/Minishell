@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 23:08:36 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/18 17:10:18 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ int	main(void)
     // Ctrl-\で何もしない（デフォルト動作を無効にする）
     signal(SIGQUIT, handle_sigquit);
     // Ctrl-Dでシェルを終了する
-    signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない	
+    signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
+	status = 0;
 	while (1)
 	{
         //標準入力で受け取る
