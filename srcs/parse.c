@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 23:43:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 16:13:59 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:25:24 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 	*rest = tok;
 }
 
-// 一部修正
+// parse関数:一部修正 <--- pipeで追加修正
+
 // t_node	*parse(t_token *tok)
 // {
 // 	t_node	*node;
