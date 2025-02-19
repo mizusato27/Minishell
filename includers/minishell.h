@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/17 23:34:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:44:34 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_node	*parse(t_token *tok);
 
 //utils.c
 char	*ft_strncpy(char *dest, char *src, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 
 // map.c
 t_item	*item_new(char *name, char *value);
