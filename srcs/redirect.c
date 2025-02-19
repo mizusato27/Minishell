@@ -7,50 +7,6 @@
 
 #include <string.h>
 
-char	*search_path(const char *filename)// <--- 削除予定
-{
-	char	path[PATH_MAX];
-	char	*value;
-	char	*end;
-
-	value = getenv("PATH");
-	while (*value)
-	{
-		// /bin:/usr/bin
-		//     ^
-		//     end
-		bzero(path, PATH_MAX);
-		end = strchr(value, ':');
-		if (end)
-			strncpy(path, value, end - value);
-		else
-			strlcpy(path, value, PATH_MAX);
-		strlcat(path, "/", PATH_MAX);
-		strlcat(path, filename, PATH_MAX);
-		if (access(path, X_OK) == 0)
-		{
-			char	*dup;
-
-			dup = strdup(path);
-			if (dup == NULL)
-				fatal_error("strdup");
-			return (dup);
-		}
-		if (end == NULL)
-			return (NULL);
-		value = end + 1;
-	}
-	return (NULL);
-}
-
-void	validate_access(const char *path, const char *filename)
-{
-	if (path == NULL)
-		err_exit(filename, "command not found", 127);
-	if (access(path, F_OK) < 0)
-		err_exit(filename, "command not found", 127);
-}
-
 int	stash_fd(int fd)
 {
 	int	stash;
@@ -95,34 +51,44 @@ int	read_here_document(const char *delimiter)// delimiter:区切り文字
 }
 
 // リダイレクトのためのファイルを開く関数
-int	open_redirect_file(t_node *redirects)
+int	open_redirect_file(t_node *node)
 {
-	if (redirects == NULL)
+	if (node == NULL)
 		return (0);
-	if (redirects->kind == ND_REDIR_OUT)
-		redirects->filefd = open(redirects->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (node->kind == ND_PIPELINE)
+	{
+		if (open_redirect_file(node->command) < 0)
+			return (-1);
+		if (open_redirect_file(node->next) < 0)
+			return (-1);
+		return (0);
+	}
+	else if (node->kind == ND_SIMPLE_CMD)
+		return (open_redirect_file(node->redirects));
+	if (node->kind == ND_REDIR_OUT)
+		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 // 	- ND_REDIR_OUT（出力リダイレクト）の場合：
 //   - O_CREAT: ファイルが存在しない場合は作成
 //   - O_WRONLY: 書き込み専用でオープン
 //   - O_TRUNC: ファイルが存在する場合は内容を削除
 //   - パーミッション 0644 (rw-r--r--)
-	else if (redirects->kind == ND_REDIR_IN)
-		redirects->filefd = open(redirects->filename->word, O_RDONLY);
+	else if (node->kind == ND_REDIR_IN)
+		node->filefd = open(node->filename->word, O_RDONLY);
 // 	入力リダイレクション（<）の場合は、ファイルを読み込み専用（O_RDONLY）で開きます
 // 	出力と異なり、新規作成（O_CREAT）や書き込み権限（O_WRONLY）は不要です
-	else if (redirects->kind == ND_REDIR_APPEND)
-		redirects->filefd = open(redirects->filename->word, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else if (redirects->kind == ND_REDIR_HEREDOC)
-		redirects->filefd = read_here_document(redirects->delimiter->word);
+	else if (node->kind == ND_REDIR_APPEND)
+		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else if (node->kind == ND_REDIR_HEREDOC)
+		node->filefd = read_here_document(node->delimiter->word);
 	else
 		assert_error("open_redir_file");
-	if (redirects->filefd < 0)
+	if (node->filefd < 0)
 	{
-		xperror(redirects->filename->word);
+		xperror(node->filename->word);
 		return (-1);
 	}
-	redirects->filefd = stash_fd(redirects->filefd);
-	return (open_redirect_file(redirects->next));
+	node->filefd = stash_fd(node->filefd);
+	return (open_redirect_file(node->next));
 }
 
 // 実際のリダイレクト処理を行う関数
@@ -145,48 +111,6 @@ void	do_redirect(t_node *redirects)
 	do_redirect(redirects->next);
 }
 
-int	execute_cmd(t_node *node)
-{
-	extern char	**environ;
-	const char	*path;
-	pid_t		pid;
-	int			wstatus;
-	char		**argv;
-
-	pid = fork();
-	if (pid < 0)
-		fatal_error("fork");
-// 	子プロセス（pid == 0）の場合：
-// - トークンリストを argv 配列に変換
-// - パスにスラッシュが含まれていない場合は PATH を検索
-// - 実行権限をチェック（validate_access）
-// - execve でコマンドを実行
-// - execve が失敗した場合はエラー処理
-	else if (pid == 0)
-	{
-		// child process
-		argv = token_list_to_argv(node->args);
-		path = argv[0];
-		if (strchr(path, '/') == NULL)
-			path = search_path(path);// <--- 後にfind_executableに修正予定
-		validate_access(path, argv[0]);
-		execve(path, argv, environ);
-		fatal_error("execve");
-	}
-// 	親プロセスの場合：
-// - 子プロセスの終了を待機（wait）
-// - 終了ステータスを返す
-	// else
-	// {
-	// 	// parent process
-	// 	wait(&wstatus);
-	// 	return (WEXITSTATUS(wstatus));
-	// }
-	else
-		wait(&wstatus);
-		return (WEXITSTATUS(wstatus));
-}
-
 // リダイレクトを元に戻す関数
 void	reset_redirect(t_node *redirects)
 {
@@ -206,16 +130,4 @@ void	reset_redirect(t_node *redirects)
 //   - 保存しておいた元のファイルディスクリプタを復元
 	else
 		assert_error("reset_redirect");
-}
-
-int	redirect(t_node *node)
-{
-	int	cmd_status;
-
-	if (open_redirect_file(node->redirects) < 0)
-		return (ERROR_OPEN_REDIR);
-	do_redirect(node->redirects);
-	cmd_status = execute_cmd(node);
-	reset_redirect(node->redirects);
-	return (cmd_status);
 }

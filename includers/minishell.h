@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:21:31 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:01:05 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <signal.h>
+
+#include <errno.h>// <--- pipe
 
 #ifndef PATH_MAX
 # define PATH_MAX 10000
@@ -70,8 +72,9 @@ struct						s_token
 };
 
 enum e_node_kind {
+	ND_PIPELINE,// <--- pipe
 	ND_SIMPLE_CMD,
-	ND_REDIR_OUT,// <-----
+	ND_REDIR_OUT,// <--- added
 	ND_REDIR_IN,
 	ND_REDIR_APPEND,
 	ND_REDIR_HEREDOC,
@@ -91,6 +94,10 @@ struct s_node {
 	t_token		*delimiter;
 	int			filefd;
 	int			stashed_targetfd;
+	// PIPELINE <---
+	int			inpipe[2];
+	int			outpipe[2];
+	t_node		*command;
 };
 
 //error.c
@@ -104,10 +111,11 @@ void	assert_error(const char *msg);
 void	xperror(const char *location);
 
 //exec.c
-// int		interpret(char *line);
+char	**token_list_to_argv(t_token *tok);
 void	interpret(char *line, int *stat_loc);
 
 //expand.c
+void	todo(char *message);
 void	expand(t_node *node);
 
 //tokenize.c
@@ -134,10 +142,15 @@ t_node	*parse(t_token *tok);
 //utils.c
 char	*ft_strncpy(char *dest, char *src, size_t n);
 
-// 修正
-int		redirect(t_node *node);
-char	**token_list_to_argv(t_token *tok);
-char	*find_executable(const char *filename);
-void	todo(char *message);
+// redirect.c
+// int		redirect(t_node *node);
+int		open_redirect_file(t_node *node);
+void	do_redirect(t_node *redirects);
+void	reset_redirect(t_node *redirects);
+
+// pipe.c
+void	create_new_pipe(t_node *node);
+void	process_child_pipe(t_node *node);
+void	process_parent_pipe(t_node *node);
 
 #endif

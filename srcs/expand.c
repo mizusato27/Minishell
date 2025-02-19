@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:25:54 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:17:53 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	expand_quote_removal(t_node *node)
 	remove_quote(node->filename);// <--- added
 	remove_quote(node->delimiter);// <--- added
 	expand_quote_removal(node->redirects);// <--- added
+	expand_quote_removal(node->command);// <--- pipe
 	expand_quote_removal(node->next);
 }
 

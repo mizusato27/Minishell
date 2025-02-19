@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 23:43:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/13 15:46:09 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:13:59 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,22 +133,76 @@ void	append_command_element(t_node *command, t_token **rest, t_token *tok)
 }
 
 // 一部修正
-t_node	*parse(t_token *tok)
+// t_node	*parse(t_token *tok)
+// {
+// 	t_node	*node;
+
+// 	node = new_node(ND_SIMPLE_CMD);
+// 	append_command_element(node, &tok, tok);// <--- 追加
+// 	while (tok && !at_eof(tok))
+// 	// {
+// 	// 	if (tok->kind == TK_WORD)
+// 	// 	{
+// 	// 		append_tok(&node->args, tokdup(tok));
+// 	// 		tok = tok->next;
+// 	// 	}
+// 	// 	else
+// 	// 		parse_error("Unexpected Token", &tok, tok);
+// 	// }
+// 		append_command_element(node, &tok, tok);// <--- 追加
+// 	return (node);
+// }
+
+// -------------------- pipeで追加 --------------------
+
+bool	startswith(const char *s, const char *keyword)
+{
+	return (memcmp(s, keyword, strlen(keyword)) == 0);
+}
+
+bool	is_control_operator(t_token *tok)
+{
+	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
+	size_t				i = 0;
+
+	while (i < sizeof(operators) / sizeof(*operators))
+	{
+		if (startswith(tok->word, operators[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+t_node	*simple_command(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
 	node = new_node(ND_SIMPLE_CMD);
-	append_command_element(node, &tok, tok);// <--- 追加
-	while (tok && !at_eof(tok))
-	// {
-	// 	if (tok->kind == TK_WORD)
-	// 	{
-	// 		append_tok(&node->args, tokdup(tok));
-	// 		tok = tok->next;
-	// 	}
-	// 	else
-	// 		parse_error("Unexpected Token", &tok, tok);
-	// }
-		append_command_element(node, &tok, tok);// <--- 追加
+	append_command_element(node, &tok, tok);
+	while (tok && !at_eof(tok) && !is_control_operator(tok))
+		append_command_element(node, &tok, tok);
+	*rest = tok;
 	return (node);
+}
+
+t_node	*pipeline(t_token **rest, t_token *tok)
+{
+	t_node	*node;
+
+	node = new_node(ND_PIPELINE);
+	node->inpipe[0] = STDIN_FILENO;
+	node->inpipe[1] = -1;
+	node->outpipe[0] = -1;
+	node->outpipe[1] = STDOUT_FILENO;
+	node->command = simple_command(&tok, tok);
+	if (equal_op(tok, "|"))
+		node->next = pipeline(&tok, tok->next);
+	*rest = tok;
+	return (node);
+}
+
+t_node	*parse(t_token *tok)
+{
+	return (pipeline(&tok, tok));
 }

@@ -158,7 +158,7 @@ assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
-# meta chara
+## meta chara
 # echo -e "${BLUE}meta chara${RESET}"
 # assert ">"
 # assert ">>"
@@ -197,5 +197,8 @@ assert 'cat <<EOF\nhello\nworld'
 assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
 echo
 
+## Pipe
+assert 'cat Makefile | grep minishell'
+assert 'cat | cat | ls\n\n'
 
 cleanup

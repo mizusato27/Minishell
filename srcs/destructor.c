@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 19:04:55 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:25:30 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:38:56 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_node(t_node *node)
 	free_token(node->delimiter);//<--- added
 	free_node(node->redirects);// <--- added
 	free_node(node->next);
+	free_node(node->command);// <--- pipe
 	free(node);
 }
 

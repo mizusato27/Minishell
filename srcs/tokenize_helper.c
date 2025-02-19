@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:00:09 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:52:09 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,4 @@ void	init_operators(char *operators[14])
 	operators[11] = "<";
 	operators[12] = ">";
 	operators[13] = NULL;
-}
-
-//とりあえず置いておく
-bool	is_redirection_operator(const char *s)
-{
-	static char	*const operators[] = {">", "<", ">>", "<<"};
-	size_t				i = 0;
-	while (i < sizeof(operators) / sizeof(*operators))
-	{
-		if (which_op(s, operators[i]))
-			return (true);
-		i++;
-	}
-	return (false);
 }

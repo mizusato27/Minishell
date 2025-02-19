@@ -6,11 +6,13 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/13 15:48:02 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:02:24 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+#include <string.h>// <--- 一旦使用
 
 //いったんコピペ、どうせ後でいらなくなる
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
@@ -99,35 +101,76 @@ char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-// excute関数 -> redirect関数に相当
+void	child_process(t_node *node)
+{
+	extern char	**environ;
+	char		*path;
+	char		**argv;
 
-// F_OK: ファイルが存在するか
-//execveは成功したら戻ってこない
-// static int	execute(char *args[])
-// {
-// 	int		pid;
-// 	int		status;
-// 	char	*path;
-// 	char 	*cmd;
+	process_child_pipe(node);
+	do_redirect(node->command->redirects);
+	argv = token_list_to_argv(node->command->args);
+	path = argv[0];
+	if (strchr(path, '/') == NULL)
+		path = find_executable(path);
+	if (path == NULL)
+		err_exit(argv[0], "command not found", 127);
+	if (access(path, F_OK) < 0)
+		err_exit(argv[0], "command not found", 127);
+	execve(path, argv, environ);
+	reset_redirect(node->command->redirects);
+	fatal_error("execve");
+}
 
-// 	pid = fork();
-// 	cmd = args[0];
-// 	path = cmd;
-// 	if (pid < 0)
-// 		error(ER_FORK);
-// 	else if (pid == CHILD_PROCESS)
-// 	{
-// 		if (ft_strchr(path, '/') == NULL)
-// 			path = find_executable(path);
-// 		if (path == NULL || access(path, F_OK) < 0)
-// 			err_exit(cmd, ER_ACCESS, 127);
-// 		execve(path, args, NULL);
-// 		error(ER_EXECVE);
-// 	}
-// 	else
-// 		wait(&status);
-// 	return (WEXITSTATUS(status));
-// }
+pid_t	execute_pipe(t_node *node)
+{
+	pid_t		pid;
+
+	if (node == NULL)
+		return (-1);
+	create_new_pipe(node);
+	pid = fork();
+	if (pid < 0)
+		fatal_error("fork");
+	else if (pid == 0)
+		child_process(node);
+	process_parent_pipe(node);
+	if (node->next)
+		return (execute_pipe(node->next));
+	return (pid);
+}
+
+int	wait_pipe(pid_t pid)
+{
+	pid_t	result;
+	int		status;
+	int		wstatus;
+
+	while (1)
+	{
+		result = wait(&wstatus);
+		if (result == pid)
+			status = WEXITSTATUS(wstatus);
+		else if (result < 0)
+		{
+			if (errno == ECHILD)
+				break ;
+		}
+	}
+	return (status);
+}
+
+int	execute_cmd(t_node *node)
+{
+	pid_t	pid;
+	int		cmd_status;
+
+	if (open_redirect_file(node) < 0)
+		return (ERROR_OPEN_REDIR);
+	pid = execute_pipe(node);
+	cmd_status = wait_pipe(pid);
+	return (cmd_status);
+}
 
 //stat_locは終了ステータスを格納する変数
 //syntax_errorは構文エラーがあるかどうかを格納する変数
@@ -156,7 +199,8 @@ void	interpret(char *line, int *stat_loc)
 		else
 		{
 			expand(node);
-			*stat_loc = redirect(node);// <--- 修正
+			// *stat_loc = redirect(node);// <--- 修正
+			*stat_loc = execute_cmd(node);// <- pipe
 		}
 		free_node(node);
 	}
