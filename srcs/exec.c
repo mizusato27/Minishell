@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 16:02:24 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:22:55 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void	interpret(char *line, int *stat_loc)
 		else
 		{
 			expand(node);
-			// *stat_loc = redirect(node);// <--- 修正
+			// *stat_loc = redirect(node);// <--- 修正 <--- pipeで削除
 			*stat_loc = execute_cmd(node);// <- pipe
 		}
 		free_node(node);
