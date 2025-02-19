@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 09:19:28 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:25:54 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	append_char(char **s, char c)
 {
 	size_t	size;
 	char	*new;
-	
+
 	size = APPEND_CHAR_SIZE + END_CHAR_SIZE;
 	if (*s)
 		size += ft_strlen(*s);
@@ -44,7 +44,7 @@ void	remove_quote(t_token *token)
 	char	*new_word;
 	char	*word;
 	char	quote_flag;
-	
+
 	if (token == NULL || token->kind != TK_WORD || token->word == NULL)
 		return ;
 	word = token->word;
@@ -78,6 +78,9 @@ void	expand_quote_removal(t_node *node)
 	if (node == NULL)
 		return ;
 	remove_quote(node->args);
+	remove_quote(node->filename);// <--- added
+	remove_quote(node->delimiter);// <--- added
+	expand_quote_removal(node->redirects);// <--- added
 	expand_quote_removal(node->next);
 }
 
@@ -88,6 +91,6 @@ void	expand(t_node *node)
 
 // int main()
 // {
-	
+
 // 	return (0);
 // }

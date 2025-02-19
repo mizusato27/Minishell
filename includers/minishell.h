@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/18 17:13:38 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:21:31 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ void	err_exit(const char *location, const char *msg, int status);
 void	error(char *msg);
 void	tokenize_error(const char *location, int *j, char *line);
 void	parse_error(const char *location, t_token **rest, t_token *tok);
+void	fatal_error(const char *msg);
+void	assert_error(const char *msg);
+void	xperror(const char *location);
 
 //exec.c
 // int		interpret(char *line);

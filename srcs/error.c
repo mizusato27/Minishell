@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/12 23:51:34 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:24:31 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	syntax_error = false;
 
-// //コマンドがなかったときに、エラーメッセージを表示して終了
+//コマンドがなかったときに、エラーメッセージを表示して終了
 void	err_exit(const char *cmd, const char *msg, int status)
 {
     write(2, "minishell: ", 11);
@@ -61,5 +61,30 @@ void	error(char *msg)
 	exit(2);
 }
 
+// --------------------エラー関数(作り方参照)--------------------
+#define ERROR_PREFIX "minishell: "
 
+void	perror_prefix(void)
+{
+	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
+}
 
+void	fatal_error(const char *msg)
+{
+	perror_prefix();
+	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
+	exit(1);
+}
+
+void	assert_error(const char *msg)
+{
+	perror_prefix();
+	dprintf(STDERR_FILENO, "Assert Error: %s\n", msg);
+	exit(255);
+}
+
+void	xperror(const char *location)
+{
+	perror_prefix();
+	perror(location);
+}

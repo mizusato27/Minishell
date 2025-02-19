@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/18 17:14:20 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:00:09 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ bool	is_operator(const char *s)
 	while (operators[i])
 	{
 		if (which_op(s, operators[i]))
-			return true;
+			return (true);
 		i++;
 	}
-	return false;
+	return (false);
 }
 
 //制御演算子の生成

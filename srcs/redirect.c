@@ -7,36 +7,6 @@
 
 #include <string.h>
 
-// --------------------エラー関数(作り方参照)--------------------
-#define ERROR_PREFIX "minishell: "
-
-static void	perror_prefix(void)
-{
-	dprintf(STDERR_FILENO, "%s", ERROR_PREFIX);
-}
-
-void	fatal_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
-	exit(1);
-}
-
-void	assert_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Assert Error: %s\n", msg);
-	exit(255);
-}
-
-void	xperror(const char *location)
-{
-	perror_prefix();
-	perror(location);
-}
-
-// --------------------redirect関連--------------------
-
 char	*search_path(const char *filename)// <--- 削除予定
 {
 	char	path[PATH_MAX];

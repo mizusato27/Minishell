@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destructor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 19:04:55 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/09 07:54:50 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:25:30 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	free_node(t_node *node)
 	if (node == NULL)
 		return ;
 	free_token(node->args);
+	free_token(node->filename);// <--- added
+	free_token(node->delimiter);//<--- added
+	free_node(node->redirects);// <--- added
 	free_node(node->next);
 	free(node);
 }
