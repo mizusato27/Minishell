@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 17:44:34 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 10:42:05 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 
-//externは複数のファイルで使う変数を宣言するときに使う
-extern bool	syntax_error;
 # define CHILD_PROCESS 0
 # define APPEND_CHAR_SIZE 1
 # define END_CHAR_SIZE 1
@@ -90,6 +88,10 @@ struct s_map {
 	t_item	item_head;
 };
 
+//externは複数のファイルで使う変数を宣言するときに使う
+extern bool	syntax_error;
+extern t_map	*g_envmap;
+
 //error.c
 void    malloc_error();
 void	err_exit(const char *location, const char *msg, int status);
@@ -129,8 +131,6 @@ char	*ft_strncpy(char *dest, char *src, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
 
 // map.c
-t_item	*item_new(char *name, char *value);
-char	*item_get_string(t_item *item);
 t_map	*map_new(void);
 char	*map_get(t_map *map, const char *name);
 int		map_put(t_map *map, const char *string, bool allow_empty_value);
@@ -138,6 +138,11 @@ int		map_set(t_map *map, const char *name, const char *value);
 int		map_unset(t_map *map, const char *name);
 size_t	map_len(t_map *map, bool count_null_value);
 void	map_printall(t_map *map);
+
+// map_helper.c
+bool	is_identifier(const char *s);
+t_item	*item_new(char *name, char *value);
+char	*item_get_string(t_item *item);
 
 // env.c
 char	*xgetenv(const char *name);
