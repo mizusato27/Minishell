@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/11 20:40:13 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:01:49 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*find_executable(const char *filename)
 	char	*path_end;
 	char	*result;
 
-	env = getenv("PATH");
+	env = xgetenv("PATH");
 	while (*env)
 	{
 		path_end = ft_strchr(env, ':');
@@ -119,7 +119,7 @@ static int	execute(char *args[])
 			path = find_executable(path);
 		if (path == NULL || access(path, F_OK) < 0)
 			err_exit(cmd, ER_ACCESS, 127);
-		execve(path, args, NULL);
+		execve(path, args, get_environ(g_envmap));
 		error(ER_EXECVE);
 	}
 	else

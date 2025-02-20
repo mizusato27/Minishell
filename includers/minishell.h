@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 10:42:05 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 11:22:31 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ struct s_item {
 	char	*value;
 	t_item	*next;
 };
+
+//map->item_headにはダミーのアイテムが入っている
+//ダミーノードの利点は、リストの先頭と末尾の処理を簡単にすることができる
+//map->item_head.nextには最初のアイテムが入っている
 struct s_map {
 	t_item	item_head;
 };

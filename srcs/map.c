@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 10:37:40 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 11:13:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	map_set(t_map *map, const char *name, const char *value)
 		cur->next = map->item_head.next;
 		map->item_head.next = cur;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 //map_putはマップに値を設定する関数
