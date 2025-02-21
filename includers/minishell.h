@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/21 09:13:08 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:37:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,17 +141,19 @@ void	setup_signal(void);
 void	reset_signal(void);
 
 // map.c
-t_map	*map_new(void);
 char	*map_get(t_map *map, const char *name);
 int		map_put(t_map *map, const char *string, bool allow_empty_value);
-int		map_set(t_map *map, const char *name, const char *value);
 int		map_unset(t_map *map, const char *name);
 size_t	map_len(t_map *map, bool count_null_value);
 void	map_printall(t_map *map);
 
+// map_create.c
+t_item	*item_new(char *name, char *value);
+t_map	*map_new(void);
+int		map_set(t_map *map, const char *name, const char *value);
+
 // map_helper.c
 bool	is_identifier(const char *s);
-t_item	*item_new(char *name, char *value);
 // char	*item_get_string(t_item *item);
 
 // env.c

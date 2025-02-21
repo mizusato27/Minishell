@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/21 09:15:51 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 10:13:59 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*item_connect_equals(t_item *item)
 		strsize += ft_strlen(item->value);
 	string = malloc(strsize);
 	if (string == NULL)
-		error("malloc");
+		error(ER_MALLOC);
 	ft_strlcpy(string, item->name, strsize);
 	if (item->value)
 	{

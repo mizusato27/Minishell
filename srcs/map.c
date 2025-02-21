@@ -6,22 +6,11 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 11:13:37 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:36:35 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
-//map_newは新しいマップを作成する関数
-t_map	*map_new(void)
-{
-	t_map	*map;
-
-	map = ft_calloc(1, sizeof(*map));
-	if (map == NULL)
-		error(ER_MALLOC_CALLOC);
-	return (map);
-}
 
 //map_getはマップから値を取得する関数
 char	*map_get(t_map *map, const char *name)
@@ -66,55 +55,7 @@ int	map_unset(t_map *map, const char *name)
 	return (0);
 }
 
-//map_setはマップに値を設定する関数
-int	map_set(t_map *map, const char *name, const char *value)
-{
-	t_item	*cur;
-
-	if (name == NULL || !is_identifier(name))
-		return (-1);
-	cur = map->item_head.next;
-	while (cur)
-	{
-		if (ft_strcmp(cur->name, name) == 0)
-			break ;
-		cur = cur->next;
-	}
-	// found
-	if (cur)
-	{
-		free(cur->value);
-		if (value == NULL)
-			cur->value = NULL;
-		else
-		{
-			cur->value = ft_strdup(value);
-			if (cur->value == NULL)
-				error("map_set strdup");
-		}
-	}
-	// not found
-	else
-	{
-		if (value == NULL)
-		{
-			cur = item_new(ft_strdup(name), NULL);
-			if (cur->name == NULL)
-				error(ER_MALLOC_STRDUP);
-		}
-		else
-		{
-			cur = item_new(strdup(name), ft_strdup(value));
-			if (cur->name == NULL || cur->value == NULL)
-				error(ER_MALLOC_STRDUP);
-		}
-		cur->next = map->item_head.next;
-		map->item_head.next = cur;
-	}
-	return (EXIT_SUCCESS);
-}
-
-//map_putはマップに値を設定する関数
+//"KEY=VALUE" の形式の文字列を受け取り、キーと値を分割して設定する関数
 int	map_put(t_map *map, const char *string, bool allow_empty_value)
 {
 	int		result;

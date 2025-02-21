@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:51:24 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 12:05:10 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 12:35:08 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,4 @@ bool	is_identifier(const char *s)
 	return (true);
 }
 
-//item_newは新しいアイテムを作成する関数
-t_item	*item_new(char *name, char *value)
-{
-	t_item	*item;
 
-	item = ft_calloc(1, sizeof(*item));
-	if (item == NULL)
-		error(ER_MALLOC_CALLOC);
-	item->name = name;
-	item->value = value;
-	return (item);
-}

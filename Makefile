@@ -6,13 +6,13 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/21 09:55:23 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/21 12:35:47 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c map.c map_helper.c env.c signal.c)
+				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
