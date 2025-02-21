@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 10:41:05 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:17:16 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,29 @@
 
 t_map		*g_envmap;
 
+//item_get_stringはアイテムを文字列に変換する関数
+char	*item_conect_equals(t_item *item)
+{
+	size_t	strsize;
+	char	*string;
+
+	strsize = ft_strlen(item->name) + 2; // +2 for '=' and '\0'
+	if (item->value)
+		strsize += ft_strlen(item->value);
+	string = malloc(strsize);
+	if (string == NULL)
+		error("malloc");
+	ft_strlcpy(string, item->name, strsize);
+	if (item->value)
+	{
+		ft_strlcat(string, "=", strsize);
+		ft_strlcat(string, item->value, strsize);
+	}
+	return (string);
+}
+
 // get_environは環境変数を取得する関数
+// 環境変数は「変数名=値」の形式で格納されている
 char	**get_environ(t_map *map)
 {
 	size_t	i;
@@ -23,14 +45,16 @@ char	**get_environ(t_map *map)
 	char	**environ;
 
 	size = map_len(map, false) + 1;
-	environ = calloc(size, sizeof(char *));
+	environ = ft_calloc(size, sizeof(char *));
+	if (environ == NULL)
+		error(ER_MALLOC_CALLOC);
 	i = 0;
 	item = map->item_head.next;
 	while (item)
 	{
 		if (item->value)
 		{
-			environ[i] = item_get_string(item);
+			environ[i] = item_connect_equals(item);
 			i++;
 		}
 		item = item->next;

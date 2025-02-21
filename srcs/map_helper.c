@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:51:24 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 10:37:47 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:05:10 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,4 @@ t_item	*item_new(char *name, char *value)
 	item->name = name;
 	item->value = value;
 	return (item);
-}
-
-//item_get_stringはアイテムを文字列に変換する関数
-char	*item_get_string(t_item *item)
-{
-	size_t	strsize;
-	char	*string;
-
-	strsize = ft_strlen(item->name) + 2;
-	if (item->value)
-		strsize += ft_strlen(item->value);
-	string = malloc(strsize);
-	if (string == NULL)
-		error("malloc");
-	ft_strlcpy(string, item->name, strsize);
-	if (item->value)
-	{
-		ft_strlcat(string, "=", strsize);
-		ft_strlcat(string, item->value, strsize);
-	}
-	return (string);
 }

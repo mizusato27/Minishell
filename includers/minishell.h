@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 11:22:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/20 12:11:17 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	map_printall(t_map *map);
 // map_helper.c
 bool	is_identifier(const char *s);
 t_item	*item_new(char *name, char *value);
-char	*item_get_string(t_item *item);
+// char	*item_get_string(t_item *item);
 
 // env.c
 char	*xgetenv(const char *name);
