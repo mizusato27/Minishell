@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 12:17:16 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:15:51 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_map		*g_envmap;
 
 //item_get_stringはアイテムを文字列に変換する関数
-char	*item_conect_equals(t_item *item)
+char	*item_connect_equals(t_item *item)
 {
 	size_t	strsize;
 	char	*string;

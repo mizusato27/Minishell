@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 12:01:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:14:20 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ static int	execute(char *args[])
 		error(ER_FORK);
 	else if (pid == CHILD_PROCESS)
 	{
+		reset_signal(); //<-signal.c
 		if (ft_strchr(path, '/') == NULL)
 			path = find_executable(path);
 		if (path == NULL || access(path, F_OK) < 0)

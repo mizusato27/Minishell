@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 09:53:07 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:11:32 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	main(void)
     signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない	
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
-	initenv();
+	setup_signal(); //<-- signal.c
+	initenv(); //<-- env.c
+	status = 0;
 	while (1)
 	{
         //標準入力で受け取る

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/20 12:11:17 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/21 09:13:08 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ struct s_node {
 	t_node		*next;
 };
 
-struct s_item {
+struct s_item { //<-env.c
 	char	*name;
 	char	*value;
 	t_item	*next;
@@ -88,13 +88,15 @@ struct s_item {
 //map->item_headにはダミーのアイテムが入っている
 //ダミーノードの利点は、リストの先頭と末尾の処理を簡単にすることができる
 //map->item_head.nextには最初のアイテムが入っている
-struct s_map {
+struct s_map { //<-env.c
 	t_item	item_head;
 };
 
 //externは複数のファイルで使う変数を宣言するときに使う
 extern bool	syntax_error;
-extern t_map	*g_envmap;
+extern t_map	*g_envmap; //<-env.c
+extern bool						readline_interrupted; //<-signal.c
+extern volatile sig_atomic_t	sig; //<-signal.c
 
 //error.c
 void    malloc_error();
@@ -133,6 +135,10 @@ t_node	*parse(t_token *tok);
 //utils.c
 char	*ft_strncpy(char *dest, char *src, size_t n);
 int		ft_strcmp(const char *s1, const char *s2);
+
+// signal.h
+void	setup_signal(void);
+void	reset_signal(void);
 
 // map.c
 t_map	*map_new(void);
