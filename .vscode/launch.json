@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/ynihei/Desktop/42/rev/minishell",
-      "program": "/home/ynihei/Desktop/42/rev/minishell/build/Debug/outDebug",
+      "cwd": "/home/nihei/42/42_cursus/minishell/mizu_minishell",
+      "program": "/home/nihei/42/42_cursus/minishell/mizu_minishell/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

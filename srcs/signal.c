@@ -6,83 +6,108 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/21 09:54:54 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/22 20:39:35 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
-volatile sig_atomic_t	sig = 0;
+// グローバル変数: 受信したシグナル番号を保持
+volatile sig_atomic_t sig = 0;
 
-void	handler(int signum)
+/**
+ * シグナルハンドラ関数
+ * 受信したシグナル番号をグローバル変数 'sig' に保存する
+ */
+void handler(int signum)
 {
 	sig = signum;
 }
 
-void	reset_sig(int signum)
+/**
+ * シグナルの動作をデフォルトにリセットする
+ * @param signum 対象のシグナル番号
+ */
+void reset_sig(int signum)
 {
-	struct sigaction	sa;
+	struct sigaction sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	sa.sa_handler = SIG_DFL;
+	sa.sa_handler = SIG_DFL; // デフォルトのシグナル動作
 	if (sigaction(signum, &sa, NULL) < 0)
 		error("sigaction");
 }
 
-void	ignore_sig(int signum)
+/**
+ * 指定したシグナルを無視する設定を行う
+ */
+void ignore_sig(int signum)
 {
-	struct sigaction	sa;
+	struct sigaction sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	sa.sa_handler = SIG_IGN;
+	sa.sa_handler = SIG_IGN; // シグナルを無視する
 	if (sigaction(signum, &sa, NULL) < 0)
 		error("sigaction");
 }
 
-void	setup_sigint(void)
+/**
+ * SIGINT（Ctrl+C）のシグナルハンドラを設定する
+ * シグナルを受信した際に handler 関数が呼ばれる
+ */
+void setup_sigint(void)
 {
-	struct sigaction	sa;
+	struct sigaction sa;
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	sa.sa_handler = handler;
+	sa.sa_handler = handler; // SIGINT を受けた際に handler を呼び出す
 	if (sigaction(SIGINT, &sa, NULL) < 0)
 		error("sigaction");
 }
 
-#include <stdio.h>
-#include <readline/readline.h>
-
-int	check_state(void)
+/**
+ * シグナルの状態をチェックし、必要な処理を行う
+ * @return 処理結果（常に 0 を返す）
+ */
+int check_state(void)
 {
 	if (sig == 0)
 		return (0);
-	else if (sig == SIGINT)
+	else if (sig == SIGINT) // Ctrl+C が押された場合
 	{
 		sig = 0;
-		// readline_interrupted = true;
-		rl_replace_line("", 0);
-		rl_done = 1;
+		// readline_interrupted = true; // （コメントアウトされた処理）
+		rl_replace_line("", 0); // 入力行をクリア
+		rl_done = 1; // readline ループを終了
 		return (0);
 	}
 	return (0);
 }
 
-void	setup_signal(void)
+/**
+ * 必要なシグナル設定を行う
+ * SIGQUIT を無視し、SIGINT を適切に処理する
+ */
+void setup_signal(void)
 {
-	extern int	_rl_echo_control_chars;
+	extern int _rl_echo_control_chars;
 
-	_rl_echo_control_chars = 0;
-	rl_outstream = stderr;
+	_rl_echo_control_chars = 0; // Ctrl+文字 の表示を無効化
+	rl_outstream = stderr; // readline の出力先を標準エラー出力に設定
 	if (isatty(STDIN_FILENO))
-		rl_event_hook = check_state;
-	ignore_sig(SIGQUIT);
-	setup_sigint();
+		rl_event_hook = check_state; // シグナルチェックをイベントフックに設定
+	ignore_sig(SIGQUIT); // SIGQUIT を無視する
+	setup_sigint(); // SIGINT の設定
 }
 
-void	reset_signal(void)
+/**
+ * 指定されたシグナルをデフォルトの動作にリセットする
+ * SIGQUIT および SIGINT のシグナル動作をリセット
+ */
+void reset_signal(void)
 {
 	reset_sig(SIGQUIT);
 	reset_sig(SIGINT);

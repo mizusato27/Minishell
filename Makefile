@@ -6,29 +6,25 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/21 12:35:47 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/22 21:02:47 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
+BUILTIN_DIR	= builtin
+
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c)
+				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c) \
+			  $(addprefix $(BUILTIN_DIR)/, builtin.c)
 
 OBJS_DIR 	= objs
-OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}
+OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
 
 NAME		= minishell
 
 CC			= cc
-# RLDIR    = $(shell brew --prefix readline)
-CFLAGS		= -Wall -Wextra -Werror -I includers/ 
-# DEPFLAGS = -MMD -MP
-# CFLAGS += $(DEPFLAGS)
-
-
-# CFLAGS		= -Wall -Wextra -Werror -g -fsanitize=address -I includers/
-# CFLAGS		= -I includers/
-LDFLAGS     = -lreadline 
+CFLAGS		= -Wall -Wextra -Werror -I includers/
+LDFLAGS     = -lreadline
 
 LIBFT       = libft/libft.a
 
@@ -40,20 +36,19 @@ ${LIBFT}:
 ${NAME}:	${OBJS} ${LIBFT}
 			${CC} ${CFLAGS} ${OBJS} ${LDFLAGS} ${LIBFT} -o ${NAME}
 
-$(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c
-			mkdir -p $(OBJS_DIR)
+# 依存するソースファイルを個別にオブジェクトファイルへコンパイル
+$(OBJS_DIR)/%.o:	%.c
+			mkdir -p $(dir $@)
 			${CC} ${CFLAGS} -c $< -o $@
 
 clean:
 			make clean -C ./libft
-			${RM} ${OBJS} 
+			${RM} -r ${OBJS_DIR}
 
 fclean:		clean
 			make fclean -C ./libft
 			${RM} ${NAME}
 
 re:			fclean all
-
-# -include $(OBJS:.o=.d)
 
 .PHONY:		all clean fclean re
