@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 16:22:55 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:45:14 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*find_executable(const char *filename)
 	char	*path_end;
 	char	*result;
 
-	env = getenv("PATH");
+	env = xgetenv("PATH");
 	while (*env)
 	{
 		path_end = ft_strchr(env, ':');
@@ -103,7 +103,7 @@ char	*find_executable(const char *filename)
 
 void	child_process(t_node *node)
 {
-	extern char	**environ;
+	// extern char	**environ;
 	char		*path;
 	char		**argv;
 
@@ -117,7 +117,7 @@ void	child_process(t_node *node)
 		err_exit(argv[0], "command not found", 127);
 	if (access(path, F_OK) < 0)
 		err_exit(argv[0], "command not found", 127);
-	execve(path, argv, environ);
+	execve(path, argv, get_environ(g_envmap));
 	reset_redirect(node->command->redirects);
 	fatal_error("execve");
 }

@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
+#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/19 15:35:21 by mizusato         ###   ########.fr        #
+#    Updated: 2025/02/22 21:34:22 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c redirect.c pipe.c)
+				destructor.c parse.c utils.c redirect.c pipe.c map.c env.c map_helper.c map_create.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o}

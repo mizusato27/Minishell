@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/18 17:10:18 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:43:14 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(void)
     signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
+	initenv();
 	status = 0;
 	while (1)
 	{

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 16:17:53 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:43:59 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
+
+//getenvが出てきたら、xgetenvに変更
 
 void	todo(char *message)
 {
