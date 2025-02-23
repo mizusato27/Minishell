@@ -6,16 +6,18 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/23 11:41:36 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/23 14:14:20 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
 BUILTIN_DIR	= $(SRCS_DIR)/builtin
+ENV_DIR		= $(SRCS_DIR)/env
 
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c redirect.c pipe.c) \
-			  $(addprefix $(BUILTIN_DIR)/, builtin.c)
+				destructor.c parse.c utils.c signal.c redirect.c pipe.c) \
+			  $(addprefix $(BUILTIN_DIR)/, builtin.c) \
+			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c )
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
