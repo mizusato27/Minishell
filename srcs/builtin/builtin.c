@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 11:43:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/23 14:03:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,32 @@ int		exec_builtin(t_node *node)
 	reset_redirect(node->command->redirects);
 	return (status);
 }
+
+void init_builtin_commands(char *commands[8])
+{
+	commands[0] = "exit";
+	// commands[1] = "echo";
+	// commands[2] = "env";
+	// commands[3] = "cd";
+	// commands[4] = "export";
+	// commands[5] = "pwd";
+	// commands[6] = "unset";
+	commands[7] = NULL;
+}
+
 bool	is_builtin(t_node *node)
 {
 	const char		*cmd_name;
-	char			*builtin_commands[] = {"exit"};
+	char			*builtin_commands[8];
 	unsigned int	i;
+
+	init_builtin_commands(builtin_commands);
 	if (node == NULL || node->command == NULL || node->command->args == NULL ||
 			node->command->args->word == NULL)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;
-	while (i < sizeof(builtin_commands) / sizeof(*builtin_commands))
+	while (i < 1)
 	{
 		if (ft_strcmp(cmd_name, builtin_commands[i]) == 0)
 			return (true);
