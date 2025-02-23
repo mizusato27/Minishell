@@ -6,21 +6,21 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 14:03:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/23 17:17:25 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //いったん置いておいて、この後にbuiltin_exitを実装する
-int builtin_exit(char **argv)
-{
-	int		status;
+// int builtin_exit(char **argv)
+// {
+// 	int		status;
 
-	status = 0;
-	printf("argv[0]: %s\n", argv[0]);
-	exit(status);
-}
+// 	status = 0;
+// 	printf("argv[0]: %s\n", argv[0]);
+// 	exit(status);
+// }
 
 int		exec_builtin(t_node *node)
 {

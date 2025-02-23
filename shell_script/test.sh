@@ -7,6 +7,9 @@ RESET="\033[0m"
 OK=$GREEN"OK"$RESET
 NG=$RED"NG"$RESET
 
+# 引数処理
+RUN_TEST="$1"  # 最初の引数を取得
+
 cat <<EOF | gcc -xc -o a.out -
 #include <stdio.h>
 int main() { printf("hello from a.out\n"); }
@@ -198,7 +201,18 @@ assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
 echo
 
 ## Pipe
+echo -e "${BLUE}"Pipe"${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
+
+# Builtin
+echo -e "${BLUE}Builtin${RESET}"
+## exit
+assert 'exit'
+assert 'exit 42'
+assert 'exit ""'
+assert 'exit hello'
+assert 'exit 42Tokyo'
+assert 'exit 1 2'
 
 cleanup
