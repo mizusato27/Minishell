@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 23:45:14 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/23 11:27:58 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>// <--- 一旦使用
 
 //いったんコピペ、どうせ後でいらなくなる
+//reallocは後で変更必須
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
 	char **new_argv;
@@ -111,7 +112,7 @@ void	child_process(t_node *node)
 	do_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	path = argv[0];
-	if (strchr(path, '/') == NULL)
+	if (ft_strchr(path, '/') == NULL)
 		path = find_executable(path);
 	if (path == NULL)
 		err_exit(argv[0], "command not found", 127);
@@ -167,8 +168,13 @@ int	execute_cmd(t_node *node)
 
 	if (open_redirect_file(node) < 0)
 		return (ERROR_OPEN_REDIR);
-	pid = execute_pipe(node);
-	cmd_status = wait_pipe(pid);
+	if (node->next == NULL && is_builtin(node))
+		cmd_status = exec_builtin(node);
+	else
+	{
+		pid = execute_pipe(node);
+		cmd_status = wait_pipe(pid);
+	}
 	return (cmd_status);
 }
 

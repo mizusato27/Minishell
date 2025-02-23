@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 21:39:07 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/23 11:28:57 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,9 @@ bool						is_identifier(const char *s);
 char						*xgetenv(const char *name);
 void						initenv(void);
 char						**get_environ(t_map *map);
+
+// builtin.c
+int							exec_builtin(t_node *node);
+bool						is_builtin(t_node *node);
 
 #endif
