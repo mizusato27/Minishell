@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 23:43:14 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 23:26:48 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	last_status;// <--- special param
+
 void handle_sigint(int sig)
 {
-    (void)sig; // 引数のsigは使用しない
-    write(1, "\nminishell$ ", 12); // Ctrl-Cで新しいプロンプトを表示
+	(void)sig; // 引数のsigは使用しない
+	write(1, "\nminishell$ ", 12); // Ctrl-Cで新しいプロンプトを表示
 }
 
 void handle_sigquit(int sig)
 {
-    (void)sig; // Ctrl-\で何もしない
+	(void)sig; // Ctrl-\で何もしない
 }
 
 int	main(void)
 {
 	char	*line;
-	int		status;
+	// int		status;
 
 	// Ctrl-Cでプロンプトを新しい行に表示
     signal(SIGINT, handle_sigint);
@@ -37,7 +39,8 @@ int	main(void)
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
 	initenv();
-	status = 0;
+	// status = 0;
+	last_status = 0;
 	while (1)
 	{
         //標準入力で受け取る
@@ -47,9 +50,11 @@ int	main(void)
         //標準入力した文字列の履歴を残す
 		if (*line)
 			add_history(line);
-		interpret(line, &status);
+		// interpret(line, &status);
+		interpret(line, &last_status);
 		// TODO: intepret line as a command
 		free(line);
 	}
-	exit(status);
+	// exit(status);
+	exit(last_status);
 }

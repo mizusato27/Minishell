@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/24 14:27:07 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:26:05 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,34 @@ static int	is_variable(char *str)
 	return (is_alpha_under(str[1]));
 }
 
+static int	is_special_param(char *str)
+{
+	if (str[0] == '$' && str[1] == '?')
+		return (1);
+	return (0);
+}
+
+static void	add_number(char **dst, unsigned int n)
+{
+	if (n == 0)
+	{
+		add_char(dst, '0');
+		return ;
+	}
+	if (n / 10 != 0)
+		add_number(dst, n / 10);
+	add_char(dst, '0' + (n % 10));
+}
+
+static void	expand_special_param_str(char **dst, char **rest, char *ptr)
+{
+	if (!is_special_param(ptr))
+		assert_error("Expected special parameter");
+	ptr += 2;
+	add_number(dst, last_status);
+	*rest = ptr;
+}
+
 static void	expand_var_str(char **dst, char **rest, char *ptr)
 {
 	char	*name;
@@ -150,6 +178,8 @@ static void	add_double_quote(char **dst, char **rest, char *ptr)
 				assert_error("Unclosed double quote");
 			else if (is_variable(ptr))
 				expand_var_str(dst, &ptr, ptr);
+			else if (is_special_param(ptr))
+				expand_special_param_str(dst, &ptr, ptr);
 			else
 				add_char(dst, *ptr++);
 		}
@@ -179,6 +209,8 @@ static void	expand_var_token(t_token *tok)
 			add_double_quote(&new_str, &ptr, ptr);
 		else if (is_variable(ptr))
 			expand_var_str(&new_str, &ptr, ptr);// 変数を展開
+		else if (is_special_param(ptr))
+			expand_special_param_str(&new_str, &ptr, ptr);
 		else
 			add_char(&new_str, *ptr++);// 通常の文字をそのまま追加
 	}

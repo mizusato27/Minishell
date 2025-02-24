@@ -20,8 +20,12 @@ int main(int argc, char *argv[]) {
 }
 EOF
 
+cat <<EOF | gcc -xc -o exit42 -
+int main() { return 42; }
+EOF
+
 cleanup() {
-	rm -f cmp out a.out print_args
+	rm -f cmp out a.out print_args exit42
 }
 
 NG_LIST=()  # NG の項目を保存する配列
@@ -201,11 +205,21 @@ echo
 echo -e "${BLUE}Pipe${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
+echo
 
 ## Expand Variable
 echo -e "${BLUE}Expand Variable${RESET}"
 assert 'echo $USER'
 assert 'echo $USER$PATH$TERM'
 assert 'echo "$USER  $PATH   $TERM"'
+echo
+
+## Special Parameter $?
+echo -e "${BLUE}Special Parameter${RESET}"
+assert 'echo $?'
+assert 'invalid\necho $?\necho $?'
+assert 'exit42\necho $?\necho $?'
+assert 'exit42\n\necho $?\necho $?'
+echo
 
 cleanup

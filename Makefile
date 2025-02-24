@@ -6,7 +6,7 @@
 #    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/24 14:32:56 by mizusato         ###   ########.fr        #
+#    Updated: 2025/02/24 23:30:22 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ all:		${NAME}
 ${LIBFT}:
 			make -C ./libft
 
-${NAME}:	${OBJS} ${LIBFT}
-			${CC} ${CFLAGS} ${OBJS} ${LDFLAGS} ${LIBFT} -o ${NAME}
 # ${NAME}:	${OBJS} ${LIBFT}
-# 			${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LDFLAGS} -o ${NAME}
+# 			${CC} ${CFLAGS} ${OBJS} ${LDFLAGS} ${LIBFT} -o ${NAME}
+${NAME}:	${OBJS} ${LIBFT}
+			${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LDFLAGS} -o ${NAME}
 
 # 依存するソースファイルを個別にオブジェクトファイルへコンパイル
 $(OBJS_DIR)/%.o:	%.c

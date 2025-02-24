@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/24 14:28:35 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:22:41 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define DOUBLE_QUOTE '\"'
 
 // externは複数のファイルで使う変数を宣言するときに使う
+extern int					last_status;// <--- special param
 extern bool					syntax_error;
 
 # define CHILD_PROCESS 0
