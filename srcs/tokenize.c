@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 //新しいトークンを作成
-//callocを使用することにより、メンバも全て初期化
+// callocを使用することにより、メンバも全て初期化
 t_token	*new_token(char *word, t_token_kind kind)
 {
 	t_token	*token;
@@ -27,7 +27,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 }
 
 //制御演算子かどうかのチェック
-//j < sizeof(operators) / sizeof(*operators)は制御演算子の数だけチェック
+// j < sizeof(operators) / sizeof(*operators)は制御演算子の数だけチェック
 t_token	*operator(int *i, char *line)
 {
 	size_t	j;
@@ -97,7 +97,7 @@ t_token	*word(int *i, char *line)
 	return (new_token(word, TK_WORD));
 }
 
-//head.nextに最初のトークンを格納
+// head.nextに最初のトークンを格納
 t_token	*tokenize(char *arg)
 {
 	t_token	head;
@@ -113,8 +113,8 @@ t_token	*tokenize(char *arg)
 		while (arg[i] && is_blank(arg[i]))
 			i++;
 		if (!arg[i])
-			break;
-		else if (is_operator(&arg[i]))// <--- modified
+			break ;
+		else if (is_operator(&arg[i])) // <--- modified
 			token->next = operator(&i, arg + i);
 		else if (!is_metacharacter(arg[i]) && arg[i])
 			token->next = word(&i, arg + i);

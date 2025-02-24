@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-//getenvが出てきたら、xgetenvに変更
+// getenvが出てきたら、xgetenvに変更
 
 void	todo(char *message)
 {
@@ -80,10 +80,10 @@ void	expand_quote_removal(t_node *node)
 	if (node == NULL)
 		return ;
 	remove_quote(node->args);
-	remove_quote(node->filename);// <--- added
-	remove_quote(node->delimiter);// <--- added
-	expand_quote_removal(node->redirects);// <--- added
-	expand_quote_removal(node->command);// <--- pipe
+	remove_quote(node->filename);          // <--- added
+	remove_quote(node->delimiter);         // <--- added
+	expand_quote_removal(node->redirects); // <--- added
+	expand_quote_removal(node->command);   // <--- pipe
 	expand_quote_removal(node->next);
 }
 

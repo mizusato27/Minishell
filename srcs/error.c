@@ -17,12 +17,12 @@ bool	syntax_error = false;
 //コマンドがなかったときに、エラーメッセージを表示して終了
 void	err_exit(const char *cmd, const char *msg, int status)
 {
-    write(2, "minishell: ", 11);
-    write(2, cmd, ft_strlen(cmd));
-    write(2, ": ", 2);
-    write(2, msg, ft_strlen(msg));
-    write(2, "\n", 1);
-    exit(status);
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	exit(status);
 }
 
 //構文エラーがある場合に単語の最後までスキップ

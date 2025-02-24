@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	free_node(t_node *node)
 {
 	if (node == NULL)
 		return ;
 	free_token(node->args);
-	free_token(node->filename);// <--- added
-	free_token(node->delimiter);//<--- added
-	free_node(node->redirects);// <--- added
+	free_token(node->filename);  // <--- added
+	free_token(node->delimiter); //<--- added
+	free_node(node->redirects);  // <--- added
 	free_node(node->next);
-	free_node(node->command);// <--- pipe
+	free_node(node->command); // <--- pipe
 	free(node);
 }
 

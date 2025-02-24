@@ -22,7 +22,7 @@
 // 	exit(status);
 // }
 
-int		exec_builtin(t_node *node)
+int	exec_builtin(t_node *node)
 {
 	int		status;
 	char	**argv;
@@ -38,7 +38,7 @@ int		exec_builtin(t_node *node)
 	return (status);
 }
 
-void init_builtin_commands(char *commands[8])
+void	init_builtin_commands(char *commands[8])
 {
 	commands[0] = "exit";
 	// commands[1] = "echo";
@@ -57,8 +57,8 @@ bool	is_builtin(t_node *node)
 	unsigned int	i;
 
 	init_builtin_commands(builtin_commands);
-	if (node == NULL || node->command == NULL || node->command->args == NULL ||
-			node->command->args->word == NULL)
+	if (node == NULL || node->command == NULL || node->command->args == NULL
+		|| node->command->args->word == NULL)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;

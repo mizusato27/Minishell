@@ -153,10 +153,6 @@ echo -e "${BLUE}double quote${RESET}"
 assert './print_args "hello   world" "42Tokyo"'
 assert 'echo "hello   world" "42Tokyo"'
 assert "echo \"'hello   world'\" \"42Tokyo\""
-echo
-
-## combination
-echo -e "${BLUE}combination${RESET}"
 assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
@@ -204,15 +200,32 @@ echo
 echo -e "${BLUE}"Pipe"${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
+assert 'ls | grep'
+echo
 
 # Builtin
 echo -e "${BLUE}Builtin${RESET}"
 ## exit
 assert 'exit'
+assert 'exit  '
 assert 'exit 42'
+assert 'exit 2147483647'
+assert 'exit 2147483648'
+assert 'exit 4294967295'
+assert 'exit 4294967296'
+assert 'exit 9223372036854775807'
+assert 'exit 9223372036854775808'
+assert 'exit 0'
+assert 'exit +1'
+assert 'exit -1'
+assert 'exit 111111111111111111111111111111111111111111'
 assert 'exit ""'
 assert 'exit hello'
 assert 'exit 42Tokyo'
 assert 'exit 1 2'
+assert 'exit 1 2 3'
+assert 'ls | exit'
+assert 'exit | ls'
+echo
 
 cleanup

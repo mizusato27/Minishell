@@ -12,40 +12,40 @@
 
 #include "minishell.h"
 
-void handle_sigint(int sig)
+void	handle_sigint(int sig)
 {
-    (void)sig; // 引数のsigは使用しない
-    write(1, "\nminishell$ ", 12); // Ctrl-Cで新しいプロンプトを表示
+	(void)sig;                     // 引数のsigは使用しない
+	write(1, "\nminishell$ ", 12); // Ctrl-Cで新しいプロンプトを表示
 }
 
-void handle_sigquit(int sig)
+void	handle_sigquit(int sig)
 {
-    (void)sig; // Ctrl-\で何もしない
+	(void)sig; // Ctrl-\で何もしない
 }
 
-int last_status = 0;
+int		last_status = 0;
 
 int	main(void)
 {
 	char	*line;
 
 	// Ctrl-Cでプロンプトを新しい行に表示
-    signal(SIGINT, handle_sigint);
-    // Ctrl-\で何もしない（デフォルト動作を無効にする）
-    signal(SIGQUIT, handle_sigquit);
-    // Ctrl-Dでシェルを終了する
-    signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない
+	signal(SIGINT, handle_sigint);
+	// Ctrl-\で何もしない（デフォルト動作を無効にする）
+	signal(SIGQUIT, handle_sigquit);
+	// Ctrl-Dでシェルを終了する
+	signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
 	initenv();
 	last_status = 0;
 	while (1)
 	{
-        //標準入力で受け取る
+		//標準入力で受け取る
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-        //標準入力した文字列の履歴を残す
+		//標準入力した文字列の履歴を残す
 		if (*line)
 			add_history(line);
 		interpret(line, &last_status);

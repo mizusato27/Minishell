@@ -50,8 +50,8 @@ bool	which_op(const char *s, const char *op)
 // }
 bool	is_operator(const char *s)
 {
-	char *operators[14];
-	int i;
+	char	*operators[14];
+	int		i;
 
 	init_operators(operators);
 	i = 0;

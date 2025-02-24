@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 void	append_tok(t_token **tokens, t_token *tok)
 {
@@ -163,9 +163,11 @@ bool	startswith(const char *s, const char *keyword)
 
 bool	is_control_operator(t_token *tok)
 {
-	static char	*const	operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|", "\n"};
-	size_t				i = 0;
+	size_t	i;
 
+	static char *const operators[] = {"||", "&", "&&", ";", ";;", "(", ")", "|",
+		"\n"};
+	i = 0;
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
 		if (startswith(tok->word, operators[i]))
