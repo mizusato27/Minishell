@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 00:32:19 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 01:46:46 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	exec_builtin(t_node *node)
 		status = builtin_exit(argv);
 	else if (ft_strcmp(argv[0], "export") == 0)
 		status = builtin_export(argv);
+	else if (ft_strcmp(argv[0], "pwd") == 0)
+		status = builtin_pwd();
 	else
 		todo("exec_builtin");
 	free_argv(argv);
@@ -47,8 +49,8 @@ void	init_builtin_commands(char *commands[8])
 	// commands[1] = "echo";
 	// commands[2] = "env";
 	// commands[3] = "cd";
-	// commands[4] = "export";
-	// commands[5] = "pwd";
+	commands[4] = "export";
+	commands[5] = "pwd";
 	// commands[6] = "unset";
 	commands[7] = NULL;
 }

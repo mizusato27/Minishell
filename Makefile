@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
+#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/25 00:37:00 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/25 01:19:36 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
 NAME		= minishell
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I includers/ \
-				 -fsanitize=address
-LDFLAGS     = -lreadline
+# CFLAGS		= -Wall -Wextra -Werror -I includers/ \
+# 				 -fsanitize=address
+# LDFLAGS     = -lreadline
 ## macOS用
-# RLDIR		= $(shell brew --prefix readline)
-# CFLAGS		= -Wall -Wextra -Werror -I includers/ -I$(RLDIR)/include
-# LDFLAGS		= -L$(RLDIR)/lib -lreadline
+RLDIR		= $(shell brew --prefix readline)
+CFLAGS		= -Wall -Wextra -Werror -I includers/ -I$(RLDIR)/include
+LDFLAGS		= -L$(RLDIR)/lib -lreadline
 
 LIBFT		= libft/libft.a
 

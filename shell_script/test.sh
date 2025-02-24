@@ -277,21 +277,21 @@ assert './infinite_loop'
 
 # Manual Debug
 # $ ./minishell
-# $ 
-# 1. Ctrl-\ 
+# $
+# 1. Ctrl-\
 # 2. Ctrl-C
 # 3. Ctrl-D
 #
 # $ ./minishell
 # $ hogehoge
-# 1. Ctrl-\ 
+# 1. Ctrl-\
 # 2. Ctrl-C
 # 3. Ctrl-D
 #
 # $ ./minishell
 # $ cat <<EOF
 # >
-# 1. Ctrl-\ 
+# 1. Ctrl-\
 # 2. Ctrl-C
 # 3. Ctrl-D
 #
@@ -299,7 +299,7 @@ assert './infinite_loop'
 # $ cat <<EOF
 # > hoge
 # > fuga
-# 1. Ctrl-\ 
+# 1. Ctrl-\
 # 2. Ctrl-C
 # 3. Ctrl-D
 
@@ -308,6 +308,7 @@ assert './infinite_loop'
 # Builtin
 echo -e "${BLUE}Builtin${RESET}"
 ## exit
+echo -e "${BLUE}exit${RESET}"
 assert 'exit'
 assert 'exit  '
 assert 'exit 42'
@@ -331,6 +332,7 @@ assert 'exit | ls'
 echo
 
 ## export
+echo -e "${BLUE}export${RESET}"
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'
@@ -342,5 +344,19 @@ assert 'export [invalid] nosuch hoge=nosuch\n export | grep nosuch | sort'
 assert 'export nosuch [invalid] hoge=nosuch\n export | grep nosuch | sort'
 assert 'export nosuch hoge=nosuch [invalid]\n export | grep nosuch | sort'
 assert 'export nosuch="nosuch2=hoge"\nexport $nosuch\n export | grep nosuch | sort'
+echo
+
+## pwd
+echo -e "${BLUE}pwd${RESET}"
+assert 'pwd'
+# assert 'cd\npwd'
+# assert 'cd src\npwd'
+# assert 'cd /etc\npwd'
+# assert 'cd . \n pwd \n echo $PWD $OLDPWD'
+# assert 'cd .. \n pwd \n echo $PWD $OLDPWD'
+# assert 'cd /// \n pwd \n echo $PWD $OLDPWD'
+# assert 'cd /tmp/// \n pwd \n echo $PWD $OLDPWD'
+# assert 'unset PWD\npwd\ncd /etc\npwd'
+echo
 
 cleanup
