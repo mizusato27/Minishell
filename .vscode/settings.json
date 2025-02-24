@@ -64,6 +64,9 @@
     "unordered_map": "c",
     "vector": "c",
     "string_view": "c",
-    "initializer_list": "c"
+    "initializer_list": "c",
+    "signal.h": "c",
+    "stdio.h": "c",
+    "stdlib.h": "c"
   }
 }

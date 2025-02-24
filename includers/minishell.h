@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 11:28:57 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 13:00:39 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include "../libft/libft.h"
 # include <errno.h> // <--- pipe
 # include <fcntl.h>
+# include <stdio.h>// <--- 場所変更
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>

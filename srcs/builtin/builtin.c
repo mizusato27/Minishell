@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 14:03:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/23 18:28:39 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int		exec_builtin(t_node *node)
 	int		status;
 	char	**argv;
 
+	status = 0;// <--- 追加しないとコンパイルエラーが出ました。
 	do_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	if (ft_strcmp(argv[0], "exit") == 0)
