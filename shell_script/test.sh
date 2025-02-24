@@ -307,6 +307,7 @@ assert './infinite_loop'
 
 # Builtin
 echo -e "${BLUE}Builtin${RESET}"
+echo -e "${BLUE}exit${RESET}"
 ## exit
 assert 'exit'
 assert 'exit  '
@@ -331,6 +332,7 @@ assert 'exit | ls'
 echo
 
 ## export
+echo -e "${BLUE}export${RESET}"
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'

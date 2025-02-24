@@ -6,7 +6,7 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/25 00:37:00 by ynihei           ###   ########.fr        #
+#    Updated: 2025/02/25 00:45:24 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ NAME		= minishell
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -I includers/ \
-				 -fsanitize=address
+				#  -fsanitize=address
 LDFLAGS     = -lreadline
 ## macOS用
 # RLDIR		= $(shell brew --prefix readline)

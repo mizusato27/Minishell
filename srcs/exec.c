@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 00:04:22 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 01:01:45 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,12 @@ char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-void	child_process(t_node *node)
+int	exec_nonbuiltin(t_node *node) __attribute__((noreturn));
+int	exec_nonbuiltin(t_node *node)
 {
 	char	*path;
 	char	**argv;
 
-	// extern char	**environ;
-	reset_signal();// <-signal.c
-	process_child_pipe(node);
 	do_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	path = argv[0];
@@ -118,9 +116,38 @@ void	child_process(t_node *node)
 	if (access(path, F_OK) < 0)
 		err_exit(argv[0], "command not found", 127);
 	execve(path, argv, get_environ(g_envmap));
-	// free(argv);
+	free(argv);
 	reset_redirect(node->command->redirects);
-	fatal_error("execve");
+	write(2, "execve failed\n", 14);
+	exit(127);
+	// fatal_error("execve");
+}
+
+void	child_process(t_node *node)
+{
+	// char	*path;
+	// char	**argv;
+
+	// extern char	**environ;
+	reset_signal();// <-signal.c
+	process_child_pipe(node);
+	// do_redirect(node->command->redirects);
+	// argv = token_list_to_argv(node->command->args);
+	// path = argv[0];
+	// if (ft_strchr(path, '/') == NULL)
+	// 	path = find_executable(path);
+	// if (path == NULL)
+	// 	err_exit(argv[0], "command not found", 127);
+	// if (access(path, F_OK) < 0)
+	// 	err_exit(argv[0], "command not found", 127);
+	// execve(path, argv, get_environ(g_envmap));
+	// free(argv);
+	// reset_redirect(node->command->redirects);
+	// fatal_error("execve");
+	if (is_builtin(node))//<-builtin.c
+		exit(exec_builtin(node));
+	else
+		exec_nonbuiltin(node);
 }
 
 pid_t	execute_pipe(t_node *node)
