@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/24 13:50:40 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 21:09:46 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void						parse_error(const char *location, t_token **rest,
 void						fatal_error(const char *msg);
 void						assert_error(const char *msg);
 void						xperror(const char *location);
+void						builtin_error(const char *func, const char *name, const char *err);
 
 // exec.c
 char						**token_list_to_argv(t_token *tok);
@@ -184,6 +185,10 @@ void						create_new_pipe(t_node *node);
 void						process_child_pipe(t_node *node);
 void						process_parent_pipe(t_node *node);
 
+//signal.c
+void	setup_signal(void);
+void	reset_signal(void);
+
 // map.c
 char						*map_get(t_map *map, const char *name);
 int							map_put(t_map *map, const char *string,
@@ -211,7 +216,10 @@ char						**get_environ(t_map *map);
 int							exec_builtin(t_node *node);
 bool						is_builtin(t_node *node);
 
-//builtin_exit.c
+// exit.c
 int							builtin_exit(char **argv);
+
+// export.c
+int		builtin_export(char **argv);
 
 #endif

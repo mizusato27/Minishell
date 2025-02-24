@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 17:12:32 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 19:39:08 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,9 @@ int	main(void)
 {
 	char	*line;
 
-	// Ctrl-Cでプロンプトを新しい行に表示
-	signal(SIGINT, handle_sigint);
-	// Ctrl-\で何もしない（デフォルト動作を無効にする）
-	signal(SIGQUIT, handle_sigquit);
-	// Ctrl-Dでシェルを終了する
-	signal(SIGTSTP, SIG_IGN); // SIGTSTPを無視して、バックグラウンドにしない
 	//デバッグのために標準出力にしているが、後々削除
 	rl_outstream = stderr;
+	setup_signal();
 	initenv();
 	last_status = 0;
 	while (1)

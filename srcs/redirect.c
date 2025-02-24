@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 19:56:55 by ynihei            #+#    #+#             */
+/*   Updated: 2025/02/24 20:03:29 by ynihei           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <fcntl.h>
 #include <readline/readline.h>
@@ -5,6 +17,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+bool	readline_interrupted = false;
 
 int	stash_fd(int fd)
 {
@@ -26,6 +40,7 @@ int	read_here_document(const char *delimiter) // delimiter:区切り文字
 	// パイプを作成
 	if (pipe(pipe_fd) < 0)
 		fatal_error("pipe");
+	readline_interrupted = false; //readline_interruptedは入力の中断を表すフラグ
 	// 区切り文字が入力されるまでループ
 	while (1)
 	{
@@ -34,6 +49,11 @@ int	read_here_document(const char *delimiter) // delimiter:区切り文字
 		if (line == NULL) // EOF（Ctrl+D）が入力された場合
 			break ;
 		// 区切り文字と一致するか確認
+		if (readline_interrupted)// 入力の中断フラグ(signalがきた)が立っている場合
+		{
+			free(line);
+			break ;
+		}
 		if (strcmp(line, delimiter) == 0)
 		{
 			free(line);
@@ -46,6 +66,11 @@ int	read_here_document(const char *delimiter) // delimiter:区切り文字
 	// 書き込み側のファイルディスクリプタを閉じる
 	close(pipe_fd[1]);
 	// 読み取り側のファイルディスクリプタを返す
+	if (readline_interrupted)//シグナルが来た場合
+	{
+		close(pipe_fd[0]);
+		return (-1);
+	}
 	return (pipe_fd[0]);
 }
 
@@ -85,7 +110,9 @@ int	open_redirect_file(t_node *node)
 		assert_error("open_redir_file");
 	if (node->filefd < 0)
 	{
-		xperror(node->filename->word);
+		// xperror(node->filename->word);
+		if (node->kind == ND_REDIR_OUT || node->kind == ND_REDIR_APPEND || node->kind == ND_REDIR_IN)//<-signal.c
+			xperror(node->filename->word);
 		return (-1);
 	}
 	node->filefd = stash_fd(node->filefd);

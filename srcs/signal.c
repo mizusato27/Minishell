@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 20:39:35 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 19:55:02 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	check_state(void)
 	else if (sig == SIGINT) // Ctrl+C が押された場合
 	{
 		sig = 0;
-		// readline_interrupted = true; // （コメントアウトされた処理）
+		readline_interrupted = true; // （コメントアウトされた処理）
 		rl_replace_line("", 0); // 入力行をクリア
 		rl_done = 1;            // readline ループを終了
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 17:17:25 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 21:10:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	exec_builtin(t_node *node)
 	argv = token_list_to_argv(node->command->args);
 	if (ft_strcmp(argv[0], "exit") == 0)
 		status = builtin_exit(argv);
+	else if (ft_strcmp(argv[0], "export") == 0)
+		status = builtin_export(argv);
 	else
 		todo("exec_builtin");
 	free_argv(argv);

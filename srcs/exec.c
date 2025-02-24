@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 11:27:58 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 21:24:30 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	child_process(t_node *node)
 	char	**argv;
 
 	// extern char	**environ;
+	reset_signal();// <-signal.c
 	process_child_pipe(node);
 	do_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
@@ -117,6 +118,7 @@ void	child_process(t_node *node)
 	if (access(path, F_OK) < 0)
 		err_exit(argv[0], "command not found", 127);
 	execve(path, argv, get_environ(g_envmap));
+	// free(argv);
 	reset_redirect(node->command->redirects);
 	fatal_error("execve");
 }
@@ -147,13 +149,29 @@ int	wait_pipe(pid_t pid)
 
 	while (1)
 	{
+		// if (result == pid)
+		// 	status = WEXITSTATUS(wstatus);
+		// else if (result < 0)
+		// {
+		// 	if (errno == ECHILD)
+		// 		break ;
+		// }
 		result = wait(&wstatus);
 		if (result == pid)
-			status = WEXITSTATUS(wstatus);
+		{
+			if (WIFSIGNALED(wstatus))//<-signal.c
+				status = 128 + WTERMSIG(wstatus);//signalで終了したときの処理
+			else
+				status = WEXITSTATUS(wstatus);
+		}
 		else if (result < 0)
 		{
 			if (errno == ECHILD)
 				break ;
+			else if (errno == EINTR)//システムコールが割り込まれた
+				continue ;
+			else
+				fatal_error("wait");
 		}
 	}
 	return (status);
