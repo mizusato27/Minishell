@@ -3,21 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
+#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/24 23:30:22 by mizusato         ###   ########.fr        #
+#    Updated: 2025/02/25 00:37:00 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
 BUILTIN_DIR	= $(SRCS_DIR)/builtin
-# EXPAND_DIR	= $(SRCS_DIR)/expand
+ENV_DIR		= $(SRCS_DIR)/env
 
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c redirect.c pipe.c) \
-			  $(addprefix $(BUILTIN_DIR)/, builtin.c) \
-			#   $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c variable.c)
+				destructor.c parse.c utils.c signal.c redirect.c pipe.c) \
+			  $(addprefix $(BUILTIN_DIR)/, builtin.c exit.c export.c unset.c env.c cd.c echo.c pwd.c) \
+			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c )
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
@@ -25,7 +25,8 @@ OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
 NAME		= minishell
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I includers/
+CFLAGS		= -Wall -Wextra -Werror -I includers/ \
+				 -fsanitize=address
 LDFLAGS     = -lreadline
 ## macOS用
 # RLDIR		= $(shell brew --prefix readline)

@@ -7,6 +7,9 @@ RESET="\033[0m"
 OK=$GREEN"OK"$RESET
 NG=$RED"NG"$RESET
 
+# 引数処理
+RUN_TEST="$1"  # 最初の引数を取得
+
 cat <<EOF | gcc -xc -o a.out -
 #include <stdio.h>
 int main() { printf("hello from a.out\n"); }
@@ -24,8 +27,18 @@ cat <<EOF | gcc -xc -o exit42 -
 int main() { return 42; }
 EOF
 
+# cleanup() {
+# 	rm -f cmp out a.out print_args exit42
+# print_desc() {
+# 	echo -e $YELLOW"$1"$RESET
+# }
+
+print_desc() {
+	echo -e $YELLOW"$1"$RESET
+}
+
 cleanup() {
-	rm -f cmp out a.out print_args exit42
+	rm -f cmp out a.out print_args exit42 infinite_loop
 }
 
 NG_LIST=()  # NG の項目を保存する配列
@@ -154,10 +167,6 @@ echo -e "${BLUE}double quote${RESET}"
 assert './print_args "hello   world" "42Tokyo"'
 assert 'echo "hello   world" "42Tokyo"'
 assert "echo \"'hello   world'\" \"42Tokyo\""
-echo
-
-## combination
-echo -e "${BLUE}combination${RESET}"
 assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
@@ -221,5 +230,117 @@ assert 'invalid\necho $?\necho $?'
 assert 'exit42\necho $?\necho $?'
 assert 'exit42\n\necho $?\necho $?'
 echo
+
+# Signal handling
+echo "int main() { while (1) ; }" | gcc -xc -o infinite_loop -
+
+## Signal to shell processes
+print_desc "SIGTERM to SHELL"
+(sleep 0.01; pkill -SIGTERM bash;
+ sleep 0.01; pkill -SIGTERM minishell) &
+assert './infinite_loop' 2>/dev/null # Redirect stderr to suppress signal terminated message
+
+print_desc "SIGQUIT to SHELL"
+(sleep 0.01; pkill -SIGQUIT bash; # SIGQUIT should not kill the shell
+ sleep 0.01; pkill -SIGTERM bash;
+ sleep 0.01; pkill -SIGQUIT minishell; # SIGQUIT should not kill the shell
+ sleep 0.01; pkill -SIGTERM minishell) &
+assert './infinite_loop' 2>/dev/null # Redirect stderr to suppress signal terminated message
+
+print_desc "SIGINT to SHELL"
+(sleep 0.01; pkill -SIGINT bash; # SIGINT should not kill the shell
+ sleep 0.01; pkill -SIGTERM bash;
+ sleep 0.01; pkill -SIGINT minishell; # SIGINT should not kill the shell
+ sleep 0.01; pkill -SIGTERM minishell) &
+assert './infinite_loop' 2>/dev/null # Redirect stderr to suppress signal terminated message
+
+## Signal to child processes
+print_desc "SIGTERM to child process"
+(sleep 0.01; pkill -SIGTERM infinite_loop;
+ sleep 0.01; pkill -SIGTERM infinite_loop) &
+assert './infinite_loop'
+
+print_desc "SIGINT to child process"
+(sleep 0.01; pkill -SIGINT infinite_loop;
+ sleep 0.01; pkill -SIGINT infinite_loop) &
+assert './infinite_loop'
+
+print_desc "SIGQUIT to child process"
+(sleep 0.01; pkill -SIGQUIT infinite_loop;
+ sleep 0.01; pkill -SIGQUIT infinite_loop) &
+assert './infinite_loop'
+
+print_desc "SIGUSR1 to child process"
+(sleep 0.01; pkill -SIGUSR1 infinite_loop;
+ sleep 0.01; pkill -SIGUSR1 infinite_loop) &
+assert './infinite_loop'
+
+# Manual Debug
+# $ ./minishell
+# $ 
+# 1. Ctrl-\ 
+# 2. Ctrl-C
+# 3. Ctrl-D
+#
+# $ ./minishell
+# $ hogehoge
+# 1. Ctrl-\ 
+# 2. Ctrl-C
+# 3. Ctrl-D
+#
+# $ ./minishell
+# $ cat <<EOF
+# >
+# 1. Ctrl-\ 
+# 2. Ctrl-C
+# 3. Ctrl-D
+#
+# $ ./minishell
+# $ cat <<EOF
+# > hoge
+# > fuga
+# 1. Ctrl-\ 
+# 2. Ctrl-C
+# 3. Ctrl-D
+
+
+
+# Builtin
+echo -e "${BLUE}Builtin${RESET}"
+## exit
+assert 'exit'
+assert 'exit  '
+assert 'exit 42'
+assert 'exit 2147483647'
+assert 'exit 2147483648'
+assert 'exit 4294967295'
+assert 'exit 4294967296'
+assert 'exit 9223372036854775807'
+assert 'exit 9223372036854775808'
+assert 'exit 0'
+assert 'exit +1'
+assert 'exit -1'
+assert 'exit 111111111111111111111111111111111111111111'
+assert 'exit ""'
+assert 'exit hello'
+assert 'exit 42Tokyo'
+assert 'exit 1 2'
+assert 'exit 1 2 3'
+assert 'ls | exit'
+assert 'exit | ls'
+echo
+
+## export
+assert 'export | grep nosuch | sort'
+assert 'export nosuch\n export | grep nosuch | sort'
+assert 'export nosuch=fuga\n export | grep nosuch | sort'
+assert 'export nosuch=fuga hoge=nosuch\n export | grep nosuch | sort'
+assert 'export [invalid]'
+assert 'export [invalid_nosuch]\n export | grep nosuch | sort'
+assert 'export [invalid]=nosuch\n export | grep nosuch | sort'
+assert 'export [invalid] nosuch hoge=nosuch\n export | grep nosuch | sort'
+assert 'export nosuch [invalid] hoge=nosuch\n export | grep nosuch | sort'
+assert 'export nosuch hoge=nosuch [invalid]\n export | grep nosuch | sort'
+assert 'export nosuch="nosuch2=hoge"\nexport $nosuch\n export | grep nosuch | sort'
 
 cleanup

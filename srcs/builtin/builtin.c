@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/23 18:28:39 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:32:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //いったん置いておいて、この後にbuiltin_exitを実装する
-int builtin_exit(char **argv)
-{
-	int		status;
+// int builtin_exit(char **argv)
+// {
+// 	int		status;
 
-	status = 0;
-	printf("argv[0]: %s\n", argv[0]);
-	exit(status);
-}
+// 	status = 0;
+// 	printf("argv[0]: %s\n", argv[0]);
+// 	exit(status);
+// }
 
-int		exec_builtin(t_node *node)
+int	exec_builtin(t_node *node)
 {
 	int		status;
 	char	**argv;
@@ -32,6 +32,8 @@ int		exec_builtin(t_node *node)
 	argv = token_list_to_argv(node->command->args);
 	if (ft_strcmp(argv[0], "exit") == 0)
 		status = builtin_exit(argv);
+	else if (ft_strcmp(argv[0], "export") == 0)
+		status = builtin_export(argv);
 	else
 		todo("exec_builtin");
 	free_argv(argv);
@@ -39,7 +41,7 @@ int		exec_builtin(t_node *node)
 	return (status);
 }
 
-void init_builtin_commands(char *commands[8])
+void	init_builtin_commands(char *commands[8])
 {
 	commands[0] = "exit";
 	// commands[1] = "echo";
@@ -58,8 +60,8 @@ bool	is_builtin(t_node *node)
 	unsigned int	i;
 
 	init_builtin_commands(builtin_commands);
-	if (node == NULL || node->command == NULL || node->command->args == NULL ||
-			node->command->args->word == NULL)
+	if (node == NULL || node->command == NULL || node->command->args == NULL
+		|| node->command->args->word == NULL)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;

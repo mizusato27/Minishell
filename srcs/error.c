@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:24:31 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:11:52 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ bool	syntax_error = false;
 //コマンドがなかったときに、エラーメッセージを表示して終了
 void	err_exit(const char *cmd, const char *msg, int status)
 {
-    write(2, "minishell: ", 11);
-    write(2, cmd, ft_strlen(cmd));
-    write(2, ": ", 2);
-    write(2, msg, ft_strlen(msg));
-    write(2, "\n", 1);
-    exit(status);
+	write(2, "minishell: ", 11);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	exit(status);
 }
 
 //構文エラーがある場合に単語の最後までスキップ
@@ -87,4 +87,13 @@ void	xperror(const char *location)
 {
 	perror_prefix();
 	perror(location);
+}
+
+void	builtin_error(const char *func, const char *name, const char *err)
+{
+	perror_prefix();
+	dprintf(STDERR_FILENO, "%s: ", func);
+	if (name)
+		dprintf(STDERR_FILENO, "`%s': ", name);
+	dprintf(STDERR_FILENO, "%s\n", err);
 }

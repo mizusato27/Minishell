@@ -6,13 +6,13 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/21 10:13:59 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 00:14:33 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_map		*g_envmap;
+t_map		*g_envmap;//グローバル変数をcallocしていることによるleakが発生
 
 //item_get_stringはアイテムを文字列に変換する関数
 char	*item_connect_equals(t_item *item)
@@ -84,9 +84,6 @@ void	initenv(void)
 {
 	extern char	**environ;
 
-	g_envmap = ft_calloc(1, sizeof(*g_envmap));
-	if (g_envmap == NULL)
-		error(ER_MALLOC_CALLOC);
 	g_envmap = map_new();
 	envmap_init(g_envmap, environ);
 }
