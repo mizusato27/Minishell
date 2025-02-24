@@ -6,16 +6,18 @@
 #    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/24 13:06:52 by mizusato         ###   ########.fr        #
+#    Updated: 2025/02/24 14:32:56 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_DIR	= srcs
 BUILTIN_DIR	= $(SRCS_DIR)/builtin
+# EXPAND_DIR	= $(SRCS_DIR)/expand
 
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c expand.c tokenize.c tokenize_helper.c \
 				destructor.c parse.c utils.c map.c map_create.c map_helper.c env.c signal.c redirect.c pipe.c) \
-			  $(addprefix $(BUILTIN_DIR)/, builtin.c)
+			  $(addprefix $(BUILTIN_DIR)/, builtin.c) \
+			#   $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c variable.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}

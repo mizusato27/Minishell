@@ -198,7 +198,14 @@ assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
 echo
 
 ## Pipe
+echo -e "${BLUE}Pipe${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
+
+## Expand Variable
+echo -e "${BLUE}Expand Variable${RESET}"
+assert 'echo $USER'
+assert 'echo $USER$PATH$TERM'
+assert 'echo "$USER  $PATH   $TERM"'
 
 cleanup

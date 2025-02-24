@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 23:43:59 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/24 14:27:07 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	todo(char *message)
 }
 
 //文字列の最後に文字を追加
-void	append_char(char **s, char c)
+void	add_char(char **s, char c)
 {
 	size_t	size;
 	char	*new;
@@ -41,7 +41,7 @@ void	append_char(char **s, char c)
 }
 
 //クォートを削除
-void	remove_quote(t_token *token)
+static void	remove_quote(t_token *token)
 {
 	char	*new_word;
 	char	*word;
@@ -50,7 +50,10 @@ void	remove_quote(t_token *token)
 	if (token == NULL || token->kind != TK_WORD || token->word == NULL)
 		return ;
 	word = token->word;
-	new_word = NULL;
+	// new_word = NULL;
+	new_word = ft_calloc(1, sizeof(char));// <--- modified
+	if (new_word == NULL)
+		fatal_error("calloc");
 	while (*word && !is_metacharacter(*word))
 	{
 		if (*word == SINGLE_QUOTE || *word == DOUBLE_QUOTE)
@@ -61,12 +64,12 @@ void	remove_quote(t_token *token)
 			{
 				if (*word == '\0')
 					todo("Unclosed quote");
-				append_char(&new_word, *word++);
+				add_char(&new_word, *word++);
 			}
 			word++;
 		}
 		else
-			append_char(&new_word, *word++);
+			add_char(&new_word, *word++);
 	}
 	free(token->word);
 	if (!new_word)
@@ -80,15 +83,124 @@ void	expand_quote_removal(t_node *node)
 	if (node == NULL)
 		return ;
 	remove_quote(node->args);
-	remove_quote(node->filename);// <--- added
-	remove_quote(node->delimiter);// <--- added
-	expand_quote_removal(node->redirects);// <--- added
+	remove_quote(node->filename);
+	remove_quote(node->delimiter);
+	expand_quote_removal(node->redirects);
 	expand_quote_removal(node->command);// <--- pipe
 	expand_quote_removal(node->next);
 }
 
+static int	is_variable(char *str)
+{
+	if (str[0] != '$')
+		return (0);
+	return (is_alpha_under(str[1]));
+}
+
+static void	expand_var_str(char **dst, char **rest, char *ptr)
+{
+	char	*name;
+	char	*value;
+
+	name = ft_calloc(1, sizeof(char));
+	if (name == NULL)
+		fatal_error("calloc");
+	if (*ptr != '$')
+		assert_error("Expected dollar sign");
+	ptr++;
+	if (!is_alpha_under(*ptr))
+		assert_error("Variable must starts with alphabetic character or underscore.");
+	add_char(&name, *ptr++);
+	while (is_alpha_num_under(*ptr))
+		add_char(&name, *ptr++);
+	value = getenv(name);
+	free(name);
+	if (value)
+		while (*value)
+			add_char(dst, *value++);
+	*rest = ptr;
+}
+
+static void	add_single_quote(char **dst, char **rest, char *ptr)
+{
+	if (*ptr == SINGLE_QUOTE)
+	{
+		add_char(dst, *ptr++);
+		while (*ptr != SINGLE_QUOTE)
+		{
+			if (*ptr == '\0')
+				assert_error("Unclosed single quote");
+			add_char(dst, *ptr++);
+		}
+		add_char(dst, *ptr++);
+		*rest = ptr;
+	}
+	else
+		assert_error("Expected single quote");
+}
+
+static void	add_double_quote(char **dst, char **rest, char *ptr)
+{
+	if (*ptr == DOUBLE_QUOTE)
+	{
+		add_char(dst, *ptr++);
+		while (*ptr != DOUBLE_QUOTE)
+		{
+			if (*ptr == '\0')
+				assert_error("Unclosed double quote");
+			else if (is_variable(ptr))
+				expand_var_str(dst, &ptr, ptr);
+			else
+				add_char(dst, *ptr++);
+		}
+		add_char(dst, *ptr++);
+		*rest = ptr;
+	}
+	else
+		assert_error("Expected double quote");
+}
+
+static void	expand_var_token(t_token *tok)
+{
+	char	*new_str;// 新しい文字列を格納するためのポインタ
+	char	*ptr;
+
+	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
+		return ;
+	ptr = tok->word;
+	new_str = ft_calloc(1, sizeof(char));// 新しい文字列用にメモリを1バイト確保（NUL終端用）
+	if (!new_str)
+		fatal_error("calloc");
+	while (*ptr && !is_metacharacter(*ptr))
+	{
+		if (*ptr == SINGLE_QUOTE)
+			add_single_quote(&new_str, &ptr, ptr);// クォートで囲まれた部分を処理
+		else if (*ptr == DOUBLE_QUOTE)
+			add_double_quote(&new_str, &ptr, ptr);
+		else if (is_variable(ptr))
+			expand_var_str(&new_str, &ptr, ptr);// 変数を展開
+		else
+			add_char(&new_str, *ptr++);// 通常の文字をそのまま追加
+	}
+	free(tok->word);
+	tok->word = new_str;// 古い文字列を解放し、新しい文字列に置き換え
+	expand_var_token(tok->next);
+}
+
+void	expand_variable(t_node *node)
+{
+	if (node == NULL)
+		return ;
+	expand_var_token(node->args);
+	expand_var_token(node->filename);
+	expand_variable(node->redirects);
+	expand_variable(node->command);
+	expand_variable(node->next);
+}
+
 void	expand(t_node *node)
 {
+	expand_variable(node);
 	expand_quote_removal(node);
 }
 

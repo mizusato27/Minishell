@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/24 13:00:39 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:28:35 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,12 @@ void						interpret(char *line, int *stat_loc);
 
 // expand.c
 void						todo(char *message);
+void						add_char(char **s, char c);
 void						expand(t_node *node);
+// // quote_removal.c
+// void						expand_quote_removal(t_node *node);
+// // variable.c
+// void						expand_variable(t_node *node);
 
 // tokenize.c
 t_token						*tokenize(char *arg);
@@ -197,6 +202,8 @@ int							map_set(t_map *map, const char *name,
 								const char *value);
 
 // map_helper.c
+bool						is_alpha_under(char c);
+bool						is_alpha_num_under(char c);
 bool						is_identifier(const char *s);
 // char	*item_get_string(t_item *item);
 
