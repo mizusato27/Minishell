@@ -6,14 +6,13 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 21:11:02 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/24 21:11:30 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 01:16:04 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-#include <stdio.h>
-
+//引数がない場合は全ての環境変数を表示する
 void	print_allenv(void)
 {
 	t_item	*cur;
