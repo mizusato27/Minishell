@@ -36,7 +36,7 @@ int	builtin_pwd(void)
 	else
 	{
 		ft_putstr_fd(pwd, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (0);
 	}
 }
