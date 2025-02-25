@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 11:41:39 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:51:57 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,5 +236,8 @@ int		builtin_export(char **argv);
 
 // pwd.c
 int							builtin_pwd(void);
+
+// echo.c
+int							builtin_echo(char **argv);
 
 #endif

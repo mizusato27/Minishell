@@ -31,12 +31,11 @@ int	builtin_pwd(void)
 		}
 		ft_putstr_fd(cwd, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (0);
 	}
 	else
 	{
 		ft_putstr_fd(pwd, STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		return (0);
 	}
+	return (0);
 }

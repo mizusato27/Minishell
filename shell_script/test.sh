@@ -347,6 +347,17 @@ assert 'export nosuch hoge=nosuch [invalid]\n export | grep nosuch | sort'
 assert 'export nosuch="nosuch2=hoge"\nexport $nosuch\n export | grep nosuch | sort'
 echo
 
+## echo
+echo -e "${BLUE}echo${RESET}"
+assert 'echo'
+assert 'echo hello'
+assert 'echo hello "    " world'
+assert 'echo -n'
+assert 'echo -n hello'
+assert 'echo -n hello world'
+assert 'echo hello -n'
+echo
+
 ## pwd
 echo -e "${BLUE}pwd${RESET}"
 assert 'pwd'

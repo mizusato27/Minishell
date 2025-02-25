@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 09:44:37 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 14:21:50 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	exec_builtin(t_node *node)
 		status = builtin_export(argv);
 	else if (ft_strcmp(argv[0], "pwd") == 0)
 		status = builtin_pwd();
+	else if (ft_strcmp(argv[0], "echo") == 0)
+		status = builtin_echo(argv);
 	else
 		todo("exec_builtin");
 	free_argv(argv);
@@ -48,8 +50,8 @@ void	init_builtin_commands(char *commands[8])
 	commands[0] = "exit";
 	commands[1] = "export";
 	commands[2] = "pwd";
-	// commands[3] = "cd";
-	// commands[4] = "echo";
+	commands[3] = "echo";
+	// commands[4] = "cd";
 	// commands[5] = "env";
 	// commands[6] = "unset";
 	commands[7] = NULL;
@@ -67,7 +69,7 @@ bool	is_builtin(t_node *node)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		if (ft_strcmp(cmd_name, builtin_commands[i]) == 0)
 			return (true);
