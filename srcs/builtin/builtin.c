@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 09:31:32 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/25 09:44:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	init_builtin_commands(char *commands[8])
 {
 	commands[0] = "exit";
 	commands[1] = "export";
-	// commands[2] = "env";
+	commands[2] = "pwd";
 	// commands[3] = "cd";
-	commands[4] = "export";
-	commands[5] = "pwd";
+	// commands[4] = "echo";
+	// commands[5] = "env";
 	// commands[6] = "unset";
 	commands[7] = NULL;
 }
@@ -67,7 +67,7 @@ bool	is_builtin(t_node *node)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;
-	while (i < 2)
+	while (i < 3)
 	{
 		if (ft_strcmp(cmd_name, builtin_commands[i]) == 0)
 			return (true);
