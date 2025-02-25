@@ -31,45 +31,72 @@ static void	expand_var_str(char **dst, char **rest, char *ptr)
 	*rest = ptr;
 }
 
-static void	add_single_quote(char **dst, char **rest, char *ptr)
-{
-	if (*ptr == SINGLE_QUOTE)
-	{
-		add_char(dst, *ptr++);
-		while (*ptr != SINGLE_QUOTE)
-		{
-			if (*ptr == '\0')
-				assert_error("Unclosed single quote");
-			add_char(dst, *ptr++);
-		}
-		add_char(dst, *ptr++);
-		*rest = ptr;
-	}
-	else
-		assert_error("Expected single quote");
-}
+// static void	add_single_quote(char **dst, char **rest, char *ptr)
+// {
+// 	if (*ptr == SINGLE_QUOTE)
+// 	{
+// 		add_char(dst, *ptr++);
+// 		while (*ptr != SINGLE_QUOTE)
+// 		{
+// 			if (*ptr == '\0')
+// 				assert_error("Unclosed single quote");
+// 			add_char(dst, *ptr++);
+// 		}
+// 		add_char(dst, *ptr++);
+// 		*rest = ptr;
+// 	}
+// 	else
+// 		assert_error("Expected single quote");
+// }
 
-static void	add_double_quote(char **dst, char **rest, char *ptr)
+// static void	add_double_quote(char **dst, char **rest, char *ptr)
+// {
+// 	if (*ptr == DOUBLE_QUOTE)
+// 	{
+// 		add_char(dst, *ptr++);
+// 		while (*ptr != DOUBLE_QUOTE)
+// 		{
+// 			if (*ptr == '\0')
+// 				assert_error("Unclosed double quote");
+// 			else if (is_variable(ptr))
+// 				expand_var_str(dst, &ptr, ptr);
+// 			else if (is_special_param(ptr))
+// 				expand_special_param_str(dst, &ptr, ptr);
+// 			else
+// 				add_char(dst, *ptr++);
+// 		}
+// 		add_char(dst, *ptr++);
+// 		*rest = ptr;
+// 	}
+// 	else
+// 		assert_error("Expected double quote");
+// }
+
+static void	add_quote(char **dst, char **rest, char *ptr)
 {
-	if (*ptr == DOUBLE_QUOTE)
+	char	type_of_quote;
+	int		flag;
+
+	flag = 0;
+	type_of_quote = *ptr;
+	if (type_of_quote == DOUBLE_QUOTE)
+		flag++;
+	else if (type_of_quote != SINGLE_QUOTE)
+		assert_error("Expected quote");
+	add_char(dst, *ptr++);
+	while (*ptr != type_of_quote)
 	{
-		add_char(dst, *ptr++);
-		while (*ptr != DOUBLE_QUOTE)
-		{
-			if (*ptr == '\0')
-				assert_error("Unclosed double quote");
-			else if (is_variable(ptr))
-				expand_var_str(dst, &ptr, ptr);
-			else if (is_special_param(ptr))
-				expand_special_param_str(dst, &ptr, ptr);
-			else
-				add_char(dst, *ptr++);
-		}
-		add_char(dst, *ptr++);
-		*rest = ptr;
+		if (*ptr == '\0')
+			assert_error("Unclosed double quote");
+		else if (flag == 1 && is_variable(ptr))
+			expand_var_str(dst, &ptr, ptr);
+		else if (flag == 1 && is_special_param(ptr))
+			expand_special_param_str(dst, &ptr, ptr);
+		else
+			add_char(dst, *ptr++);
 	}
-	else
-		assert_error("Expected double quote");
+	add_char(dst, *ptr++);
+	*rest = ptr;
 }
 
 static void	expand_var_token(t_token *tok)
@@ -85,10 +112,12 @@ static void	expand_var_token(t_token *tok)
 		fatal_error("calloc");
 	while (*ptr && !is_metacharacter(*ptr))
 	{
-		if (*ptr == SINGLE_QUOTE)
-			add_single_quote(&new_str, &ptr, ptr);// クォートで囲まれた部分を処理
-		else if (*ptr == DOUBLE_QUOTE)
-			add_double_quote(&new_str, &ptr, ptr);
+		// if (*ptr == SINGLE_QUOTE)
+		// 	add_single_quote(&new_str, &ptr, ptr);// クォートで囲まれた部分を処理
+		// else if (*ptr == DOUBLE_QUOTE)
+		// 	add_double_quote(&new_str, &ptr, ptr);
+		if (*ptr == SINGLE_QUOTE || *ptr == DOUBLE_QUOTE)
+			add_quote(&new_str, &ptr, ptr);
 		else if (is_variable(ptr))
 			expand_var_str(&new_str, &ptr, ptr);// 変数を展開
 		else if (is_special_param(ptr))
