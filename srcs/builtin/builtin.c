@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 20:56:45 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:59:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//いったん置いておいて、この後にbuiltin_exitを実装する
-// int builtin_exit(char **argv)
-// {
-// 	int		status;
-
-// 	status = 0;
-// 	printf("argv[0]: %s\n", argv[0]);
-// 	exit(status);
-// }
 
 int	exec_builtin(t_node *node)
 {
@@ -40,6 +30,8 @@ int	exec_builtin(t_node *node)
 		status = builtin_echo(argv);
 	else if (ft_strcmp(argv[0], "cd") == 0)
 		status = builtin_cd(argv);
+	else if (strcmp(argv[0], "unset") == 0)
+		status = builtin_unset(argv);
 	else
 		todo("exec_builtin");
 	free_argv(argv);
@@ -54,8 +46,8 @@ void	init_builtin_commands(char *commands[8])
 	commands[2] = "pwd";
 	commands[3] = "echo";
 	commands[4] = "cd";
-	// commands[5] = "env";
-	// commands[6] = "unset";
+	commands[5] = "unset";
+	// commands[6] = "env";
 	commands[7] = NULL;
 }
 
@@ -71,7 +63,7 @@ bool	is_builtin(t_node *node)
 		return (false);
 	cmd_name = node->command->args->word;
 	i = 0;
-	while (i < 5)
+	while (i < 6)
 	{
 		if (ft_strcmp(cmd_name, builtin_commands[i]) == 0)
 			return (true);

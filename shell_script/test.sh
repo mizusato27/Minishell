@@ -396,4 +396,17 @@ assert 'cd /etc\npwd'
 assert 'unset PWD\npwd\ncd /etc\npwd'
 echo
 
+## unset
+echo -e "${BLUE}unset${RESET}"
+export hoge fuga=fuga
+assert 'unset'
+assert 'unset hoge'
+assert 'unset fuga'
+assert 'unset nosuch'
+assert 'unset [invalid]'
+assert 'unset hoge fuga'
+assert 'unset hoge nosuch fuga'
+assert 'unset fuga \n export | echo $fuga'
+assert 'unset [invalid] fuga \n echo $fuga'
+
 cleanup

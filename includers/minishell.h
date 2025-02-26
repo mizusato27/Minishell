@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 20:47:19 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:58:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,9 @@ int							builtin_exit(char **argv);
 
 // export.c
 int		builtin_export(char **argv);
+
+// unset.c
+int		builtin_unset(char **argv);
 
 // pwd.c
 int							builtin_pwd(void);
