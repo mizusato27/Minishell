@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 13:51:57 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/26 20:47:19 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ bool						at_eof(t_token *tok);
 t_node						*parse(t_token *tok);
 
 // utils.c
+char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
 
@@ -239,5 +240,8 @@ int							builtin_pwd(void);
 
 // echo.c
 int							builtin_echo(char **argv);
+
+// cd.c
+int							builtin_cd(char **argv);
 
 #endif

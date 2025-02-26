@@ -347,6 +347,31 @@ assert 'export nosuch hoge=nosuch [invalid]\n export | grep nosuch | sort'
 assert 'export nosuch="nosuch2=hoge"\nexport $nosuch\n export | grep nosuch | sort'
 echo
 
+## cd
+echo -e "${BLUE}cd${RESET}"
+assert 'cd'
+assert 'cd .'
+assert 'cd ..'
+assert 'cd ///'
+assert 'cd /tmp'
+assert 'cd /tmp/'
+assert 'cd /tmp///'
+assert 'cd /../../../././.././'
+assert 'cd src'
+
+# assert 'cd \n echo $PWD'
+unset HOME
+assert 'cd \n echo $PWD'
+assert 'cd .\n echo $PWD'
+# assert 'cd ..\n echo $PWD'
+# assert 'cd ///\n echo $PWD'
+# assert 'cd /tmp\n echo $PWD'
+# assert 'cd /tmp/\n echo $PWD'
+# assert 'cd /tmp///\n echo $PWD'
+# assert 'cd /../../../././.././\n echo $PWD'
+assert 'cd src\n echo $PWD'
+echo
+
 ## echo
 echo -e "${BLUE}echo${RESET}"
 assert 'echo'
@@ -361,14 +386,14 @@ echo
 ## pwd
 echo -e "${BLUE}pwd${RESET}"
 assert 'pwd'
-# assert 'cd\npwd'
-# assert 'cd src\npwd'
-# assert 'cd /etc\npwd'
+assert 'cd\npwd'
+assert 'cd src\npwd'
+assert 'cd /etc\npwd'
 # assert 'cd . \n pwd \n echo $PWD $OLDPWD'
 # assert 'cd .. \n pwd \n echo $PWD $OLDPWD'
 # assert 'cd /// \n pwd \n echo $PWD $OLDPWD'
 # assert 'cd /tmp/// \n pwd \n echo $PWD $OLDPWD'
-# assert 'unset PWD\npwd\ncd /etc\npwd'
+assert 'unset PWD\npwd\ncd /etc\npwd'
 echo
 
 cleanup

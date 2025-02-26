@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 08:27:33 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/22 21:38:35 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/26 20:46:02 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_strncat(char *restrict s1, const char *restrict s2, size_t n)
+{
+	char	*dst;
+	size_t	i;
+	size_t	j;
+
+	dst = s1;
+	i = 0;
+	j = 0;
+	while (dst[i])
+		i++;
+	while (s2[j] && n > j)
+	{
+		dst[i] = s2[j];
+		i++;
+		j++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
 
 char	*ft_strncpy(char *dest, char *src, size_t n)
 {
