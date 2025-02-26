@@ -23,7 +23,7 @@ static void	expand_var_str(char **dst, char **rest, char *ptr)
 	add_char(&name, *ptr++);
 	while (is_alpha_num_under(*ptr))
 		add_char(&name, *ptr++);
-	value = getenv(name);
+	value = xgetenv(name);// <--- "getenv" -> "xgetenv" in Step13
 	free(name);
 	if (value)
 		while (*value)
