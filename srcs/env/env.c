@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 00:14:33 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/26 22:52:17 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,22 @@ char	*xgetenv(const char *name)
 // envmap_initは環境変数を初期化する関数
 static void	envmap_init(t_map *map, char **ep)
 {
+	char	cwd[PATH_MAX];
+
 	while (*ep)
 	{
 		map_put(map, *ep, false);
 		ep++;
 	}
+	if (map_get(map, "SHLVL") == NULL)
+		map_set(map, "SHLVL", "1");
+	if (map_get(map, "PWD") == NULL)
+	{
+		getcwd(cwd, PATH_MAX);
+		map_set(map, "PWD", cwd);
+	}
+	if (map_get(map, "OLDPWD") == NULL)
+		map_set(map, "OLDPWD", NULL);
 }
 
 // initenvは環境変数を初期化する関数

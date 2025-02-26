@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 21:58:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/02/26 23:39:51 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,10 +233,10 @@ bool						is_builtin(t_node *node);
 int							builtin_exit(char **argv);
 
 // export.c
-int		builtin_export(char **argv);
+int							builtin_export(char **argv);
 
 // unset.c
-int		builtin_unset(char **argv);
+int							builtin_unset(char **argv);
 
 // pwd.c
 int							builtin_pwd(void);
@@ -246,5 +246,8 @@ int							builtin_echo(char **argv);
 
 // cd.c
 int							builtin_cd(char **argv);
+
+// env.c
+int							builtin_env(void);
 
 #endif

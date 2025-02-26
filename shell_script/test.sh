@@ -334,6 +334,8 @@ echo
 
 ## export
 echo -e "${BLUE}export${RESET}"
+print_desc "Output of 'export' differs, but it's ok."
+assert 'export' # order of variables, default variables differs...
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'
@@ -345,6 +347,13 @@ assert 'export [invalid] nosuch hoge=nosuch\n export | grep nosuch | sort'
 assert 'export nosuch [invalid] hoge=nosuch\n export | grep nosuch | sort'
 assert 'export nosuch hoge=nosuch [invalid]\n export | grep nosuch | sort'
 assert 'export nosuch="nosuch2=hoge"\nexport $nosuch\n export | grep nosuch | sort'
+echo
+
+## env
+echo -e "${BLUE}env${RESET}"
+print_desc "Output of 'env' differs, but it's ok."
+assert 'env' # order of variables, default variables differs...
+assert 'env | grep hoge | sort'
 echo
 
 ## cd
@@ -359,16 +368,16 @@ assert 'cd /tmp///'
 assert 'cd /../../../././.././'
 assert 'cd src'
 
-# assert 'cd \n echo $PWD'
+assert 'cd \n echo $PWD'
 unset HOME
 assert 'cd \n echo $PWD'
 assert 'cd .\n echo $PWD'
-# assert 'cd ..\n echo $PWD'
-# assert 'cd ///\n echo $PWD'
-# assert 'cd /tmp\n echo $PWD'
-# assert 'cd /tmp/\n echo $PWD'
-# assert 'cd /tmp///\n echo $PWD'
-# assert 'cd /../../../././.././\n echo $PWD'
+assert 'cd ..\n echo $PWD'
+assert 'cd ///\n echo $PWD'
+assert 'cd /tmp\n echo $PWD'
+assert 'cd /tmp/\n echo $PWD'
+assert 'cd /tmp///\n echo $PWD'
+assert 'cd /../../../././.././\n echo $PWD'
 assert 'cd src\n echo $PWD'
 echo
 
@@ -389,10 +398,10 @@ assert 'pwd'
 assert 'cd\npwd'
 assert 'cd src\npwd'
 assert 'cd /etc\npwd'
-# assert 'cd . \n pwd \n echo $PWD $OLDPWD'
-# assert 'cd .. \n pwd \n echo $PWD $OLDPWD'
-# assert 'cd /// \n pwd \n echo $PWD $OLDPWD'
-# assert 'cd /tmp/// \n pwd \n echo $PWD $OLDPWD'
+assert 'cd . \n pwd \n echo $PWD $OLDPWD'
+assert 'cd .. \n pwd \n echo $PWD $OLDPWD'
+assert 'cd /// \n pwd \n echo $PWD $OLDPWD'
+assert 'cd /tmp/// \n pwd \n echo $PWD $OLDPWD'
 assert 'unset PWD\npwd\ncd /etc\npwd'
 echo
 
