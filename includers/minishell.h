@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 23:39:51 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:38:57 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,11 +185,16 @@ char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
 
-// redirect.c
-// int		redirect(t_node *node);
+// redirect
+// here_document.c
+int							read_here_document(const char *delimiter);
+// open_file.c
 int							open_redirect_file(t_node *node);
+// redirect.c
 void						do_redirect(t_node *redirects);
 void						reset_redirect(t_node *redirects);
+// stash_fd.c
+int							stash_fd(int fd);
 
 // pipe.c
 void						create_new_pipe(t_node *node);

@@ -177,22 +177,32 @@ echo
 # assert ">>"
 # assert ";"
 # assert ";;"
+# echo
 
 # Redirect
 # Redirecting output
 echo -e "${BLUE}Redirecting output${RESET}"
 assert 'echo hello >hello.txt' 'hello.txt'
 assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
+assert 'echo "" > f4' 'f4'
+assert 'echo \"\" > f5' 'f5'
+assert 'echo >f6' 'f6'
+rm -f f4 f5 f6
 echo
 
 ## Redirecting input
 echo -e "${BLUE}Redirecting input${RESET}"
 assert 'cat <Makefile'
+# assert 'cat <'
 echo hello >f1
 echo world >f2
 echo 42Tokyo >f3
-assert 'cat <f1<f2<f3'
-rm -f f1 f2 f3
+echo "" >f4
+assert 'cat <f1<f2<f3<f4'
+assert 'cat < f1 <   f2  <       f3      '
+assert 'cat <f1<f2<f3<f5'
+# assert 'cat <f1<'
+rm -f f1 f2 f3 f4
 assert 'cat <hoge'
 echo
 
