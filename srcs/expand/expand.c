@@ -6,20 +6,17 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/27 15:29:06 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:38:11 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// getenvが出てきたら、xgetenvに変更
 
 void	todo(char *message)
 {
 	printf("TODO: %s\n", message);
 }
 
-//文字列の最後に文字を追加
 void	add_char(char **s, char c)
 {
 	size_t	size;
