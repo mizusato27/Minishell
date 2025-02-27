@@ -183,11 +183,19 @@ echo
 # Redirecting output
 echo -e "${BLUE}Redirecting output${RESET}"
 assert 'echo hello >hello.txt' 'hello.txt'
+assert 'echo world> hello.txt' 'hello.txt'
 assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
 assert 'echo "" > f4' 'f4'
 assert 'echo \"\" > f5' 'f5'
 assert 'echo >f6' 'f6'
-rm -f f4 f5 f6
+echo 42 > f7
+chmod 707 f7
+echo -e "-- chmod 707 --"
+assert 'Tokyo > f7' 'f7'
+chmod 777 f7
+echo -e "-- chmod 777 --"
+assert 'Tokyo > f7' 'f7'
+rm -f f4 f5 f6 f7
 echo
 
 ## Redirecting input
@@ -199,11 +207,20 @@ echo world >f2
 echo 42Tokyo >f3
 echo "" >f4
 assert 'cat <f1<f2<f3<f4'
-assert 'cat < f1 <   f2  <       f3      '
-assert 'cat <f1<f2<f3<f5'
+assert 'cat< f1 <   f2  <       f3      '
+assert 'cat <f1<f10<f2<f3'
 # assert 'cat <f1<'
-rm -f f1 f2 f3 f4
 assert 'cat <hoge'
+echo SUCCESS > f5
+chmod 000 f5
+echo -e "-- chmod 000 --"
+assert 'cat < f5'
+chmod 777 f5
+echo -e "-- chmod 777 --"
+assert 'cat < f5'
+rm -f f1 f2 f3 f4 f5
+assert 'cat</etc/passwd'
+assert 'cat < /etc/passwd < /etc/hosts'
 echo
 
 ## Appending Redirected output
