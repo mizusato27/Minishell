@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:36:55 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:42:29 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	add_path_elm(char *new_pwd, char **rest, char *src)
 	*rest = src + elm_len;
 }
 
-static char *get_new_pwd(char *old_pwd, char *path)
+static char	*get_new_pwd(char *old_pwd, char *path)
 {
 	char	new_pwd[PATH_MAX];
 	char	*result;

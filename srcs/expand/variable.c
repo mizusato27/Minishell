@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:57 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:38:58 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:43:19 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void	expand_var_str(char **dst, char **rest, char *ptr)
 		assert_error("Expected dollar sign");
 	ptr++;
 	if (!is_alpha_under(*ptr))
-		assert_error("Variable must starts with alphabetic character or underscore.");
+		assert_error(
+			"Variable must starts with alphabetic character or underscore.");
 	add_char(&name, *ptr++);
 	while (is_alpha_num_under(*ptr))
 		add_char(&name, *ptr++);
