@@ -23,7 +23,7 @@ static void	expand_var_str(char **dst, char **rest, char *ptr)
 	add_char(&name, *ptr++);
 	while (is_alpha_num_under(*ptr))
 		add_char(&name, *ptr++);
-	value = xgetenv(name);// <--- "getenv" -> "xgetenv" in Step13
+	value = xgetenv(name);
 	free(name);
 	if (value)
 		while (*value)
@@ -60,13 +60,13 @@ static void	add_quote(char **dst, char **rest, char *ptr)
 
 static void	expand_var_token(t_token *tok)
 {
-	char	*new_str;// 新しい文字列を格納するためのポインタ
+	char	*new_str;
 	char	*ptr;
 
 	if (tok == NULL || tok->kind != TK_WORD || tok->word == NULL)
 		return ;
 	ptr = tok->word;
-	new_str = ft_calloc(1, sizeof(char));// 新しい文字列用にメモリを1バイト確保（NUL終端用）
+	new_str = ft_calloc(1, sizeof(char));
 	if (!new_str)
 		fatal_error("calloc");
 	while (*ptr && !is_metacharacter(*ptr))
@@ -74,14 +74,14 @@ static void	expand_var_token(t_token *tok)
 		if (*ptr == SINGLE_QUOTE || *ptr == DOUBLE_QUOTE)
 			add_quote(&new_str, &ptr, ptr);
 		else if (is_variable(ptr))
-			expand_var_str(&new_str, &ptr, ptr);// 変数を展開
+			expand_var_str(&new_str, &ptr, ptr);
 		else if (is_special_param(ptr))
 			expand_special_param_str(&new_str, &ptr, ptr);
 		else
-			add_char(&new_str, *ptr++);// 通常の文字をそのまま追加
+			add_char(&new_str, *ptr++);
 	}
 	free(tok->word);
-	tok->word = new_str;// 古い文字列を解放し、新しい文字列に置き換え
+	tok->word = new_str;
 	expand_var_token(tok->next);
 }
 
