@@ -1,4 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   open_file.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 22:43:07 by mizusato          #+#    #+#             */
+/*   Updated: 2025/02/28 23:58:39 by mizusato         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+static int	process_open_file(t_node *node)
+{
+	int	fd;
+
+	fd = 0;
+	if (node->kind == ND_REDIR_OUT)
+		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (node->kind == ND_REDIR_IN)
+		fd = open(node->filename->word, O_RDONLY);
+	else if (node->kind == ND_REDIR_APPEND)
+		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND,
+				0644);
+	else if (node->kind == ND_REDIR_HEREDOC)
+		fd = read_here_document(node->delimiter->word);
+	else
+		assert_error(ER_OPEN_FILE);
+	if (fd < 0)
+	{
+		if (node->kind == ND_REDIR_OUT || node->kind == ND_REDIR_APPEND
+			|| node->kind == ND_REDIR_IN)
+			xperror(node->filename->word);
+	}
+	return (fd);
+}
 
 int	open_redirect_file(t_node *node)
 {
@@ -14,24 +51,9 @@ int	open_redirect_file(t_node *node)
 	}
 	else if (node->kind == ND_SIMPLE_CMD)
 		return (open_redirect_file(node->redirects));
-	if (node->kind == ND_REDIR_OUT)
-		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC,
-				0644);
-	else if (node->kind == ND_REDIR_IN)
-		node->filefd = open(node->filename->word, O_RDONLY);
-	else if (node->kind == ND_REDIR_APPEND)
-		node->filefd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND,
-				0644);
-	else if (node->kind == ND_REDIR_HEREDOC)
-		node->filefd = read_here_document(node->delimiter->word);
-	else
-		assert_error("open_redir_file");
+	node->filefd = process_open_file(node);
 	if (node->filefd < 0)
-	{
-		if (node->kind == ND_REDIR_OUT || node->kind == ND_REDIR_APPEND || node->kind == ND_REDIR_IN)//<-signal.c
-			xperror(node->filename->word);
 		return (-1);
-	}
 	node->filefd = stash_fd(node->filefd);
 	return (open_redirect_file(node->next));
 }

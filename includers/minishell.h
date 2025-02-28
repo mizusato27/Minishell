@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/27 16:38:57 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/02/28 23:52:49 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ER_EXECVE "execve error"
 # define ER_ACCESS "command not found"
 # define ER_MALLOC "malloc error"
+# define ER_OPEN_FILE "open redirect file"
 
 # define OPERATORS "|&;()\n"
 # define METAS "|&;()<> \t\n"
