@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/28 23:52:49 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/01 02:15:27 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <unistd.h>
-#include <limits.h> // <-- exit
+# include <limits.h> // <-- exit
 
 # ifndef PATH_MAX
 #  define PATH_MAX 10000
@@ -39,7 +39,9 @@
 # define ER_EXECVE "execve error"
 # define ER_ACCESS "command not found"
 # define ER_MALLOC "malloc error"
-# define ER_OPEN_FILE "open redirect file"
+# define ER_FILE "invalid file"
+# define ER_DUP2 "dup2 error"
+# define ER_CLOSE "close error"
 
 # define OPERATORS "|&;()\n"
 # define METAS "|&;()<> \t\n"
@@ -181,6 +183,11 @@ void						free_argv(char **argv);
 bool						at_eof(t_token *tok);
 t_node						*parse(t_token *tok);
 
+// utils
+// ft_close.c
+int							ft_close(int fildes);
+// ft_dup2.c
+int							ft_dup2(int fildes, int fildes2);
 // utils.c
 char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);

@@ -6,7 +6,7 @@
 #    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/02/27 16:40:02 by mizusato         ###   ########.fr        #
+#    Updated: 2025/03/01 02:18:27 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,15 @@ BUILTIN_DIR		= $(SRCS_DIR)/builtin
 ENV_DIR			= $(SRCS_DIR)/env
 EXPAND_DIR		= $(SRCS_DIR)/expand
 REDIRECT_DIR	= $(SRCS_DIR)/redirect
+UTILS_DIR		= $(SRCS_DIR)/utils
 
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c tokenize.c tokenize_helper.c \
-				destructor.c parse.c utils.c signal.c pipe.c) \
+				destructor.c parse.c signal.c pipe.c) \
 			  $(addprefix $(BUILTIN_DIR)/, builtin.c exit.c export.c unset.c env.c cd.c echo.c pwd.c) \
 			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c) \
 			  $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c special_param.c variable.c) \
-			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c)
+			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
+			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c utils.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}

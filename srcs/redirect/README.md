@@ -2,6 +2,8 @@
 
 ## 目次
 - [open_file.c](#open_filec)
+- [stash_fd.c](#stash_fdc)
+- [redirect.c](#redirectc)
 
 ## open_file.c
 
@@ -20,25 +22,52 @@
 
 4. process_open_file関数
 	- 出力リダイレクト'>'(ND_REDIR_OUT)
-		```
+		```c
 		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		```
 		- O_CREAT: ファイルが存在しない場合は作成
 		- O_WRONLY: 書き込み専用でオープン
 		- O_TRUNC: ファイルが存在する場合は内容を切り詰める（上書き）
 		- パーミッション 0644: 所有者は読み書き可、その他のユーザーは読み取りのみ
+
 	- 入力リダイレクト'<'(ND_REDIR_IN)
-		```
+		```c
 		fd = open(node->filename->word, O_RDONLY);
 		```
 		- O_RDONLY: 読み取り専用でオープン
+
 	- 追記モードでの出力リダイレクト">>"(ND_REDIR_APPEND)
-		```
+		```c
 		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		```
 		- O_APPEND: 既存ファイルの末尾に追記
+
 	- ヒアドキュメント"<<"(ND_REDIR_HEREDOC)
-		```
+		```c
 		fd = read_here_document(node->delimiter->word);
 		```
 		- read_here_document関数を呼び出してヒアドキュメントを処理
+
+## stash_fd.c
+
+与えられたファイル記述子を「安全な場所」に複製する関数
+
+1. is_valid_fd関数
+	- 渡されたファイル記述子が有効かをチェックする
+	- 無効な場合、"EBADF"(Bad File Descripter)エラーを設定
+
+2. statsh_fd関数
+	- 新しいファイル記述子に、10以降の有効な記述子を設定
+	- ft_dup2関数で元のファイル記述子に複製
+
+3. fdに10を加える意図
+	- 標準ファイル記述子との衝突回避:
+	 UNIXシステムでは、0（標準入力）、1（標準出力）、2（標準エラー出力）は特別な意味を持ちます。また、多くのプログラムは3〜9の番号も使用することがあります。
+
+	- シェルのリダイレクト機能の実装:
+	 シェルでリダイレクトを実装する際には、標準入出力のファイル記述子（0, 1, 2）を一時的に変更しますが、元の状態に戻せるように元のファイル記述子を保存しておく必要があります。
+
+	- 安全な番号範囲の確保:
+	 10以上の値を使うことで、シェル自身やコマンドが通常使用する低い番号のファイル記述子と重複するリスクを減らします。
+
+## redirect.c

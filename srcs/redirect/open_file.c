@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:07 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/28 23:58:39 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/01 02:11:26 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	process_open_file(t_node *node)
 	else if (node->kind == ND_REDIR_HEREDOC)
 		fd = read_here_document(node->delimiter->word);
 	else
-		assert_error(ER_OPEN_FILE);
+		assert_error(ER_FILE);
 	if (fd < 0)
 	{
 		if (node->kind == ND_REDIR_OUT || node->kind == ND_REDIR_APPEND
