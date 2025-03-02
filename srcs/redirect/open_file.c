@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:07 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/01 02:11:26 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:10:55 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	process_open_file(t_node *node)
 		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND,
 				0644);
 	else if (node->kind == ND_REDIR_HEREDOC)
-		fd = read_here_document(node->delimiter->word);
+		fd = read_here_document(node->delimiter->word, node->is_delim_quoted);
 	else
 		assert_error(ER_FILE);
 	if (fd < 0)

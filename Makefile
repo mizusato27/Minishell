@@ -6,7 +6,7 @@
 #    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/01 02:18:27 by mizusato         ###   ########.fr        #
+#    Updated: 2025/03/02 19:58:02 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c tokenize.c tokenize_help
 			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c) \
 			  $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c special_param.c variable.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
-			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c utils.c)
+			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c utils.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}

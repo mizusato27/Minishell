@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 23:43:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 16:25:24 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:35:48 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ t_node	*redirect_heredoc(t_token **rest, t_token *tok)
 
 	node = new_node(ND_REDIR_HEREDOC);
 	node->delimiter = tokdup(tok->next);
+	node->is_delim_quoted = false;// <--- 時間あれば実装
 	node->targetfd = STDIN_FILENO;
 	*rest = tok->next->next;
 	return (node);

@@ -6,20 +6,20 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:57 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:43:19 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:26:34 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_variable(char *str)
+int	is_variable(char *str)
 {
 	if (str[0] != '$')
 		return (0);
 	return (is_alpha_under(str[1]));
 }
 
-static void	expand_var_str(char **dst, char **rest, char *ptr)
+void	expand_var_str(char **dst, char **rest, char *ptr)
 {
 	char	*name;
 	char	*value;
@@ -44,7 +44,7 @@ static void	expand_var_str(char **dst, char **rest, char *ptr)
 	*rest = ptr;
 }
 
-static void	add_quote(char **dst, char **rest, char *ptr)
+void	add_quote(char **dst, char **rest, char *ptr)
 {
 	char	type_of_quote;
 	int		flag;
@@ -81,7 +81,7 @@ static void	expand_var_token(t_token *tok)
 	ptr = tok->word;
 	new_str = ft_calloc(1, sizeof(char));
 	if (!new_str)
-		fatal_error("calloc");
+		fatal_error(ER_MALLOC_CALLOC);
 	while (*ptr && !is_metacharacter(*ptr))
 	{
 		if (*ptr == SINGLE_QUOTE || *ptr == DOUBLE_QUOTE)

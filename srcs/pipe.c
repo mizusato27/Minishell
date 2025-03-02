@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:39:16 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:39:17 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:56:23 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	create_new_pipe(t_node *node)
 {
 	if (node->next == NULL)
 		return ;
-	if (pipe(node->outpipe) < 0)
-		fatal_error("pipe");
+	ft_pipe(node->outpipe);
 	node->next->inpipe[0] = node->outpipe[0];
 	node->next->inpipe[1] = node->outpipe[1];
 }

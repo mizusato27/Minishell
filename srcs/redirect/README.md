@@ -4,6 +4,7 @@
 - [open_file.c](#open_filec)
 - [stash_fd.c](#stash_fdc)
 - [redirect.c](#redirectc)
+- [here_document.c](#here_documentc)
 
 ## open_file.c
 
@@ -74,7 +75,9 @@
 
 - ファイル記述子
 	- filefd : リダイレクト先（または元）のファイルのファイルディスクリプタを保持
+
 	- targetfd : リダイレクトによって変更される標準の入出力ストリームのファイルディスクリプタを示す
+
 	- stashed_targetfd : リダイレクション前の元の状態を保存するためのファイルディスクリプタ。後で元の状態に戻すために使用される。
 
 - setup_redirect関数
@@ -86,3 +89,5 @@
 	1. 再帰的に次のリダイレクトノードを先に処理
 	2. リダイレクトに使用したファイル記述子を閉じる
 	3. リダイレクト前のファイル記述子の状態を復元する(stashed_targetfdに保存しておいた元の記述子をtargetfdに復元)
+
+# here_document.c

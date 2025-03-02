@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 16:39:37 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:57:56 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define ER_FILE "invalid file"
 # define ER_DUP2 "dup2 error"
 # define ER_CLOSE "close error"
+# define ER_PIPE "pipe error"
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_RESET_REDIR "reset_redirect error"
 
@@ -50,16 +51,12 @@
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 
-// externは複数のファイルで使う変数を宣言するときに使う
-extern int					last_status;// <--- special param
-extern bool					syntax_error;
-
 # define CHILD_PROCESS 0
 # define APPEND_CHAR_SIZE 1
 # define END_CHAR_SIZE 1
 # define ERROR_TOKENIZE 258
 # define ERROR_PARSE 258
-# define ERROR_OPEN_REDIR 1 // <-----
+# define ERROR_OPEN_REDIR 1
 
 typedef struct s_token		t_token;
 enum						e_token_kind
@@ -95,16 +92,17 @@ struct						s_node
 	// t_token		*args;
 	t_node_kind				kind;
 	t_node					*next;
-	// CMD <---------------
+	// CMD
 	t_token					*args;
 	t_node					*redirects;
 	// REDIR
 	int						targetfd;
 	t_token					*filename;
 	t_token					*delimiter;
+	bool					is_delim_quoted;
 	int						filefd;
 	int						stashed_targetfd;
-	// PIPELINE <---
+	// PIPELINE
 	int						inpipe[2];
 	int						outpipe[2];
 	t_node					*command;
@@ -127,12 +125,20 @@ struct						s_map
 	t_item					item_head;
 };
 
+typedef struct s_context	t_context;
+struct 						s_context
+{
+	bool						g_rl_intr;
+	// todo:グローバル変数をすべてこの構造体に移動
+};
+extern t_context			g_ctx;
+
 // externは複数のファイルで使う変数を宣言するときに使う
-extern bool					syntax_error;
+extern bool						syntax_error;
 extern int						last_status;
-extern t_map *g_envmap;           //<-env.c
-extern bool readline_interrupted; //<-signal.c
-extern volatile sig_atomic_t sig; //<-signal.c
+extern t_map 					*g_envmap; //<-env.c
+// extern bool						g_rl_intr; //<-signal.c
+extern volatile sig_atomic_t	sig; //<-signal.c
 
 // error.c
 void						malloc_error(void);
@@ -162,6 +168,9 @@ void						expand_quote_removal(t_node *node);
 int							is_special_param(char *str);
 void						expand_special_param_str(char **dst, char **rest, char *ptr);
 // variable.c
+int							is_variable(char *str);
+void						expand_var_str(char **dst, char **rest, char *ptr);
+void						add_quote(char **dst, char **rest, char *ptr);
 void						expand_variable(t_node *node);
 
 // tokenize.c
@@ -190,6 +199,8 @@ t_node						*parse(t_token *tok);
 int							ft_close(int fildes);
 // ft_dup2.c
 int							ft_dup2(int fildes, int fildes2);
+// ft_pipe.c
+int							ft_pipe(int pipefd[2]);
 // utils.c
 char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
@@ -197,7 +208,7 @@ int							ft_strcmp(const char *s1, const char *s2);
 
 // redirect
 // here_document.c
-int							read_here_document(const char *delimiter);
+int							read_here_document(const char *delimiter, bool is_quoted);
 // open_file.c
 int							open_redirect_file(t_node *node);
 // redirect.c
