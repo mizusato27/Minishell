@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/01 02:15:27 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:39:37 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 # define ER_FILE "invalid file"
 # define ER_DUP2 "dup2 error"
 # define ER_CLOSE "close error"
+# define ER_SETUP_REDIR "setup_redirect error"
+# define ER_RESET_REDIR "reset_redirect error"
 
 # define OPERATORS "|&;()\n"
 # define METAS "|&;()<> \t\n"
@@ -199,7 +201,7 @@ int							read_here_document(const char *delimiter);
 // open_file.c
 int							open_redirect_file(t_node *node);
 // redirect.c
-void						do_redirect(t_node *redirects);
+void						setup_redirect(t_node *redirects);
 void						reset_redirect(t_node *redirects);
 // stash_fd.c
 int							stash_fd(int fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 01:01:45 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/02 16:23:09 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	exec_nonbuiltin(t_node *node)
 	char	*path;
 	char	**argv;
 
-	do_redirect(node->command->redirects);
+	setup_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	path = argv[0];
 	if (ft_strchr(path, '/') == NULL)
@@ -131,7 +131,7 @@ void	child_process(t_node *node)
 	// extern char	**environ;
 	reset_signal();// <-signal.c
 	process_child_pipe(node);
-	// do_redirect(node->command->redirects);
+	// setup_redirect(node->command->redirects);
 	// argv = token_list_to_argv(node->command->args);
 	// path = argv[0];
 	// if (ft_strchr(path, '/') == NULL)

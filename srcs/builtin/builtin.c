@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 23:35:00 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:22:59 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exec_builtin(t_node *node)
 	char	**argv;
 
 	status = 0;
-	do_redirect(node->command->redirects);
+	setup_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	if (ft_strcmp(argv[0], "exit") == 0)
 		status = builtin_exit(argv);
