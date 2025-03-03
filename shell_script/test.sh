@@ -235,6 +235,10 @@ assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
 assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
 assert 'cat <<EOF\nhello\nworld'
 assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
+assert 'cat <<EOF\n$USER\nEOF\nNOPRINT'
+assert 'cat <<'\''EOF'\''\n$USER\nEOF\nNOPRINT'
+assert 'cat <<"EOF"\n$USER\nEOF\nNOPRINT'
+assert 'cat <<E"O"F\n$USER\nEOF\nNOPRINT'
 echo
 
 ## Pipe
