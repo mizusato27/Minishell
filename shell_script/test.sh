@@ -186,7 +186,7 @@ assert 'echo hello >hello.txt' 'hello.txt'
 assert 'echo world> hello.txt' 'hello.txt'
 assert 'echo hello >f1>f2>f3' 'f1' 'f2' 'f3'
 assert 'echo "" > f4' 'f4'
-assert 'echo \"\" > f5' 'f5'
+assert 'echo '\"\"' > f5' 'f5'
 assert 'echo >f6' 'f6'
 echo 42 > f7
 chmod 707 f7
@@ -227,18 +227,45 @@ echo
 echo -e "${BLUE}Appending Redirected output${RESET}"
 assert 'pwd >>pwd.txt' 'pwd.txt'
 assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
+echo "hello " >f1
+assert 'echo world >>f1' 'f1'
+assert 'echo hello >>f2' 'f2'
+assert 'echo hello>>f3' 'f3'
+assert 'echo "" >>f2' 'f2'
+assert 'echo "" >>f4' 'f4'
+assert 'echo '\"\"' >>f2' 'f2'
+assert 'echo >>f2' 'f2'
+echo 42 >f7
+chmod 707 f7
+echo -e "-- chmod 707 --"
+assert 'Tokyo >> f7' 'f7'
+chmod 777 f7
+echo -e "-- chmod 777 --"
+assert 'Tokyo >> f7' 'f7'
+rm -f f1 f2 f3 f4 f7
+
 echo
 
 ## Here Document
 echo -e "${BLUE}Here Document${RESET}"
 assert 'cat <<EOF\nhello\nworld\nEOF\nNOPRINT'
 assert 'cat <<EOF<<eof\nhello\nworld\nEOF\neof\nNOPRINT'
+assert 'cat <<EOF<<eof\nhello\nworld\n  EOF\nNOPRINT'
+assert 'cat <<EOF<<eof\nhello\nworld\nEOF  \nNOPRINT'
+assert 'cat <<EOF\nEOF\nNOPRINT'
 assert 'cat <<EOF\nhello\nworld'
 assert 'cat <<E"O"F\nhello\nworld\nEOF\nNOPRINT'
 assert 'cat <<EOF\n$USER\nEOF\nNOPRINT'
 assert 'cat <<'\''EOF'\''\n$USER\nEOF\nNOPRINT'
 assert 'cat <<"EOF"\n$USER\nEOF\nNOPRINT'
 assert 'cat <<E"O"F\n$USER\nEOF\nNOPRINT'
+assert 'cat <<"E"'\''O'\''F\n$USER\nEOF\nNOPRINT'
+assert 'cat <<EOF | grep "hello"\nhello world\ngoodbye world\nEOF\nNOPRINT'
+assert 'cat <<EOF\n'\\'\nEOF\nNOPRINT'
+assert 'cat <<EOF\n'\$'USER\n$USER\nEOF\nNOPRINT'
+assert 'cat <<A\nsingle char delim\nA\nNOPRINT'
+assert 'cat <<E@Fspecial chars delim\nE@F\nNOPRINT'
+assert 'cat <<EOF1 <<EOF2\nabc\ndef\nEOF1\nEOF2\nNOPRINT'
 echo
 
 ## Pipe
