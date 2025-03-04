@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 21:00:37 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:14:22 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		last_status = 0;
 
 t_context	g_ctx = {};
 
@@ -25,8 +23,7 @@ int	main(void)
 	rl_outstream = stderr;
 	setup_signal();
 	initenv();
-	// status = 0;
-	last_status = 0;
+	g_ctx.g_last_status = 0;
 	while (1)
 	{
 		//標準入力で受け取る
@@ -37,10 +34,10 @@ int	main(void)
 		if (*line)
 			add_history(line);
 		// interpret(line, &status);
-		interpret(line, &last_status);
+		interpret(line, &g_ctx.g_last_status);
 		// TODO: intepret line as a command
 		free(line);
 	}
 	// exit(status);
-	exit(last_status);
+	exit(g_ctx.g_last_status);
 }

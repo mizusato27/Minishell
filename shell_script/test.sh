@@ -123,6 +123,7 @@ trap summary EXIT
 echo
 echo -e "${BLUE}Empty line (EOF)${RESET}"
 assert ''
+assert ' '
 echo
 
 # Absolute path commands without args

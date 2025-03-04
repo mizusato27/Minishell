@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_param.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:49 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:38:51 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:03:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	expand_special_param_str(char **dst, char **rest, char *ptr)
 	if (!is_special_param(ptr))
 		assert_error("Expected special parameter");
 	ptr += 2;
-	add_number(dst, last_status);
+	add_number(dst, g_ctx.g_last_status);
 	*rest = ptr;
 }
