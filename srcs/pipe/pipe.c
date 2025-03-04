@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:39:16 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/02 19:56:23 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:54:27 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	create_new_pipe(t_node *node)
 
 void	process_child_pipe(t_node *node)
 {
-	close(node->outpipe[0]);
-	dup2(node->inpipe[0], STDIN_FILENO);
+	close(node->outpipe[0]);// <--- ft_close にすると壊れる(なぜ?)
+	ft_dup2(node->inpipe[0], STDIN_FILENO);
 	if (node->inpipe[0] != STDIN_FILENO)
-		close(node->inpipe[0]);
-	dup2(node->outpipe[1], STDOUT_FILENO);
+		ft_close(node->inpipe[0]);
+	ft_dup2(node->outpipe[1], STDOUT_FILENO);
 	if (node->outpipe[1] != STDOUT_FILENO)
-		close(node->outpipe[1]);
+		ft_close(node->outpipe[1]);
 }
 
 void	process_parent_pipe(t_node *node)
 {
 	if (node->inpipe[0] != STDIN_FILENO)
-		close(node->inpipe[0]);
+		ft_close(node->inpipe[0]);
 	if (node->next)
-		close(node->outpipe[1]);
+		ft_close(node->outpipe[1]);
 }

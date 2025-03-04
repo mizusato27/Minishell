@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 21:32:58 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/04 21:51:44 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:25:51 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ static void	init_ctrl_operators(char *operators[2])
 	operators[1] = "\n";
 }
 
-static bool	startswith(const char *s, const char *keyword)
+static int	cmp_prefix(const char *s, const char *keyword)
 {
-	if (ft_memcmp(s, keyword, ft_strlen(keyword)) == 0)
-		return (true);
-	return (false);
+	int	result;
+
+	result = ft_memcmp(s, keyword, ft_strlen(keyword));
+	return (result);
 }
 
 bool	is_ctrl_operator(t_token *tok)
@@ -34,7 +35,7 @@ bool	is_ctrl_operator(t_token *tok)
 	init_ctrl_operators(operators);
 	while (i < sizeof(operators) / sizeof(*operators))
 	{
-		if (startswith(tok->word, operators[i]))
+		if (cmp_prefix(tok->word, operators[i]) == 0)
 			return (true);
 		i++;
 	}
