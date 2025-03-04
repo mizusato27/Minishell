@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 16:23:09 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:25:31 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void	interpret(char *line, int *stat_loc)
 	// 	;
 	if (at_eof(tok))
 		;
-	else if (syntax_error)
+	else if (g_ctx.g_syntax_error)
 		*stat_loc = ERROR_TOKENIZE;
 	else
 	{
@@ -243,7 +243,7 @@ void	interpret(char *line, int *stat_loc)
 		// argv = token_list_to_argv(node->args);
 		// *stat_loc = execute(argv);
 		// free_argv(argv);
-		if (syntax_error)
+		if (g_ctx.g_syntax_error)
 			*stat_loc = ERROR_PARSE;
 		else
 		{

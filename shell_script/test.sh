@@ -160,6 +160,7 @@ echo -e "${BLUE}single quote${RESET}"
 assert "./print_args 'hello   world' '42Tokyo'"
 assert "echo 'hello   world' '42Tokyo'"
 assert "echo '\"hello   world\"' '42Tokyo'"
+assert "\'"
 echo
 
 ## double quote
@@ -171,7 +172,7 @@ assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
-## meta chara
+# # meta chara
 # echo -e "${BLUE}meta chara${RESET}"
 # assert ">"
 # assert ">>"
@@ -272,6 +273,7 @@ echo
 echo -e "${BLUE}Pipe${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
+assert 'ls |'
 echo
 
 ## Expand Variable

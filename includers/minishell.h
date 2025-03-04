@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 20:57:56 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:24:28 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,13 @@ typedef struct s_context	t_context;
 struct 						s_context
 {
 	bool						g_rl_intr;
+	bool						g_syntax_error;
 	// todo:グローバル変数をすべてこの構造体に移動
 };
 extern t_context			g_ctx;
 
 // externは複数のファイルで使う変数を宣言するときに使う
-extern bool						syntax_error;
+// extern bool						syntax_error;
 extern int						last_status;
 extern t_map 					*g_envmap; //<-env.c
 // extern bool						g_rl_intr; //<-signal.c
