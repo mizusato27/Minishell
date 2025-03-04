@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_helper.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/19 15:52:09 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 10:47:11 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//空白文字化のチェック
-bool	is_blank(char c)
-{
-	return (c == ' ' || c == '\t' || c == '\n');
-}
 
 //メタ文字のチェック
 bool	is_metacharacter(char c)
@@ -32,22 +26,6 @@ bool	which_op(const char *s, const char *op)
 	return (ft_memcmp(s, op, ft_strlen(op)) == 0);
 }
 
-//制御演算子かどうかのチェック
-// bool	is_operator(char c)
-// {
-// 	char	*operators;
-// 	int		i;
-
-// 	i = 0;
-// 	operators = OPERATORS;
-// 	while (operators[i])
-// 	{
-// 		if (operators[i] == c)
-// 			return (true);
-// 		i++;
-// 	}
-// 	return (false);
-// }
 bool	is_operator(const char *s)
 {
 	char	*operators[14];
@@ -81,4 +59,18 @@ void	init_operators(char *operators[14])
 	operators[11] = "<";
 	operators[12] = ">";
 	operators[13] = NULL;
+}
+
+//新しいトークンを作成
+// callocを使用することにより、メンバも全て初期化
+t_token	*new_token(char *word, t_token_kind kind)
+{
+	t_token	*token;
+
+	token = ft_calloc(1, sizeof(*token));
+	if (token == NULL)
+		error(ER_MALLOC_CALLOC);
+	token->word = word;
+	token->kind = kind;
+	return (token);
 }

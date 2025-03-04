@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 10:24:28 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:46:38 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,12 +177,9 @@ void						expand_variable(t_node *node);
 // tokenize.c
 t_token						*tokenize(char *arg);
 t_token						*new_token(char *word, t_token_kind kind);
-
 // tokenize_helper.c
-bool						is_blank(char c);
 bool						is_metacharacter(char c);
 bool						which_op(const char *s, const char *op);
-// bool	is_operator(char c);
 bool						is_operator(const char *s);
 void						init_operators(char *operators[14]);
 
@@ -206,6 +203,7 @@ int							ft_pipe(int pipefd[2]);
 char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
+bool						is_blank(char c);
 
 // redirect
 // here_document.c

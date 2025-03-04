@@ -6,25 +6,11 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 10:25:21 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 10:52:31 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//新しいトークンを作成
-// callocを使用することにより、メンバも全て初期化
-t_token	*new_token(char *word, t_token_kind kind)
-{
-	t_token	*token;
-
-	token = ft_calloc(1, sizeof(*token));
-	if (token == NULL)
-		error(ER_MALLOC_CALLOC);
-	token->word = word;
-	token->kind = kind;
-	return (token);
-}
 
 //制御演算子かどうかのチェック
 // j < sizeof(operators) / sizeof(*operators)は制御演算子の数だけチェック
@@ -53,7 +39,7 @@ t_token	*operator(int *i, char *line)
 }
 
 //文字列をトークンに分割
-int	parse_word_length(char *line)
+static	int	parse_word_length(char *line)
 {
 	char	quote_flag;
 	int		j;
@@ -97,6 +83,14 @@ t_token	*word(int *i, char *line)
 	return (new_token(word, TK_WORD));
 }
 
+static	t_token	*init_tokenize(t_token *head, int *i)
+{
+	*i = 0;
+	g_ctx.g_syntax_error = false;
+	head->next = NULL;
+	return (head);
+}
+
 // head.nextに最初のトークンを格納
 t_token	*tokenize(char *arg)
 {
@@ -104,10 +98,7 @@ t_token	*tokenize(char *arg)
 	t_token	*token;
 	int		i;
 
-	i = 0;
-	g_ctx.g_syntax_error = false;
-	head.next = NULL;
-	token = &head;
+	token = init_tokenize(&head, &i);
 	while (arg[i])
 	{
 		while (arg[i] && is_blank(arg[i]))
