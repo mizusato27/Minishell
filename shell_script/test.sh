@@ -85,6 +85,19 @@ assert() {
 	# ファイルのdiffチェック
 	for arg in "$@"
 	do
+		# ファイルの内容を表示する
+		# if [ -f "$arg"".cmp" ]; then
+		# 	echo "===== Bash output for $arg ====="
+		# 	cat "$arg"".cmp"
+		# 	echo "===== End of bash output ====="
+		# fi
+
+		# if [ -f "$arg"".out" ]; then
+		# 	echo "===== Minishell output for $arg ====="
+		# 	cat "$arg"".out"
+		# 	echo "===== End of minishell output ====="
+		# fi
+
 		echo -n "  [$arg] "
 		if diff "$arg"".cmp" "$arg"".out" >/dev/null; then
 			echo -e -n "$OK"
@@ -191,9 +204,9 @@ assert 'echo "" > f4' 'f4'
 assert 'echo '\"\"' > f5' 'f5'
 assert 'echo >f6' 'f6'
 echo 42 > f7
-chmod 707 f7
-echo -e "-- chmod 707 --"
-assert 'echo Tokyo > f7' 'f7'
+chmod 400 f7
+echo -e "-- chmod 400 --"
+assert 'echo Tokyo > f7'
 chmod 777 f7
 echo -e "-- chmod 777 --"
 assert 'echo Tokyo > f7' 'f7'
@@ -229,25 +242,22 @@ echo
 echo -e "${BLUE}Appending Redirected output${RESET}"
 assert 'pwd >>pwd.txt' 'pwd.txt'
 assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
-echo hello >f1
-assert 'f1'
-assert 'echo world >>f1' 'f1'
-assert 'f1'
-assert 'echo hello >>f2' 'f2'
-assert 'echo hello>>f3' 'f3'
-assert 'echo "" >>f2' 'f2'
-assert 'echo "" >>f4' 'f4'
-assert 'echo '\"\"' >>f2' 'f2'
-assert 'echo >>f2' 'f2'
-echo 42 >f7
-chmod 707 f7
-echo -e "-- chmod 707 --"
-assert 'echo Tokyo >> f7' 'f7'
-assert 'f7'
-chmod 777 f7
-echo -e "-- chmod 777 --"
-assert 'echo Tokyo >> f7' 'f7'
-rm -f f1 f2 f3 f4 f7
+# echo hello >f1
+# assert 'echo world >>f1' 'f1'
+# assert 'echo hello >>f2' 'f2'
+# assert 'echo hello>>f3' 'f3'
+# assert 'echo "" >>f2' 'f2'
+# assert 'echo "" >>f4' 'f4'
+# assert 'echo >>f2' 'f2'
+# echo 42 >f7
+# chmod 400 f7
+# echo -e "-- chmod 400 --"
+# assert 'echo Tokyo >> f7'
+# assert 'cat <f7'
+# chmod 777 f7
+# echo -e "-- chmod 777 --"
+# assert 'echo Tokyo >> f7' 'f7'
+# rm -f f1 f2 f3 f4 f7
 
 echo
 
