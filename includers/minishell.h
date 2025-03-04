@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 12:20:18 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 21:55:45 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ER_EXECVE "execve error"
 # define ER_ACCESS "command not found"
 # define ER_MALLOC "malloc error"
+# define ER_ADD_CMD "add_cmd_elm error"
 # define ER_FILE "invalid file"
 # define ER_DUP2 "dup2 error"
 # define ER_CLOSE "close error"
@@ -176,6 +177,12 @@ void						expand_var_str(char **dst, char **rest, char *ptr);
 void						add_quote(char **dst, char **rest, char *ptr);
 void						expand_variable(t_node *node);
 
+// tokenize
+// token.c
+void						append_tok(t_token **tokens, t_token *tok);
+bool						at_eof(t_token *tok);
+t_token						*tokdup(t_token *tok);
+bool						equal_operators(t_token *tok, char *op);
 // tokenize.c
 t_token						*tokenize(char *arg);
 t_token						*new_token(char *word, t_token_kind kind);
@@ -190,8 +197,17 @@ void						free_node(t_node *node);
 void						free_token(t_token *tok);
 void						free_argv(char **argv);
 
+// parse
+// parse_redir.c
+t_node						*redirect_out(t_token **rest, t_token *tok);
+t_node						*redirect_in(t_token **rest, t_token *tok);
+t_node						*redirect_append(t_token **rest, t_token *tok);
+t_node						*redirect_heredoc(t_token **rest, t_token *tok);
+// parse_utils.c
+bool						is_ctrl_operator(t_token *tok);
+t_node						*new_node(t_node_kind kind);
+void						add_node(t_node **node, t_node *elm);
 // parse.c
-bool						at_eof(t_token *tok);
 t_node						*parse(t_token *tok);
 
 // utils

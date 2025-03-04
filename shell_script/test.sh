@@ -186,13 +186,13 @@ assert "echo hello'      world'"
 assert "echo hello'  world  '\"  42Tokyo  \""
 echo
 
-# # meta chara
-# echo -e "${BLUE}meta chara${RESET}"
-# assert ">"
-# assert ">>"
-# assert ";"
-# assert ";;"
-# echo
+## meta chara
+echo -e "${BLUE}meta chara${RESET}"
+assert ">"
+assert ">>"
+assert ";"
+assert ";;"
+echo
 
 # Redirect
 # Redirecting output
@@ -216,7 +216,7 @@ echo
 ## Redirecting input
 echo -e "${BLUE}Redirecting input${RESET}"
 assert 'cat <Makefile'
-# assert 'cat <'
+assert 'cat <'
 echo hello >f1
 echo world >f2
 echo 42Tokyo >f3
@@ -224,7 +224,7 @@ echo "" >f4
 assert 'cat <f1<f2<f3<f4'
 assert 'cat< f1 <   f2  <       f3      '
 assert 'cat <f1<f10<f2<f3'
-# assert 'cat <f1<'
+assert 'cat <f1<'
 assert 'cat <hoge'
 echo SUCCESS > f5
 chmod 000 f5
