@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 22:52:34 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:10:43 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,33 +123,6 @@ int	exec_nonbuiltin(t_node *node)
 	// fatal_error("execve");
 }
 
-void	child_process(t_node *node)
-{
-	// char	*path;
-	// char	**argv;
-
-	// extern char	**environ;
-	reset_signal();// <-signal.c
-	process_child_pipe(node);
-	// setup_redirect(node->command->redirects);
-	// argv = token_list_to_argv(node->command->args);
-	// path = argv[0];
-	// if (ft_strchr(path, '/') == NULL)
-	// 	path = find_executable(path);
-	// if (path == NULL)
-	// 	err_exit(argv[0], "command not found", 127);
-	// if (access(path, F_OK) < 0)
-	// 	err_exit(argv[0], "command not found", 127);
-	// execve(path, argv, get_environ(g_envmap));
-	// free(argv);
-	// reset_redirect(node->command->redirects);
-	// fatal_error("execve");
-	if (is_builtin(node))//<-builtin.c
-		exit(exec_builtin(node));
-	else
-		exec_nonbuiltin(node);
-}
-
 pid_t	execute_pipe(t_node *node)
 {
 	pid_t	pid;
@@ -161,7 +134,14 @@ pid_t	execute_pipe(t_node *node)
 	if (pid < 0)
 		fatal_error("fork");
 	else if (pid == 0)
-		child_process(node);
+	{
+		reset_signal();
+		process_child_pipe(node);
+		if (is_builtin(node))
+			exit(exec_builtin(node));
+		else
+			exec_nonbuiltin(node);
+	}
 	process_parent_pipe(node);
 	if (node->next)
 		return (execute_pipe(node->next));
@@ -176,18 +156,11 @@ int	wait_pipe(pid_t pid)
 
 	while (1)
 	{
-		// if (result == pid)
-		// 	status = WEXITSTATUS(wstatus);
-		// else if (result < 0)
-		// {
-		// 	if (errno == ECHILD)
-		// 		break ;
-		// }
 		result = wait(&wstatus);
 		if (result == pid)
 		{
-			if (WIFSIGNALED(wstatus))//<-signal.c
-				status = 128 + WTERMSIG(wstatus);//signalで終了したときの処理
+			if (WIFSIGNALED(wstatus))
+				status = 128 + WTERMSIG(wstatus);
 			else
 				status = WEXITSTATUS(wstatus);
 		}
@@ -195,7 +168,7 @@ int	wait_pipe(pid_t pid)
 		{
 			if (errno == ECHILD)
 				break ;
-			else if (errno == EINTR)//システムコールが割り込まれた
+			else if (errno == EINTR)
 				continue ;
 			else
 				fatal_error("wait");
@@ -228,10 +201,7 @@ void	interpret(char *line, int *stat_loc)
 	t_token	*tok;
 	t_node	*node;
 
-	// char	**argv;
 	tok = tokenize(line);
-	// if (!tok || tok->kind == TK_EOF)
-	// 	;
 	if (at_eof(tok))
 		;
 	else if (g_ctx.g_syntax_error)
@@ -239,24 +209,14 @@ void	interpret(char *line, int *stat_loc)
 	else
 	{
 		node = parse(tok);
-		// expand(node);
-		// argv = token_list_to_argv(node->args);
-		// *stat_loc = execute(argv);
-		// free_argv(argv);
 		if (g_ctx.g_syntax_error)
 			*stat_loc = ERROR_PARSE;
 		else
 		{
 			expand(node);
-			// *stat_loc = redirect(node);// <--- 修正 <--- pipeで削除
-			*stat_loc = execute_cmd(node); // <- pipe
+			*stat_loc = execute_cmd(node);
 		}
 		free_node(node);
 	}
 	free_token(tok);
 }
-
-// int main(int argc, char **argv)
-// {
-// 	interpret(argv[1]);
-// }
