@@ -242,6 +242,7 @@ echo
 echo -e "${BLUE}Appending Redirected output${RESET}"
 assert 'pwd >>pwd.txt' 'pwd.txt'
 assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
+# テストではうまくいかないので、実際に動作で確認
 # echo hello >f1
 # assert 'echo world >>f1' 'f1'
 # assert 'echo hello >>f2' 'f2'
