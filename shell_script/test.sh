@@ -193,10 +193,10 @@ assert 'echo >f6' 'f6'
 echo 42 > f7
 chmod 707 f7
 echo -e "-- chmod 707 --"
-assert 'Tokyo > f7' 'f7'
+assert 'echo Tokyo > f7' 'f7'
 chmod 777 f7
 echo -e "-- chmod 777 --"
-assert 'Tokyo > f7' 'f7'
+assert 'echo Tokyo > f7' 'f7'
 rm -f f4 f5 f6 f7
 echo
 
@@ -229,8 +229,10 @@ echo
 echo -e "${BLUE}Appending Redirected output${RESET}"
 assert 'pwd >>pwd.txt' 'pwd.txt'
 assert 'pwd >>pwd.txt \n pwd >>pwd.txt' 'pwd.txt'
-echo "hello " >f1
+echo hello >f1
+assert 'f1'
 assert 'echo world >>f1' 'f1'
+assert 'f1'
 assert 'echo hello >>f2' 'f2'
 assert 'echo hello>>f3' 'f3'
 assert 'echo "" >>f2' 'f2'
@@ -240,10 +242,11 @@ assert 'echo >>f2' 'f2'
 echo 42 >f7
 chmod 707 f7
 echo -e "-- chmod 707 --"
-assert 'Tokyo >> f7' 'f7'
+assert 'echo Tokyo >> f7' 'f7'
+assert 'f7'
 chmod 777 f7
 echo -e "-- chmod 777 --"
-assert 'Tokyo >> f7' 'f7'
+assert 'echo Tokyo >> f7' 'f7'
 rm -f f1 f2 f3 f4 f7
 
 echo
