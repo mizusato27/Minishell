@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 21:11:02 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/25 01:16:04 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 12:21:29 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_allenv(void)
 {
 	t_item	*cur;
 
-	cur = g_envmap->item_head.next;
+	cur = g_ctx.g_envmap->item_head.next;
 	while (cur)
 	{
 		if (cur->value)
@@ -42,7 +42,7 @@ int	builtin_export(char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		if (map_put(g_envmap, argv[i], true) < 0)
+		if (map_put(g_ctx.g_envmap, argv[i], true) < 0)
 		{
 			builtin_error("export", argv[i], "not a valid identifier");
 			status = 1;

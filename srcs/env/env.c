@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/26 22:52:17 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:22:12 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_map		*g_envmap;//グローバル変数をcallocしていることによるleakが発生
 
 //item_get_stringはアイテムを文字列に変換する関数
 char	*item_connect_equals(t_item *item)
@@ -66,7 +64,7 @@ char	**get_environ(t_map *map)
 // xgetenvは環境変数の値を取得する関数
 char	*xgetenv(const char *name)
 {
-	return (map_get(g_envmap, name));
+	return (map_get(g_ctx.g_envmap, name));
 }
 
 // envmap_initは環境変数を初期化する関数
@@ -95,8 +93,8 @@ void	initenv(void)
 {
 	extern char	**environ;
 
-	g_envmap = map_new();
-	envmap_init(g_envmap, environ);
+	g_ctx.g_envmap = map_new();
+	envmap_init(g_ctx.g_envmap, environ);
 }
 
 //map_newは新しいマップを作成する関数

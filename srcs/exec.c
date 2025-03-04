@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 10:25:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 12:20:40 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	exec_nonbuiltin(t_node *node)
 		err_exit(argv[0], "command not found", 127);
 	if (access(path, F_OK) < 0)
 		err_exit(argv[0], "command not found", 127);
-	execve(path, argv, get_environ(g_envmap));
+	execve(path, argv, get_environ(g_ctx.g_envmap));
 	free(argv);
 	reset_redirect(node->command->redirects);
 	write(2, "execve failed\n", 14);

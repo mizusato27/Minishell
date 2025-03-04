@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 11:04:21 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/04 12:20:18 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ struct 						s_context
 	bool					g_rl_intr;
 	bool					g_syntax_error;
 	int						g_last_status;
+	t_map 					*g_envmap;
 	// todo:グローバル変数をすべてこの構造体に移動
 };
 extern t_context			g_ctx;
@@ -138,7 +139,7 @@ extern t_context			g_ctx;
 // externは複数のファイルで使う変数を宣言するときに使う
 // extern bool						syntax_error;
 // extern int						last_status;
-extern t_map 					*g_envmap; //<-env.c
+// extern t_map 					*g_envmap; //<-env.c
 // extern bool						g_rl_intr; //<-signal.c
 extern volatile sig_atomic_t	sig; //<-signal.c
 
