@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:29:40 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:54:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../libft/libft.h"
 # include <errno.h> // <--- pipe
 # include <fcntl.h>
-# include <stdio.h>// <--- 場所変更
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -25,7 +25,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <unistd.h>
-# include <limits.h> // <-- exit
+# include <limits.h>
 
 # ifndef PATH_MAX
 #  define PATH_MAX 10000
@@ -127,6 +127,11 @@ struct						s_map
 	t_item					item_head;
 };
 
+// g_rl_intr: readlineの割り込みフラグ
+// syntax_error: 構文エラーが発生したかどうかのフラグ
+// g_last_status: 最後に実行したコマンドの終了ステータス
+// g_envmap: 環境変数を格納するマップ
+// g_sig: シグナルの種類
 typedef struct s_context	t_context;
 struct 						s_context
 {
@@ -134,15 +139,10 @@ struct 						s_context
 	bool					g_syntax_error;
 	int						g_last_status;
 	t_map 					*g_envmap;
-	// todo:グローバル変数をすべてこの構造体に移動
+	volatile sig_atomic_t	g_sig;
 };
 extern t_context			g_ctx;
 
-// externは複数のファイルで使う変数を宣言するときに使う
-// extern bool						syntax_error;
-// extern int						last_status;
-// extern t_map 					*g_envmap; //<-env.c
-// extern bool						g_rl_intr; //<-signal.c
 extern volatile sig_atomic_t	sig; //<-signal.c
 
 // error.c

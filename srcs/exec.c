@@ -6,14 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:18:27 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:45:52 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <string.h> // <--- 一旦使用
 
-//いったんコピペ、どうせ後でいらなくなる
 // reallocは後で変更必須
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
