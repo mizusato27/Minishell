@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:41 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:38:43 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:22:33 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	remove_quote(t_token *token)
 	word = token->word;
 	new_word = ft_calloc(1, sizeof(char));
 	if (new_word == NULL)
-		fatal_error("calloc");
+		malloc_error(ER_MALLOC_CALLOC);
 	while (*word && !is_metacharacter(*word))
 	{
 		if (*word == SINGLE_QUOTE || *word == DOUBLE_QUOTE)

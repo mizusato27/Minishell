@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 21:55:45 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:18:05 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # endif
 
 // error_message
+# define ERROR_PREFIX "minishell: "
 # define ER_MALLOC_STRDUP "malloc error"
 # define ER_MALLOC_CALLOC "malloc error"
 # define ER_SYNTAX_ERROR "syntax error"
@@ -145,10 +146,9 @@ extern t_context			g_ctx;
 extern volatile sig_atomic_t	sig; //<-signal.c
 
 // error.c
-void						malloc_error(void);
-void						err_exit(const char *location, const char *msg,
+void						not_found_cmd(const char *location, const char *msg,
 								int status);
-void						error(char *msg);
+void						malloc_error(char *msg);
 void						tokenize_error(const char *location, int *j,
 								char *line);
 void						parse_error(const char *location, t_token **rest,

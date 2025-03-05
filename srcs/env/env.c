@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 12:22:12 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:19:30 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*item_connect_equals(t_item *item)
 		strsize += ft_strlen(item->value);
 	string = malloc(strsize);
 	if (string == NULL)
-		error(ER_MALLOC);
+		malloc_error(ER_MALLOC);
 	ft_strlcpy(string, item->name, strsize);
 	if (item->value)
 	{
@@ -45,7 +45,7 @@ char	**get_environ(t_map *map)
 	size = map_len(map, false) + 1;
 	environ = ft_calloc(size, sizeof(char *));
 	if (environ == NULL)
-		error(ER_MALLOC_CALLOC);
+		malloc_error(ER_MALLOC_CALLOC);
 	i = 0;
 	item = map->item_head.next;
 	while (item)

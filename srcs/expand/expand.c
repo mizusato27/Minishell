@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/27 15:38:11 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:22:12 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	add_char(char **s, char c)
 		size += ft_strlen(*s);
 	new = malloc(size);
 	if (new == NULL)
-		error(ER_MALLOC);
+		malloc_error(ER_MALLOC);
 	if (*s)
 		ft_strlcpy(new, *s, size);
 	new[size - 2] = c;

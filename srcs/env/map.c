@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 18:14:25 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:22:01 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void handle_no_equal(char **name, char **value, const char *string, bool 
     *name = ft_strdup(string);
     *value = NULL;
     if (*name == NULL)
-        error(ER_MALLOC_STRDUP);
+        malloc_error(ER_MALLOC_STRDUP);
 }
 
 static void handle_with_equal(char **name, char **value, const char *string, char *name_end)
@@ -75,12 +75,12 @@ static void handle_with_equal(char **name, char **value, const char *string, cha
     size_t name_len = name_end - string;
     *name = ft_calloc(name_len + 1, 1);
     if (*name == NULL)
-        error(ER_MALLOC_CALLOC);
+        malloc_error(ER_MALLOC_CALLOC);
     ft_strlcpy(*name, string, name_len + 1);
     (*name)[name_len] = '\0';
     *value = ft_strdup(name_end + 1);
     if (*name == NULL || *value == NULL)
-        error(ER_MALLOC_STRDUP);
+        malloc_error(ER_MALLOC_STRDUP);
 }
 
 int map_put(t_map *map, const char *string, bool allow_empty_value)

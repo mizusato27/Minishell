@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 10:47:11 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:25:18 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_token	*new_token(char *word, t_token_kind kind)
 
 	token = ft_calloc(1, sizeof(*token));
 	if (token == NULL)
-		error(ER_MALLOC_CALLOC);
+		malloc_error(ER_MALLOC_CALLOC);
 	token->word = word;
 	token->kind = kind;
 	return (token);

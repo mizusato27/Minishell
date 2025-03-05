@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 21:32:58 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/04 22:25:51 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/05 17:23:29 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_node	*new_node(t_node_kind kind)
 
 	node = ft_calloc(1, sizeof(*node));
 	if (node == NULL)
-		error(ER_MALLOC_CALLOC);
+		malloc_error(ER_MALLOC_CALLOC);
 	node->kind = kind;
 	return (node);
 }

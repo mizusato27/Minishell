@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 12:30:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:17:02 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	reset_sig(int signum)
 	sa.sa_flags = 0;
 	sa.sa_handler = SIG_DFL; // デフォルトのシグナル動作
 	if (sigaction(signum, &sa, NULL) < 0)
-		error("sigaction");
+		fatal_error("sigaction");
 }
 
 /**
@@ -50,7 +50,7 @@ void	ignore_sig(int signum)
 	sa.sa_flags = 0;
 	sa.sa_handler = SIG_IGN; // シグナルを無視する
 	if (sigaction(signum, &sa, NULL) < 0)
-		error("sigaction");
+		fatal_error("sigaction");
 }
 
 /**
@@ -65,7 +65,7 @@ void	setup_sigint(void)
 	sa.sa_flags = 0;
 	sa.sa_handler = handler; // SIGINT を受けた際に handler を呼び出す
 	if (sigaction(SIGINT, &sa, NULL) < 0)
-		error("sigaction");
+		fatal_error("sigaction");
 }
 
 /**

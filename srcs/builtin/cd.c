@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/04 12:21:15 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:24:14 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static char	*get_new_pwd(char *old_pwd, char *path)
 	}
 	result = ft_strdup(new_pwd);
 	if (result == NULL)
-		fatal_error("strdup");
+		malloc_error(ER_MALLOC_STRDUP);
 	return (result);
 }
 

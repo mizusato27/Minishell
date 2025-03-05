@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:34:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/02/21 12:36:56 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:21:36 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_item	*item_new(char *name, char *value)
 
 	item = ft_calloc(1, sizeof(*item));
 	if (item == NULL)
-		error(ER_MALLOC_CALLOC);
+		malloc_error(ER_MALLOC_CALLOC);
 	item->name = name;
 	item->value = value;
 	return (item);
@@ -32,7 +32,7 @@ t_map	*map_new(void)
 
 	map = ft_calloc(1, sizeof(*map));
 	if (map == NULL)
-		error(ER_MALLOC_CALLOC);
+		malloc_error(ER_MALLOC_CALLOC);
 	return (map);
 }
 
@@ -47,7 +47,7 @@ static void	map_add_item(t_map *map, const char *name, const char *value)
 		new_item = item_new(ft_strdup(name), ft_strdup(value));
 
 	if (new_item->name == NULL || (value != NULL && new_item->value == NULL))
-		error(ER_MALLOC_STRDUP);
+		malloc_error(ER_MALLOC_STRDUP);
 
 	new_item->next = map->item_head.next;
 	map->item_head.next = new_item;
@@ -63,7 +63,7 @@ static void	map_update_item(t_item *item, const char *value)
 	{
 		item->value = ft_strdup(value);
 		if (item->value == NULL)
-			error(ER_MALLOC_STRDUP);
+			malloc_error(ER_MALLOC_STRDUP);
 	}
 }
 
