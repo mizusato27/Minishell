@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
+#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/04 22:56:53 by mizusato         ###   ########.fr        #
+#    Updated: 2025/03/05 16:56:25 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,9 @@ PIPE_DIR		= $(SRCS_DIR)/pipe
 REDIRECT_DIR	= $(SRCS_DIR)/redirect
 TOKENIZE_DIR	= $(SRCS_DIR)/tokenize
 UTILS_DIR		= $(SRCS_DIR)/utils
+FINISH_DIR		= $(SRCS_DIR)/finish
 
-SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c destructor.c signal.c) \
+SRCS		= $(addprefix $(SRCS_DIR)/, main.c exec.c signal.c) \
 			  $(addprefix $(BUILTIN_DIR)/, builtin.c exit.c export.c unset.c env.c cd.c echo.c pwd.c) \
 			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c) \
 			  $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c special_param.c variable.c) \
@@ -28,7 +29,8 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c error.c exec.c destructor.c signal.c) \
 			  $(addprefix $(PIPE_DIR)/, pipe.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
 			  $(addprefix $(TOKENIZE_DIR)/, token.c tokenize.c tokenize_helper.c) \
-			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c utils.c)
+			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c utils.c) \
+			  $(addprefix $(FINISH_DIR)/, destructor.c error.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}
