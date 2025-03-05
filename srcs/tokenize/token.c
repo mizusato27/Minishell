@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:19:44 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/05 17:25:11 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:56:19 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	append_tok(t_token **tokens, t_token *tok)
+void	add_token(t_token **tokens, t_token *tok)
 {
 	if (*tokens == NULL)
 	{
 		*tokens = tok;
 		return ;
 	}
-	append_tok(&(*tokens)->next, tok);
+	add_token(&(*tokens)->next, tok);
 }
 
 bool	at_eof(t_token *tok)
@@ -29,7 +29,7 @@ bool	at_eof(t_token *tok)
 	return (false);
 }
 
-t_token	*tokdup(t_token *tok)
+t_token	*token_dup(t_token *tok)
 {
 	char	*word;
 

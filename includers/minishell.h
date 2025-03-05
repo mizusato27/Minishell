@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:54:37 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 18:57:42 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,9 +182,9 @@ void						expand_variable(t_node *node);
 
 // tokenize
 // token.c
-void						append_tok(t_token **tokens, t_token *tok);
+void						add_token(t_token **tokens, t_token *tok);
 bool						at_eof(t_token *tok);
-t_token						*tokdup(t_token *tok);
+t_token						*token_dup(t_token *tok);
 bool						equal_operators(t_token *tok, char *op);
 // tokenize.c
 t_token						*tokenize(char *arg);
@@ -202,10 +202,10 @@ void						free_argv(char **argv);
 
 // parse
 // parse_redir.c
-t_node						*redirect_out(t_token **rest, t_token *tok);
-t_node						*redirect_in(t_token **rest, t_token *tok);
-t_node						*redirect_append(t_token **rest, t_token *tok);
-t_node						*redirect_heredoc(t_token **rest, t_token *tok);
+t_node						*parse_redir_out(t_token **rest, t_token *tok);
+t_node						*parse_redir_in(t_token **rest, t_token *tok);
+t_node						*parse_redir_append(t_token **rest, t_token *tok);
+t_node						*parse_redir_heredoc(t_token **rest, t_token *tok);
 // parse_utils.c
 bool						is_ctrl_operator(t_token *tok);
 t_node						*new_node(t_node_kind kind);

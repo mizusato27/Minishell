@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 23:43:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 21:55:01 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:55:13 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ static void	add_cmd_elm(t_node *command, t_token **rest, t_token *tok)
 {
 	if (tok->kind == TK_WORD)
 	{
-		append_tok(&command->args, tokdup(tok));
+		add_token(&command->args, token_dup(tok));
 		tok = tok->next;
 	}
 	else if (equal_operators(tok, ">") && tok->next->kind == TK_WORD)
-		add_node(&command->redirects, redirect_out(&tok, tok));
+		add_node(&command->redirects, parse_redir_out(&tok, tok));
 	else if (equal_operators(tok, "<") && tok->next->kind == TK_WORD)
-		add_node(&command->redirects, redirect_in(&tok, tok));
+		add_node(&command->redirects, parse_redir_in(&tok, tok));
 	else if (equal_operators(tok, ">>") && tok->next->kind == TK_WORD)
-		add_node(&command->redirects, redirect_append(&tok, tok));
+		add_node(&command->redirects, parse_redir_append(&tok, tok));
 	else if (equal_operators(tok, "<<") && tok->next->kind == TK_WORD)
-		add_node(&command->redirects, redirect_heredoc(&tok, tok));
+		add_node(&command->redirects, parse_redir_heredoc(&tok, tok));
 	else
 		parse_error(ER_ADD_CMD, &tok, tok);
 	*rest = tok;
 }
 
-static t_node	*simple_command(t_token **rest, t_token *tok)
+static t_node	*process_simple_cmd(t_token **rest, t_token *tok)
 {
 	t_node	*node;
 
@@ -53,7 +53,7 @@ static t_node	*parse_pipeline(t_token **rest, t_token *tok)
 	node->inpipe[1] = -1;
 	node->outpipe[0] = -1;
 	node->outpipe[1] = STDOUT_FILENO;
-	node->command = simple_command(&tok, tok);
+	node->command = process_simple_cmd(&tok, tok);
 	if (equal_operators(tok, "|"))
 		node->next = parse_pipeline(&tok, tok->next);
 	*rest = tok;
