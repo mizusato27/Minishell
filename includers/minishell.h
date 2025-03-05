@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:18:05 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:29:40 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ extern t_context			g_ctx;
 extern volatile sig_atomic_t	sig; //<-signal.c
 
 // error.c
+void						perror_prefix(void);
 void						not_found_cmd(const char *location, const char *msg,
 								int status);
 void						malloc_error(char *msg);
@@ -153,6 +154,8 @@ void						tokenize_error(const char *location, int *j,
 								char *line);
 void						parse_error(const char *location, t_token **rest,
 								t_token *tok);
+
+// error2.c
 void						fatal_error(const char *msg);
 void						assert_error(const char *msg);
 void						xperror(const char *location);

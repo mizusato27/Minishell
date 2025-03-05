@@ -6,7 +6,7 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/05 16:56:25 by ynihei           ###   ########.fr        #
+#    Updated: 2025/03/05 17:28:21 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c exec.c signal.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
 			  $(addprefix $(TOKENIZE_DIR)/, token.c tokenize.c tokenize_helper.c) \
 			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c utils.c) \
-			  $(addprefix $(FINISH_DIR)/, destructor.c error.c)
+			  $(addprefix $(FINISH_DIR)/, destructor.c error.c error2.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}

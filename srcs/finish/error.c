@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:15:29 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:44:59 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,33 +52,6 @@ void	parse_error(const char *location, t_token **rest, t_token *tok)
 	while (tok && !at_eof(tok))
 		tok = tok->next;
 	*rest = tok;
-}
-
-void	malloc_error(char *msg)
-{
-	printf("%s\n", msg);
-	exit(2);
-}
-// --------------------エラー関数(作り方参照)--------------------
-
-void	fatal_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Fatal Error: %s\n", msg);
-	exit(1);
-}
-
-void	assert_error(const char *msg)
-{
-	perror_prefix();
-	dprintf(STDERR_FILENO, "Assert Error: %s\n", msg);
-	exit(255);
-}
-
-void	xperror(const char *location)
-{
-	perror_prefix();
-	perror(location);
 }
 
 void	builtin_error(const char *func, const char *name, const char *err)

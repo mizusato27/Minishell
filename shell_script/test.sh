@@ -442,6 +442,7 @@ assert 'cd /tmp/'
 assert 'cd /tmp///'
 assert 'cd /../../../././.././'
 assert 'cd src'
+# assert 'cd |'
 
 assert 'cd \n echo $PWD'
 unset HOME
