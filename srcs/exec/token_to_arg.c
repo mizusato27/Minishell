@@ -6,13 +6,31 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:17:38 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 19:19:19 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 20:13:12 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// reallocは後で変更必須
+void	*ft_realloc(void *ptr, size_t new_size)
+{
+	void	*new_ptr;
+
+	if (ptr == NULL)
+	{
+		new_ptr = malloc(new_size);
+		if (new_ptr == NULL)
+			malloc_error(ER_MALLOC);
+		return (new_ptr);
+	}
+	new_ptr = malloc(new_size);
+	if (new_ptr == NULL)
+		malloc_error(ER_MALLOC);
+	ft_memcpy(new_ptr, ptr, new_size);
+	free(ptr);
+	return (new_ptr);
+}
+
 // 新しいサイズでメモリを再確保
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
@@ -20,11 +38,11 @@ char	**tail_recursive(t_token *tok, int nargs, char **argv)
 
 	if (tok == NULL || tok->kind == TK_EOF)
 		return (argv);
-	new_argv = realloc(argv, (nargs + 2) * sizeof(char *));
+	new_argv = ft_realloc(argv, (nargs + 2) * sizeof(char *));
 	if (new_argv == NULL)
 	{
 		free(argv);
-		malloc_error("realloc");
+		malloc_error(ER_MALLOC_REALLOC);
 	}
 	argv = new_argv;
 	argv[nargs] = ft_strdup(tok->word);

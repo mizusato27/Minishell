@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 19:23:30 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 20:12:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@
 
 // error_message
 # define ERROR_PREFIX "minishell: "
-# define ER_MALLOC_STRDUP "malloc error"
-# define ER_MALLOC_CALLOC "malloc error"
+# define ER_MALLOC_STRDUP "strdup"
+# define ER_MALLOC_CALLOC "calloc"
+# define ER_MALLOC_REALLOC "realloc"
 # define ER_SYNTAX_ERROR "syntax error"
 # define ER_FORK "fork error"
 # define ER_EXECVE "execve error"
