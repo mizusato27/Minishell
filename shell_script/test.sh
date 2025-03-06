@@ -318,11 +318,11 @@ assert 'echo $UNDEFINED_VARIABLE'
 assert 'echo "$UNDEFINED_VARIABLE"'
 assert 'echo "$USER$UNDEFINED_VARIABLE"'
 assert 'echo "$USER $"'
-# assert 'echo "$USER$$"'
+# assert 'echo "$USER$$"'  # 本家:PIDの取得 -> 未実装
 assert 'echo "$USER$?"'
 assert 'echo "Hello $USER, your PATH is $PATH"'
-assert 'echo '\''$USER'\'''  # シングルクォート内での変数展開
-assert 'echo "$USER"'\''$PATH'\'''  # クォートの組み合わせ
+assert 'echo '\''$USER'\''' 
+assert 'echo "$USER"'\''$PATH'\'''
 # assert 'echo "$USER""\$PATH"'  # ダブルクォート内のエスケープ
 assert 'export TEST=value\necho $TEST\nunset TEST\necho $TEST'
 assert 'export TEST="$USER"\necho $TEST'
@@ -350,6 +350,14 @@ assert 'exit100\necho $?'  # 終了ステータスが100
 assert '/bin/true\necho $?'  # 絶対パスでのコマンド
 assert 'cd /nonexistent\necho $?'  # 存在しないディレクトリへのcd
 assert 'echo hello > /dev/full\necho $?'  # 書き込み失敗
+echo SUCCESS > f5
+chmod 000 f5
+echo -e "-- chmod 000 --"
+assert 'cat < f5\necho $?'
+chmod 777 f5
+echo -e "-- chmod 777 --"
+assert 'cat < f5\necho $?'
+rm -f f5
 assert 'echo $?\n/bin/false\necho $?'  # 連続したエラーコードの確認
 assert 'echo "$?"'  # ダブルクォート内での$?
 assert 'echo '\''$?'\'''  # シングルクォート内での$?

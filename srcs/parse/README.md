@@ -16,7 +16,7 @@
 	│   ├── command: simple_command("ls -l")
 	│   ├── next:
 	│       ├── ND_PIPELINE
-	│       │   ├── command: simple_command("grep \".	c\"")
+	│       │   ├── command: simple_command("grep \".c\"")
 	│       │   ├── next:
 	│       │       ├── ND_PIPELINE
 	│       │       │   ├── command: simple_command("wc -l")
