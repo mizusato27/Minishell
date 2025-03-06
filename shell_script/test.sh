@@ -342,8 +342,24 @@ echo
 echo -e "${BLUE}Special Parameter${RESET}"
 assert 'echo $?'
 assert 'invalid\necho $?\necho $?'
-assert 'exit42\necho $?\necho $?'
-assert 'exit42\n\necho $?\necho $?'
+assert 'exit 42\necho $?\necho $?'
+assert 'exit 42\n\necho $?\necho $?'
+assert 'true\necho $?'  # 成功した場合のステータスコード
+assert 'false\necho $?'  # 失敗した場合のステータスコード
+assert 'exit100\necho $?'  # 終了ステータスが100
+assert '/bin/true\necho $?'  # 絶対パスでのコマンド
+assert 'cd /nonexistent\necho $?'  # 存在しないディレクトリへのcd
+assert 'echo hello > /dev/full\necho $?'  # 書き込み失敗
+assert 'echo $?\n/bin/false\necho $?'  # 連続したエラーコードの確認
+assert 'echo "$?"'  # ダブルクォート内での$?
+assert 'echo '\''$?'\'''  # シングルクォート内での$?
+assert 'echo hello | grep world\necho $?'  # パイプラインでのエラーコード
+assert 'echo hello | grep hello\necho $?'  # 成功するパイプライン
+assert 'echo "Status: $?"'  # 文字列内での$?
+assert 'export STATUS=$?\necho $STATUS'  # 変数への$?の代入
+assert 'invalid_command 2>/dev/null\necho $?'  # エラー出力をリダイレクト
+assert 'echo foo > bar 2>/dev/null\nrm bar\necho foo > bar 2>/dev/null\nchmod 000 bar\necho foo > bar 2>/dev/null\necho $?\nchmod 777 bar\nrm bar' # パーミッションエラー
+assert './print_args $?\n./print_args "$?"'  # コマンドライン引数としての$?
 echo
 
 # Signal handling
