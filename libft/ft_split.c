@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:45:34 by mizusato          #+#    #+#             */
-/*   Updated: 2025/01/26 19:57:02 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:10:41 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static char	*alloc_word(char const *s, char c)
 {
 	char	*str;
 	int		len;
-	// int		result_cpy;
 
 	len = calculate_wordlen(s, c);
 	str = (char *)malloc((len + 1) * sizeof(char));
