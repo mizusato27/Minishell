@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 20:12:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 21:07:52 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_RESET_REDIR "reset_redirect error"
 
-# define OPERATORS "|&;()\n"
-# define METAS "|&;()<> \t\n"
+// # define OPERATORS "|&;()\n"
+# define OPERATORS "|\n"
+# define METAS "|<> \t\n"
+// # define METAS "|&;()<> \t\n"
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 

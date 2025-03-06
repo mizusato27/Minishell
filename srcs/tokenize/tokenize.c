@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:25:42 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 21:10:31 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*operator(int *i, char *line)
 {
 	size_t	j;
 	char	*op;
-	char	*operators[14];
+	char	*operators[7];
 
 	init_operators(operators);
 	j = 0;

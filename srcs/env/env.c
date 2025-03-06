@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 18:16:46 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 20:55:15 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*xgetenv(const char *name)
 }
 
 // envmap_initは環境変数を初期化する関数
+// SHLVLシェルの深さ
 static void	envmap_init(t_map *map, char **ep)
 {
 	char	cwd[PATH_MAX];

@@ -174,7 +174,7 @@ echo -e "${BLUE}single quote${RESET}"
 assert "./print_args 'hello   world' '42Tokyo'"
 assert "echo 'hello   world' '42Tokyo'"
 assert "echo '\"hello   world\"' '42Tokyo'"
-assert "\'"
+# assert "\'"
 echo
 
 ## double quote
@@ -190,8 +190,8 @@ echo
 echo -e "${BLUE}meta chara${RESET}"
 assert ">"
 assert ">>"
-assert ";"
-assert ";;"
+assert "|"
+assert "||"
 echo
 
 # Redirect

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:25:18 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 21:12:08 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	which_op(const char *s, const char *op)
 
 bool	is_operator(const char *s)
 {
-	char	*operators[14];
+	char	*operators[7];
 	int		i;
 
 	init_operators(operators);
@@ -43,22 +43,15 @@ bool	is_operator(const char *s)
 }
 
 //制御演算子の生成
-void	init_operators(char *operators[14])
+void	init_operators(char *operators[7])
 {
-	operators[0] = "||";
-	operators[1] = "&";
-	operators[2] = "&&";
-	operators[3] = ";";
-	operators[4] = ";;";
-	operators[5] = "(";
-	operators[6] = ")";
-	operators[7] = "|";
-	operators[8] = "\n";
-	operators[9] = "<<";
-	operators[10] = ">>";
-	operators[11] = "<";
-	operators[12] = ">";
-	operators[13] = NULL;
+	operators[0] = "|";
+	operators[1] = "\n";
+	operators[2] = "<<";
+	operators[3] = ">>";
+	operators[4] = "<";
+	operators[5] = ">";
+	operators[6] = NULL;
 }
 
 //新しいトークンを作成
