@@ -6,49 +6,44 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 18:45:52 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:24:56 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // reallocは後で変更必須
+// 新しいサイズでメモリを再確保
 char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
 	char	**new_argv;
 
 	if (tok == NULL || tok->kind == TK_EOF)
 		return (argv);
-	// 新しいサイズでメモリを再確保
 	new_argv = realloc(argv, (nargs + 2) * sizeof(char *));
 	if (new_argv == NULL)
 	{
-		free(argv); // reallocが失敗した場合に元のメモリを解放
+		free(argv);
 		malloc_error("realloc");
 	}
 	argv = new_argv;
-	// トークン文字列をコピーして追加
 	argv[nargs] = ft_strdup(tok->word);
 	if (argv[nargs] == NULL)
 	{
-		free(argv); // strdupが失敗した場合に全体を解放
+		free(argv);
 		malloc_error(ER_MALLOC_STRDUP);
 	}
 	argv[nargs + 1] = NULL;
-	// 再帰呼び出し
 	return (tail_recursive(tok->next, nargs + 1, argv));
 }
 
-//いったんコピペ、どうせ後でいらなくなる
 char	**token_list_to_argv(t_token *tok)
 {
 	char	**argv;
 
-	// 初期状態のargvを確保
 	argv = ft_calloc(1, sizeof(char *));
 	if (argv == NULL)
 		malloc_error(ER_MALLOC_CALLOC);
-	// 再帰的にトークンリストを変換
 	return (tail_recursive(tok, 0, argv));
 }
 
@@ -98,7 +93,7 @@ char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-int	exec_nonbuiltin(t_node *node) __attribute__((noreturn));
+int			exec_nonbuiltin(t_node *node) __attribute__((noreturn));
 int	exec_nonbuiltin(t_node *node)
 {
 	char	*path;

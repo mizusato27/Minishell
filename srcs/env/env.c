@@ -6,19 +6,20 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:19:30 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:16:46 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//item_get_stringはアイテムを文字列に変換する関数
+// item_get_stringはアイテムを文字列に変換する関数
+// +2 for '=' and '\0'
 char	*item_connect_equals(t_item *item)
 {
 	size_t	strsize;
 	char	*string;
 
-	strsize = ft_strlen(item->name) + 2; // +2 for '=' and '\0'
+	strsize = ft_strlen(item->name) + 2;
 	if (item->value)
 		strsize += ft_strlen(item->value);
 	string = malloc(strsize);
@@ -97,7 +98,7 @@ void	initenv(void)
 	envmap_init(g_ctx.g_envmap, environ);
 }
 
-//map_newは新しいマップを作成する関数
+// map_newは新しいマップを作成する関数
 // t_map	*map_new(void)
 // {
 // 	t_map	*map;

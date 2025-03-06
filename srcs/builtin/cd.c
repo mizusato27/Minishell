@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/05 17:24:14 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 18:18:52 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	add_path_elm(char *new_pwd, char **rest, char *src)
 		elm_len++;
 	if (new_pwd[dst_len - 1] != '/')
 		ft_strlcat(new_pwd, "/", PATH_MAX);
-	ft_strncat(new_pwd, src, elm_len);// <--- 要修正
+	ft_strncat(new_pwd, src, elm_len); // <--- 要修正
 	*rest = src + elm_len;
 }
 
