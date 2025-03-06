@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 15:47:24 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 15:59:57 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,15 @@ void	parse_error(const char *location, t_token **rest, t_token *tok)
 void	builtin_error(const char *func, const char *name, const char *err)
 {
 	perror_prefix();
-	dprintf(STDERR_FILENO, "%s: ", func);
+	if (func)
+		write(STDERR_FILENO, func, ft_strlen(func));
 	if (name)
-		dprintf(STDERR_FILENO, "`%s': ", name);
-	dprintf(STDERR_FILENO, "%s\n", err);
+	{
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, name, ft_strlen(name));
+	}
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, err, ft_strlen(err));
+	write(STDERR_FILENO, "\n", 1);
 }
+
