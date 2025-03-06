@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 18:57:42 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:23:30 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,11 @@ void						assert_error(const char *msg);
 void						xperror(const char *location);
 void						builtin_error(const char *func, const char *name, const char *err);
 
-// exec.c
+// token_to_arg.c
 char						**token_list_to_argv(t_token *tok);
+// exec_no_builtin.c
+int							exec_nonbuiltin(t_node *node);
+// exec.c
 void						interpret(char *line, int *stat_loc);
 
 // expand.c
