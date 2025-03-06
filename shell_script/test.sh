@@ -289,6 +289,24 @@ echo -e "${BLUE}Pipe${RESET}"
 assert 'cat Makefile | grep minishell'
 assert 'cat | cat | ls\n\n'
 assert 'ls |'
+assert 'echo hello | cat'
+assert 'echo hello | cat | cat | cat | cat'
+assert 'ls -la | grep "a" | grep "b" | grep "c"'
+assert 'ls | sort | head -n 3'
+assert '| ls'
+assert 'ls ||'
+assert 'ls | | grep a'
+assert './exit42 | echo $?'
+assert 'echo hello | invalid_command'
+assert 'invalid_command | echo hello'
+assert 'cat /etc/passwd | grep root | wc -l'
+assert 'cd .. | pwd'  # ビルトインとパイプの組み合わせ
+assert 'export TEST=hello | echo $TEST'  # 環境変数とパイプ
+assert 'echo hello > file.txt | cat file.txt' 'file.txt'
+assert 'cat < Makefile | grep include'
+assert 'cat <<EOF | wc -l\nhello\nworld\nEOF\nNOPRINT'
+assert 'echo hello | cat > pipe_output.txt' 'pipe_output.txt'
+assert './print_args "hello | world" | cat'  # クォート内のパイプ記号
 echo
 
 ## Expand Variable
@@ -296,6 +314,28 @@ echo -e "${BLUE}Expand Variable${RESET}"
 assert 'echo $USER'
 assert 'echo $USER$PATH$TERM'
 assert 'echo "$USER  $PATH   $TERM"'
+assert 'echo $UNDEFINED_VARIABLE'
+assert 'echo "$UNDEFINED_VARIABLE"'
+assert 'echo "$USER$UNDEFINED_VARIABLE"'
+assert 'echo "$USER $"'
+# assert 'echo "$USER$$"'
+assert 'echo "$USER$?"'
+assert 'echo "Hello $USER, your PATH is $PATH"'
+assert 'echo '\''$USER'\'''  # シングルクォート内での変数展開
+assert 'echo "$USER"'\''$PATH'\'''  # クォートの組み合わせ
+# assert 'echo "$USER""\$PATH"'  # ダブルクォート内のエスケープ
+assert 'export TEST=value\necho $TEST\nunset TEST\necho $TEST'
+assert 'export TEST="$USER"\necho $TEST'
+assert 'export TEST=$UNDEFINED\necho $TEST'
+assert 'export TEST="hello world"\necho "$TEST"'
+assert 'export TEST1=hello\nexport TEST2=$TEST1\necho $TEST2'
+assert 'export TEST="$USER   $PATH"\necho $TEST'
+assert 'echo $TEST$?$USER'  # 変数と特殊パラメータの組み合わせ
+assert '$ECHO hello'  # 存在しないコマンド
+assert '$USER'  # 存在しないコマンド（環境変数のみ）
+assert 'export PATH=/bin\nls\nexport PATH=\nls'  # PATHの変更
+# assert 'cat $FILE'  # 存在しないファイル
+# assert 'echo hello > $OUTFILE' 'variable_output.txt'  # リダイレクトでの変数展開
 echo
 
 ## Special Parameter $?

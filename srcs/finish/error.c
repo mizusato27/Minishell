@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 15:59:57 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:43:16 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	parse_error(const char *location, t_token **rest, t_token *tok)
 	write(2, "syntax error near unexpected token `", 37);
 	if (tok->word)
 		write(2, tok->word, ft_strlen(tok->word));
-	else
-		return ;
 	write(2, "' in ", 5);
 	write(2, location, ft_strlen(location));
 	write(2, "\n", 1);
