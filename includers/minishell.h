@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 16:03:06 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 19:09:17 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <errno.h> // <--- pipe
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <readline/history.h>
@@ -49,10 +49,8 @@
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_RESET_REDIR "reset_redirect error"
 
-// # define OPERATORS "|&;()\n"
 # define OPERATORS "|\n"
 # define METAS "|<> \t\n"
-// # define METAS "|&;()<> \t\n"
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 
@@ -83,9 +81,9 @@ struct						s_token
 
 enum						e_node_kind
 {
-	ND_PIPELINE, // <--- pipe
+	ND_PIPELINE,
 	ND_SIMPLE_CMD,
-	ND_REDIR_OUT, // <--- added
+	ND_REDIR_OUT,
 	ND_REDIR_IN,
 	ND_REDIR_APPEND,
 	ND_REDIR_HEREDOC,
@@ -94,7 +92,6 @@ typedef enum e_node_kind	t_node_kind;
 typedef struct s_node		t_node;
 struct						s_node
 {
-	// t_token		*args;
 	t_node_kind				kind;
 	t_node					*next;
 	// CMD
@@ -116,7 +113,7 @@ struct						s_node
 typedef struct s_map		t_map;
 typedef struct s_item		t_item;
 struct						s_item
-{ //<-env.c
+{
 	char					*name;
 	char					*value;
 	t_item					*next;
@@ -146,9 +143,7 @@ struct 						s_context
 };
 extern t_context			g_ctx;
 
-extern volatile sig_atomic_t	sig; //<-signal.c
-
-// [builtin]
+// -------------------- BUILTIN --------------------
 // builtin.c
 int							exec_builtin(t_node *node);
 bool						is_builtin(t_node *node);
@@ -167,7 +162,7 @@ int							builtin_pwd(void);
 // unset.c
 int							builtin_unset(char **argv);
 
-// [env]
+// -------------------- ENV --------------------
 // env.c
 char						*xgetenv(const char *name);
 void						initenv(void);
@@ -190,7 +185,7 @@ int							map_put(t_map *map, const char *string,
 								bool allow_empty_value);
 // void						map_printall(t_map *map);
 
-// [exec]
+// -------------------- EXEC --------------------
 // exec_no_builtin.c
 int							exec_nonbuiltin(t_node *node);
 // exec.c
@@ -198,7 +193,7 @@ void						interpret(char *line, int *stat_loc);
 // token_to_arg.c
 char						**token_list_to_argv(t_token *tok);
 
-// [expand]
+// -------------------- EXPAND --------------------
 // expand.c
 void						add_char(char **s, char c);
 void						expand(t_node *node);
@@ -213,7 +208,7 @@ void						expand_var_str(char **dst, char **rest, char *ptr);
 void						add_quote(char **dst, char **rest, char *ptr);
 void						expand_variable(t_node *node);
 
-// [finish]
+// -------------------- FINISH --------------------
 // destructor.c
 void						free_node(t_node *node);
 void						free_token(t_token *tok);
@@ -233,7 +228,7 @@ void						assert_error(const char *msg);
 void						xperror(const char *location);
 void						builtin_error(const char *func, const char *name, const char *err);
 
-// [parse]
+// -------------------- PARSE --------------------
 // parse_redir.c
 t_node						*parse_redir_out(t_token **rest, t_token *tok);
 t_node						*parse_redir_in(t_token **rest, t_token *tok);
@@ -246,13 +241,13 @@ void						add_node(t_node **node, t_node *elm);
 // parse.c
 t_node						*parse(t_token *tok);
 
-// [pipe]
+// -------------------- PIPE --------------------
 // pipe.c
 void						create_new_pipe(t_node *node);
 void						process_child_pipe(t_node *node);
 void						process_parent_pipe(t_node *node);
 
-// [redirect]
+// -------------------- REDIRECT --------------------
 // here_document.c
 int							read_here_document(const char *delimiter, bool is_quoted);
 // open_file.c
@@ -263,13 +258,13 @@ void						reset_redirect(t_node *redirects);
 // stash_fd.c
 int							stash_fd(int fd);
 
-// [signal]
+// -------------------- SIGNAL --------------------
 // reset_signal.c
 void	reset_signal(void);
 //signal.c
 void	setup_signal(void);
 
-// [tokenize]
+// -------------------- TOKENIZE --------------------
 // token.c
 void						add_token(t_token **tokens, t_token *tok);
 bool						at_eof(t_token *tok);
@@ -284,7 +279,7 @@ bool						which_op(const char *s, const char *op);
 bool						is_operator(const char *s);
 void						init_operators(char *operators[7]);
 
-// [utils]
+// -------------------- UTILS --------------------
 // ft_close.c
 int							ft_close(int fildes);
 // ft_dup2.c
