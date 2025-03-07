@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 21:11:02 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 18:02:13 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 02:22:39 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	sort_env(t_item **arr, size_t count)
 	}
 }
 
-void	print_allenv(void)
+void	print_env(void)
 {
 	t_item	**arr;
 	size_t	count;
@@ -104,12 +104,12 @@ int	builtin_export(char **argv)
 	i = 1;
 	if (argv[i] == NULL)
 	{
-		print_allenv();
+		print_env();
 		return (status);
 	}
 	while (argv[i])
 	{
-		if (map_put(g_ctx.g_envmap, argv[i], true) < 0)
+		if (map_set_from_string(g_ctx.g_envmap, argv[i], true) < 0)
 		{
 			builtin_error("export", argv[i], "not a valid identifier");
 			status = 1;

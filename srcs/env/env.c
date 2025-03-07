@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 20:55:15 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 02:42:53 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // item_get_stringはアイテムを文字列に変換する関数
 // +2 for '=' and '\0'
-char	*item_connect_equals(t_item *item)
+static	char	*item_connect_equals(t_item *item)
 {
 	size_t	strsize;
 	char	*string;
@@ -62,12 +62,6 @@ char	**get_environ(t_map *map)
 	return (environ);
 }
 
-// xgetenvは環境変数の値を取得する関数
-char	*xgetenv(const char *name)
-{
-	return (map_get(g_ctx.g_envmap, name));
-}
-
 // envmap_initは環境変数を初期化する関数
 // SHLVLシェルの深さ
 static void	envmap_init(t_map *map, char **ep)
@@ -76,21 +70,34 @@ static void	envmap_init(t_map *map, char **ep)
 
 	while (*ep)
 	{
-		map_put(map, *ep, false);
+		map_set_from_string(map, *ep, false);
 		ep++;
 	}
-	if (map_get(map, "SHLVL") == NULL)
-		map_set(map, "SHLVL", "1");
-	if (map_get(map, "PWD") == NULL)
+	if (map_get_value(map, "SHLVL") == NULL)
+		map_set_value(map, "SHLVL", "1");
+	if (map_get_value(map, "PWD") == NULL)
 	{
 		getcwd(cwd, PATH_MAX);
-		map_set(map, "PWD", cwd);
+		map_set_value(map, "PWD", cwd);
 	}
-	if (map_get(map, "OLDPWD") == NULL)
-		map_set(map, "OLDPWD", NULL);
+	if (map_get_value(map, "OLDPWD") == NULL)
+		map_set_value(map, "OLDPWD", NULL);
+}
+
+// map_newは新しいマップを作成する関数
+static	t_map	*map_new(void)
+{
+	t_map	*map;
+
+	map = ft_calloc(1, sizeof(*map));
+	if (map == NULL)
+		malloc_error(ER_MALLOC_CALLOC);
+	return (map);
 }
 
 // initenvは環境変数を初期化する関数
+// environは環境変数を格納する配列
+// externをつけることで、他のファイルからも参照できる
 void	initenv(void)
 {
 	extern char	**environ;
@@ -98,14 +105,3 @@ void	initenv(void)
 	g_ctx.g_envmap = map_new();
 	envmap_init(g_ctx.g_envmap, environ);
 }
-
-// map_newは新しいマップを作成する関数
-// t_map	*map_new(void)
-// {
-// 	t_map	*map;
-
-// 	map = ft_calloc(1, sizeof(*map));
-// 	if (map == NULL)
-// 		error(ER_MALLOC_CALLOC);
-// 	return (map);
-// }

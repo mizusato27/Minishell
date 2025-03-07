@@ -6,7 +6,7 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/06 19:24:29 by ynihei           ###   ########.fr        #
+#    Updated: 2025/03/08 02:23:23 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ EXEC_DIR		= $(SRCS_DIR)/exec
 
 SRCS		= $(addprefix $(SRCS_DIR)/, main.c) \
 			  $(addprefix $(BUILTIN_DIR)/, builtin.c exit.c export.c unset.c env.c cd.c echo.c pwd.c) \
-			  $(addprefix $(ENV_DIR)/, env.c map.c map_helper.c map_create.c) \
+			  $(addprefix $(ENV_DIR)/, env.c map_set_from_string.c map_helper.c map_set_value.c map_get_value.c) \
 			  $(addprefix $(EXPAND_DIR)/, expand.c quote_removal.c special_param.c variable.c) \
 			  $(addprefix $(PARSE_DIR)/, parse_redir.c parse_utils.c parse.c) \
 			  $(addprefix $(PIPE_DIR)/, pipe.c) \

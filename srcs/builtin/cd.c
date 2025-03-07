@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/06 18:18:52 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 02:24:40 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	cpy_dir_path(char *path, char *arg)
 
 	if (arg == NULL)
 	{
-		home_dir_path = map_get(g_ctx.g_envmap, "HOME");
+		home_dir_path = map_get_value(g_ctx.g_envmap, "HOME");
 		if (home_dir_path == NULL)
 		{
 			builtin_error("cd", NULL, "HOME not set");
@@ -104,8 +104,8 @@ int	builtin_cd(char **argv)
 	char	*new_pwd;
 	char	path[PATH_MAX];
 
-	old_pwd = map_get(g_ctx.g_envmap, "PWD");
-	if (map_set(g_ctx.g_envmap, "OLDPWD", old_pwd) < 0)
+	old_pwd = map_get_value(g_ctx.g_envmap, "PWD");
+	if (map_set_value(g_ctx.g_envmap, "OLDPWD", old_pwd) < 0)
 	{
 		builtin_error("cd", NULL, "map_set");
 		return (1);
@@ -118,7 +118,7 @@ int	builtin_cd(char **argv)
 		return (1);
 	}
 	new_pwd = get_new_pwd(old_pwd, path);
-	if (map_set(g_ctx.g_envmap, "PWD", new_pwd) < 0)
+	if (map_set_value(g_ctx.g_envmap, "PWD", new_pwd) < 0)
 	{
 		builtin_error("cd", NULL, "map_set");
 		return (1);

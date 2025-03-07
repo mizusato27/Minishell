@@ -6,14 +6,14 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:34:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 18:17:48 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 02:02:16 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // item_newは新しいアイテムを作成する関数
-t_item	*item_new(char *name, char *value)
+static	t_item	*item_new(char *name, char *value)
 {
 	t_item	*item;
 
@@ -23,17 +23,6 @@ t_item	*item_new(char *name, char *value)
 	item->name = name;
 	item->value = value;
 	return (item);
-}
-
-// map_newは新しいマップを作成する関数
-t_map	*map_new(void)
-{
-	t_map	*map;
-
-	map = ft_calloc(1, sizeof(*map));
-	if (map == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
-	return (map);
 }
 
 // 新しいアイテムを作成してマップに追加する関数
@@ -67,7 +56,7 @@ static void	map_update_item(t_item *item, const char *value)
 
 //直接キーと値を設定する関数
 //キーが存在しない場合は新しいアイテムを作成し、キーが存在する場合は値を更新する
-int	map_set(t_map *map, const char *name, const char *value)
+int	map_set_value(t_map *map, const char *name, const char *value)
 {
 	t_item	*cur;
 

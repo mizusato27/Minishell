@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 23:20:47 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:22:39 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,22 +165,21 @@ int							builtin_unset(char **argv);
 
 // -------------------- ENV --------------------
 // env.c
-char						*xgetenv(const char *name);
 void						initenv(void);
 char						**get_environ(t_map *map);
-// map_create.c
-t_item						*item_new(char *name, char *value);
-t_map						*map_new(void);
-int							map_set(t_map *map, const char *name,
+// map_get_value.c
+char						*map_get_value(t_map *map, const char *name);
+// map_set_value.c
+int							map_set_value(t_map *map, const char *name,
 								const char *value);
 // map_helper.c
+char						*xgetenv(const char *name);
 bool						is_alpha_under(char c);
 bool						is_alpha_num_under(char c);
 bool						is_identifier(const char *s);
 size_t						map_len(t_map *map, bool count_null_value);
 // map.c
-char						*map_get(t_map *map, const char *name);
-int							map_put(t_map *map, const char *string,
+int							map_set_from_string(t_map *map, const char *string,
 								bool allow_empty_value);
 // void						map_printall(t_map *map);
 
