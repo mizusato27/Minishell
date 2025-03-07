@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 19:22:15 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:43:07 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	execute_pipe(t_node *node)
+static pid_t	execute_pipe(t_node *node)
 {
 	pid_t	pid;
 
@@ -37,7 +37,7 @@ pid_t	execute_pipe(t_node *node)
 	return (pid);
 }
 
-int	wait_pipe(pid_t pid)
+static int	wait_pipe(pid_t pid)
 {
 	pid_t	result;
 	int		status;
@@ -66,7 +66,7 @@ int	wait_pipe(pid_t pid)
 	return (status);
 }
 
-int	execute_cmd(t_node *node)
+static int	execute_cmd(t_node *node)
 {
 	pid_t	pid;
 	int		cmd_status;

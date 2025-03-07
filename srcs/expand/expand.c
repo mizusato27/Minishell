@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/05 17:22:12 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:20:33 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	todo(char *message)
-{
-	printf("TODO: %s\n", message);
-}
 
 void	add_char(char **s, char c)
 {

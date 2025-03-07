@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/02 16:22:59 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:32:25 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_builtin(t_node *node)
 	else if (ft_strcmp(argv[0], "env") == 0)
 		status = builtin_env();
 	else
-		todo("exec_builtin");
+		ft_putstr_fd("builtin\n", STDERR_FILENO);// <--- 仮置き
 	free_argv(argv);
 	reset_redirect(node->command->redirects);
 	return (status);

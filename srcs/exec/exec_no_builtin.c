@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_no_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 19:24:02 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:42:18 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	construct_path(char path[PATH_MAX], const char *filename, char *env,
 
 //:はディレクトリの終わりを指す
 // PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
-char	*find_executable(const char *filename)
+static char	*find_executable(const char *filename)
 {
 	char	path[PATH_MAX];
 	char	*env;

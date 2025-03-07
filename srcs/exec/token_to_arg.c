@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:17:38 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 20:13:12 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:44:09 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t new_size)
+static void	*ft_realloc(void *ptr, size_t new_size)
 {
 	void	*new_ptr;
 
@@ -32,7 +32,7 @@ void	*ft_realloc(void *ptr, size_t new_size)
 }
 
 // 新しいサイズでメモリを再確保
-char	**tail_recursive(t_token *tok, int nargs, char **argv)
+static char	**tail_recursive(t_token *tok, int nargs, char **argv)
 {
 	char	**new_argv;
 
