@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 19:09:17 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/07 21:25:08 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define ERROR_TOKENIZE 258
 # define ERROR_PARSE 258
 # define ERROR_OPEN_REDIR 1
+# define ERROR_UNSET 1
 
 typedef struct s_token		t_token;
 enum						e_token_kind
@@ -177,10 +178,8 @@ bool						is_alpha_under(char c);
 bool						is_alpha_num_under(char c);
 bool						is_identifier(const char *s);
 size_t						map_len(t_map *map, bool count_null_value);
-// char	*item_get_string(t_item *item);
 // map.c
 char						*map_get(t_map *map, const char *name);
-int							map_unset(t_map *map, const char *name);
 int							map_put(t_map *map, const char *string,
 								bool allow_empty_value);
 // void						map_printall(t_map *map);

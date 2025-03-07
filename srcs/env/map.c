@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 18:17:38 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 21:03:54 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,6 @@ char	*map_get(t_map *map, const char *name)
 		cur = cur->next;
 	}
 	return (NULL);
-}
-
-// map_unsetはマップから値を削除する関数
-int	map_unset(t_map *map, const char *name)
-{
-	t_item	*cur;
-	t_item	*prev;
-
-	if (name == NULL || !is_identifier(name))
-		return (-1);
-	prev = &map->item_head;
-	cur = map->item_head.next;
-	while (cur)
-	{
-		if (ft_strcmp(cur->name, name) == 0)
-		{
-			prev->next = cur->next;
-			free(cur->name);
-			free(cur->value);
-			free(cur);
-			return (0);
-		}
-		prev = prev->next;
-		cur = cur->next;
-	}
-	return (0);
 }
 
 //"KEY=VALUE" の形式の文字列を受け取り、キーと値を分割して設定する関数
