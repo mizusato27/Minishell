@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:58:17 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 11:02:42 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 23:19:40 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	builtin_exit(char **argv)
 	char	*num;
 
 	if (argv[1] == NULL)
-		exit(g_ctx.g_last_status);
+		exit(g_ctx.g_status);
 	if (argv[2])
 	{
 		xperror("exit: too many arguments");

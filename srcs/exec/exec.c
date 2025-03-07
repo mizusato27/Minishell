@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 15:43:07 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:20:24 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static int	execute_cmd(t_node *node)
 	return (cmd_status);
 }
 
-// stat_locは終了ステータスを格納する変数
+// last_statusは終了ステータスを格納する変数
 // syntax_errorは構文エラーがあるかどうかを格納する変数
-void	interpret(char *line, int *stat_loc)
+void	interpret_cmd(char *line, int *last_status)
 {
 	t_token	*tok;
 	t_node	*node;
@@ -94,16 +94,16 @@ void	interpret(char *line, int *stat_loc)
 	if (at_eof(tok))
 		;
 	else if (g_ctx.g_syntax_error)
-		*stat_loc = ERROR_TOKENIZE;
+		*last_status = ERROR_TOKENIZE;
 	else
 	{
 		node = parse(tok);
 		if (g_ctx.g_syntax_error)
-			*stat_loc = ERROR_PARSE;
+			*last_status = ERROR_PARSE;
 		else
 		{
 			expand(node);
-			*stat_loc = execute_cmd(node);
+			*last_status = execute_cmd(node);
 		}
 		free_node(node);
 	}

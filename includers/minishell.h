@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 21:25:08 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 23:20:47 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ struct						s_map
 
 // g_rl_intr: readlineの割り込みフラグ
 // syntax_error: 構文エラーが発生したかどうかのフラグ
-// g_last_status: 最後に実行したコマンドの終了ステータス
+// g_status: 最後に実行したコマンドの終了ステータス
 // g_envmap: 環境変数を格納するマップ
 // g_sig: シグナルの種類
 typedef struct s_context	t_context;
@@ -138,7 +138,7 @@ struct 						s_context
 {
 	bool					g_rl_intr;
 	bool					g_syntax_error;
-	int						g_last_status;
+	int						g_status;
 	t_map 					*g_envmap;
 	volatile sig_atomic_t	g_sig;
 };
@@ -188,7 +188,7 @@ int							map_put(t_map *map, const char *string,
 // exec_no_builtin.c
 int							exec_nonbuiltin(t_node *node);
 // exec.c
-void						interpret(char *line, int *stat_loc);
+void						interpret_cmd(char *line, int *stat_loc);
 // token_to_arg.c
 char						**token_list_to_argv(t_token *tok);
 

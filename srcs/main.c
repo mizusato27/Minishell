@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/04 12:14:22 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 23:20:34 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(void)
 	rl_outstream = stderr;
 	setup_signal();
 	initenv();
-	g_ctx.g_last_status = 0;
+	g_ctx.g_status = 0;
 	while (1)
 	{
 		//標準入力で受け取る
@@ -34,10 +34,10 @@ int	main(void)
 		if (*line)
 			add_history(line);
 		// interpret(line, &status);
-		interpret(line, &g_ctx.g_last_status);
+		interpret_cmd(line, &g_ctx.g_status);
 		// TODO: intepret line as a command
 		free(line);
 	}
 	// exit(status);
-	exit(g_ctx.g_last_status);
+	exit(g_ctx.g_status);
 }
