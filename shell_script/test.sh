@@ -560,7 +560,6 @@ assert 'unset nosuch'
 assert 'unset [invalid]'
 assert 'unset 123abc'    # 数字で始まる変数名（無効）
 assert 'unset !invalid'  # `!` を含む変数名（無効）
-assert 'unset foo;bar'   # `;` を含む（無効）
 assert 'unset hoge=val'  # `=` を含む変数名（無効）
 assert 'unset hoge fuga'
 assert 'unset hoge nosuch fuga'

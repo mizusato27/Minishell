@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:32:20 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 21:12:08 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 21:47:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	is_metacharacter(char c)
 {
 	if (is_blank(c))
 		return (true);
-	return (c && ft_strchr("|&;()<> \t\n", c));
+	return (c && ft_strchr("|<> \t\n", c));
 }
 
 //どの制御演算子かのチェック
