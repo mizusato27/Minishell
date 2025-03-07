@@ -6,76 +6,88 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 21:11:02 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 20:47:40 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 17:43:26 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_allenv(void)
+static size_t	count_env_vars(void)
 {
 	t_item	*cur;
-	t_item	*sorted_head = NULL;
-	t_item	*node;
-	t_item	*prev;
-	t_item	*insert_pos;
+	size_t	count;
 
-	// 環境変数が空の場合は何もしない
-	if (!g_ctx.g_envmap || !g_ctx.g_envmap->item_head.next)
-		return;
-
-	// 環境変数リストをコピーし、辞書順に並び替える
+	count = 0;
 	cur = g_ctx.g_envmap->item_head.next;
 	while (cur)
 	{
-		// 新しいノードを作成
-		node = malloc(sizeof(t_item));
-		if (!node)
-			malloc_error("malloc");
-		node->name = cur->name;
-		node->value = cur->value;
-		node->next = NULL;
-
-		// 挿入位置を探す
-		insert_pos = sorted_head;
-		prev = NULL;
-		while (insert_pos && strcmp(insert_pos->name, node->name) < 0)
-		{
-			prev = insert_pos;
-			insert_pos = insert_pos->next;
-		}
-
-		// ソート済みリストにノードを挿入
-		if (prev == NULL)
-		{
-			node->next = sorted_head;
-			sorted_head = node;
-		}
-		else
-		{
-			node->next = prev->next;
-			prev->next = node;
-		}
-
+		count++;
 		cur = cur->next;
 	}
-	// ソート済みリストを表示
-	cur = sorted_head;
-	while (cur)
+	return (count);
+}
+
+static void	fill_env_array(t_item **arr, size_t count)
+{
+	t_item	*cur;
+	size_t	i;
+
+	cur = g_ctx.g_envmap->item_head.next;
+	i = 0;
+	while (cur && i < count)
 	{
-		if (cur->value)
-			printf("declare -x %s=\"%s\"\n", cur->name, cur->value);
-		else
-			printf("declare -x %s\n", cur->name);
+		arr[i] = cur;
 		cur = cur->next;
+		i++;
 	}
-	// ソート済みリストを解放
-	while (sorted_head)
+}
+
+static void	sort_env(t_item **arr, size_t count)
+{
+	t_item	*tmp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < count - 1)
 	{
-		node = sorted_head;
-		sorted_head = sorted_head->next;
-		free(node);
+		j = i + 1;
+		while (j < count)
+		{
+			if (ft_strcmp(arr[i]->name, arr[j]->name) > 0)
+			{
+				tmp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = tmp;
+			}
+			j++;
+		}
+		i++;
 	}
+}
+
+void	print_allenv(void)
+{
+	t_item	**arr;
+	size_t	count;
+	size_t	i;
+
+	count = count_env_vars();
+	arr = (t_item **)malloc(sizeof(t_item *) * count);
+	if (!arr)
+		return ;
+	fill_env_array(arr, count);
+	sort_env(arr, count);
+	i = 0;
+	while (i < count)
+	{
+		printf("declare -x %s", arr[i]->name);
+		if (arr[i]->value)
+			printf("=\"%s\"", arr[i]->value);
+		printf("\n");
+		i++;
+	}
+	free(arr);
 }
 
 int	builtin_export(char **argv)
@@ -83,13 +95,13 @@ int	builtin_export(char **argv)
 	size_t	i;
 	int		status;
 
-	if (argv[1] == NULL)
-	{
-		print_allenv();
-		return (0);
-	}
 	status = 0;
 	i = 1;
+	if (argv[i] == NULL)
+	{
+		print_allenv();
+		return (status);
+	}
 	while (argv[i])
 	{
 		if (map_put(g_ctx.g_envmap, argv[i], true) < 0)

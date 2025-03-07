@@ -474,6 +474,7 @@ echo
 ## export
 echo -e "${BLUE}export${RESET}"
 print_desc "Output of 'export' differs, but it's ok."
+echo -e "${BLUE}昇順にはした\nminishellのexportは環境変数に実行ファイルが入るため、これでok${RESET}"
 assert 'export' # order of variables, default variables differs...
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
