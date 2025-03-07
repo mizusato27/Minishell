@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 21:11:02 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 17:43:26 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:02:13 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	print_allenv(void)
 	i = 0;
 	while (i < count)
 	{
+		if (ft_strcmp(arr[i]->name, "_") == 0)
+		{
+			i++;
+			continue ;
+		}
 		printf("declare -x %s", arr[i]->name);
 		if (arr[i]->value)
 			printf("=\"%s\"", arr[i]->value);
