@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 18:04:53 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 12:50:59 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 // シグナルハンドラ関数
 // 受信したシグナル番号をグローバル変数 'sig' に保存する
-void	handler(int signum)
+void	exec_handler(int signum)
 {
 	g_ctx.g_sig = signum;
 }
 
 //指定したシグナルを設定する（無視するか、指定されたハンドラを設定する）
 //SIG_IGNはシグナルを無視
-void	setup_signal_handlers(int signum, void (*handler)(int))
+static	void	setup_signal_handlers(int signum, void (*handler)(int))
 {
 	struct sigaction	sa;
 
@@ -65,5 +65,5 @@ void	setup_signal(void)
 	if (isatty(STDIN_FILENO))
 		rl_event_hook = check_state;
 	setup_signal_handlers(SIGQUIT, SIG_IGN);
-	setup_signal_handlers(SIGINT, handler);
+	setup_signal_handlers(SIGINT, exec_handler);
 }
