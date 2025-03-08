@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 02:42:53 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**get_environ(t_map *map)
 	size = map_len(map, false) + 1;
 	environ = ft_calloc(size, sizeof(char *));
 	if (environ == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	i = 0;
 	item = map->item_head.next;
 	while (item)
@@ -91,7 +91,7 @@ static	t_map	*map_new(void)
 
 	map = ft_calloc(1, sizeof(*map));
 	if (map == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	return (map);
 }
 

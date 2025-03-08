@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_no_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 15:42:18 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*find_executable(const char *filename)
 		{
 			result = ft_strdup(path);
 			if (result == NULL)
-				malloc_error(ER_MALLOC_STRDUP);
+				malloc_error(ER_STRDUP);
 			return (result);
 		}
 		if (path_end == NULL)
@@ -69,13 +69,11 @@ int	exec_nonbuiltin(t_node *node)
 	path = argv[0];
 	if (ft_strchr(path, '/') == NULL)
 		path = find_executable(path);
-	if (path == NULL)
-		not_found_cmd(argv[0], "command not found", 127);
-	if (access(path, F_OK) < 0)
-		not_found_cmd(argv[0], "command not found", 127);
+	if (path == NULL || access(path, F_OK) < 0)
+		not_found_cmd(argv[0], ER_ACCESS, ERROR_CMD);
 	execve(path, argv, get_environ(g_ctx.g_envmap));
 	free(argv);
 	reset_redirect(node->command->redirects);
-	write(2, "execve failed\n", 14);
-	exit(127);
+	write(STDERR_FILENO, ER_EXEC, 14);
+	exit(ERROR_CMD);
 }

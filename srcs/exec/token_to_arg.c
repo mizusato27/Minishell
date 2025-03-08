@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_arg.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:17:38 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 15:44:09 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static char	**tail_recursive(t_token *tok, int nargs, char **argv)
 	if (new_argv == NULL)
 	{
 		free(argv);
-		malloc_error(ER_MALLOC_REALLOC);
+		malloc_error(ER_REALLOC);
 	}
 	argv = new_argv;
 	argv[nargs] = ft_strdup(tok->word);
 	if (argv[nargs] == NULL)
 	{
 		free(argv);
-		malloc_error(ER_MALLOC_STRDUP);
+		malloc_error(ER_STRDUP);
 	}
 	argv[nargs + 1] = NULL;
 	return (tail_recursive(tok->next, nargs + 1, argv));
@@ -61,6 +61,6 @@ char	**token_list_to_argv(t_token *tok)
 
 	argv = ft_calloc(1, sizeof(char *));
 	if (argv == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	return (tail_recursive(tok, 0, argv));
 }

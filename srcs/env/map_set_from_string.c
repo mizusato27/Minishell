@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   map_set_from_string.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 02:22:39 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	handle_no_equal(char **name, char **value, const char *string,
 		*name = ft_strdup(string);
 		*value = NULL;
 		if (*name == NULL)
-			malloc_error(ER_MALLOC_STRDUP);
+			malloc_error(ER_STRDUP);
 	}
 }
 
@@ -42,12 +42,12 @@ static void	handle_with_equal(char **name, char **value, const char *string,
 	name_len = name_end - string;
 	*name = ft_calloc(name_len + 1, 1);
 	if (*name == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	ft_strlcpy(*name, string, name_len + 1);
 	(*name)[name_len] = '\0';
 	*value = ft_strdup(name_end + 1);
 	if (*name == NULL || *value == NULL)
-		malloc_error(ER_MALLOC_STRDUP);
+		malloc_error(ER_STRDUP);
 }
 
 int	map_set_from_string(t_map *map, const char *string, bool allow_empty_value)

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 21:10:31 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*operator(int *i, char *line)
 		{
 			op = ft_strdup(operators[j]);
 			if (op == NULL)
-				malloc_error(ER_MALLOC_STRDUP);
+				malloc_error(ER_STRDUP);
 			*i += ft_strlen(op);
 			return (new_token(op, TK_OP));
 		}

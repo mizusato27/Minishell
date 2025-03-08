@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:57 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/05 17:23:11 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	expand_var_str(char **dst, char **rest, char *ptr)
 
 	name = ft_calloc(1, sizeof(char));
 	if (name == NULL)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	if (*ptr != '$')
 		assert_error("Expected dollar sign");
 	ptr++;
@@ -81,7 +81,7 @@ static void	expand_var_token(t_token *tok)
 	ptr = tok->word;
 	new_str = ft_calloc(1, sizeof(char));
 	if (!new_str)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	while (*ptr && !is_metacharacter(*ptr))
 	{
 		if (*ptr == SINGLE_QUOTE || *ptr == DOUBLE_QUOTE)

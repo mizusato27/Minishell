@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 20:19:44 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/05 18:56:19 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_token	*token_dup(t_token *tok)
 
 	word = ft_strdup(tok->word);
 	if (word == NULL)
-		malloc_error(ER_MALLOC_STRDUP);
+		malloc_error(ER_STRDUP);
 	return (new_token(word, tok->kind));
 }
 

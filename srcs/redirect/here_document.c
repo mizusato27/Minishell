@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/05 17:24:58 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*expand_here_document(char *line, bool is_quoted)
 	ptr = line;
 	new_str = ft_calloc(1, sizeof(char));
 	if (!new_str)
-		malloc_error(ER_MALLOC_CALLOC);
+		malloc_error(ER_CALLOC);
 	while (*ptr)
 	{
 		if (is_variable(ptr))

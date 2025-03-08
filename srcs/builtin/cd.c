@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/08 14:54:28 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static char	*get_new_pwd(char *old_pwd, char *path)
 	}
 	result = ft_strdup(new_pwd);
 	if (result == NULL)
-		malloc_error(ER_MALLOC_STRDUP);
+		malloc_error(ER_STRDUP);
 	return (result);
 }
 

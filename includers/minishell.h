@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 17:01:07 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@
 
 // error_message
 # define ER_ACCESS "command not found"
+# define ER_EXEC "execve failed\n"
 # define ER_ADD_CMD "add_cmd_elm error"
 # define ER_CLOSE "close error"
 # define ER_DUP2 "dup2 error"
 # define ER_EXECVE "execve error"
 # define ER_FILE "invalid file"
 # define ER_FORK "fork error"
-# define ER_MALLOC_CALLOC "calloc"
-# define ER_MALLOC_REALLOC "realloc"
-# define ER_MALLOC_STRDUP "strdup"
+# define ER_CALLOC "calloc"
+# define ER_REALLOC "realloc"
+# define ER_STRDUP "strdup"
 # define ER_MALLOC "malloc error"
 # define ER_OVERFLOW "overflow"
 # define ER_PIPE "pipe error"
@@ -62,6 +63,7 @@
 # define ERROR_PARSE 258
 # define ERROR_OPEN_REDIR 1
 # define ERROR_UNSET 1
+# define ERROR_CMD 127
 
 typedef struct s_token		t_token;
 enum						e_token_kind
