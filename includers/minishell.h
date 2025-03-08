@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 14:55:54 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:06:55 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,31 @@
 # endif
 
 // error_message
-# define ERROR_PREFIX "minishell: "
-# define ER_MALLOC_STRDUP "strdup"
+# define ER_ACCESS "command not found"
+# define ER_ADD_CMD "add_cmd_elm error"
+# define ER_CLOSE "close error"
+# define ER_DUP2 "dup2 error"
+# define ER_EXECVE "execve error"
+# define ER_FILE "invalid file"
+# define ER_FORK "fork error"
 # define ER_MALLOC_CALLOC "calloc"
 # define ER_MALLOC_REALLOC "realloc"
-# define ER_SYNTAX_ERROR "syntax error"
-# define ER_FORK "fork error"
-# define ER_EXECVE "execve error"
-# define ER_ACCESS "command not found"
+# define ER_MALLOC_STRDUP "strdup"
 # define ER_MALLOC "malloc error"
-# define ER_ADD_CMD "add_cmd_elm error"
-# define ER_FILE "invalid file"
-# define ER_DUP2 "dup2 error"
-# define ER_CLOSE "close error"
-# define ER_PIPE "pipe error"
-# define ER_SETUP_REDIR "setup_redirect error"
-# define ER_RESET_REDIR "reset_redirect error"
 # define ER_OVERFLOW "overflow"
+# define ER_PIPE "pipe error"
+# define ER_RESET_REDIR "reset_redirect error"
+# define ER_SETUP_REDIR "setup_redirect error"
+# define ER_SYNTAX_ERROR "syntax error"
+# define ERROR_PREFIX "minishell: "
 
 # define OPERATORS "|\n"
 # define METAS "|<> \t\n"
 # define SINGLE_QUOTE '\''
 # define DOUBLE_QUOTE '\"'
 
-# define CHILD_PROCESS 0
 # define APPEND_CHAR_SIZE 1
+# define CHILD_PROCESS 0
 # define END_CHAR_SIZE 1
 # define ERROR_TOKENIZE 258
 # define ERROR_PARSE 258
