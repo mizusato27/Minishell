@@ -503,6 +503,7 @@ echo
 ## cd
 echo -e "${BLUE}cd${RESET}"
 assert 'cd'
+assert 'cd -'
 assert 'cd .'
 assert 'cd ..'
 assert 'cd ///'
