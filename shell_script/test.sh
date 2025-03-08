@@ -329,7 +329,6 @@ assert 'export TEST="$USER"\necho $TEST'
 assert 'export TEST=$UNDEFINED\necho $TEST'
 assert 'export TEST="hello world"\necho "$TEST"'
 assert 'export TEST1=hello\nexport TEST2=$TEST1\necho $TEST2'
-assert 'export TEST="$USER   $PATH"\necho $TEST'
 assert 'echo $TEST$?$USER'  # 変数と特殊パラメータの組み合わせ
 assert '$ECHO hello'  # 存在しないコマンド
 assert '$USER'  # 存在しないコマンド（環境変数のみ）
@@ -483,6 +482,10 @@ assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'
 assert 'export nosuch=fuga hoge=nosuch\n export | grep nosuch | sort'
 assert 'export [invalid]'
+assert 'export TEST=" a"\necho $TEST'
+assert 'export TEST="a "\necho $TEST'
+assert 'export TEST=" a "\necho $TEST'
+assert 'export TEST="$USER   $PATH"\necho $TEST'
 assert 'export [invalid_nosuch]\n export | grep nosuch | sort'
 assert 'export [invalid]=nosuch\n export | grep nosuch | sort'
 assert 'export [invalid] nosuch hoge=nosuch\n export | grep nosuch | sort'
@@ -504,6 +507,8 @@ echo
 echo -e "${BLUE}cd${RESET}"
 assert 'cd'
 assert 'cd -'
+assert 'cd $HOME'
+assert 'cd ~'
 assert 'cd .'
 assert 'cd ..'
 assert 'cd ///'
