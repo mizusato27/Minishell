@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/08 02:24:40 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 14:54:28 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,21 @@ static void	consume_dot_path(char *new_pwd, char **rest, int elm_len)
 
 static void	add_path_elm(char *new_pwd, char **rest, char *src)
 {
-	size_t	elm_len;
+	char	buf[PATH_MAX];
 	size_t	dst_len;
+	size_t	elm_len;
 
 	elm_len = 0;
 	dst_len = ft_strlen(new_pwd);
 	while (src[elm_len] && src[elm_len] != '/')
 		elm_len++;
+	if (ft_strncpy_ex(buf, src, elm_len, PATH_MAX) >= PATH_MAX)
+		assert_error(ER_OVERFLOW);
 	if (new_pwd[dst_len - 1] != '/')
-		ft_strlcat(new_pwd, "/", PATH_MAX);
-	ft_strncat(new_pwd, src, elm_len); // <--- 要修正
+		if (ft_strlcat(new_pwd, "/", PATH_MAX) >= PATH_MAX)
+			assert_error(ER_OVERFLOW);
+	if (ft_strlcat(new_pwd, buf, PATH_MAX) >= PATH_MAX)
+		assert_error(ER_OVERFLOW);
 	*rest = src + elm_len;
 }
 

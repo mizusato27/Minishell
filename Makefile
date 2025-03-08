@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
+#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/08 02:23:23 by ynihei           ###   ########.fr        #
+#    Updated: 2025/03/08 14:57:15 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c) \
 			  $(addprefix $(PIPE_DIR)/, pipe.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
 			  $(addprefix $(TOKENIZE_DIR)/, token.c tokenize.c tokenize_helper.c) \
-			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c utils.c) \
+			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c ft_strncpy_ex.c utils.c) \
 			  $(addprefix $(FINISH_DIR)/, destructor.c error.c error2.c) \
 			  $(addprefix $(SIGNAL_DIR)/, signal.c reset_signal.c) \
 			  $(addprefix $(EXEC_DIR)/, exec.c exec_no_builtin.c token_to_arg.c)

@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 23:20:24 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:06:34 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static int	execute_cmd(t_node *node)
 	return (cmd_status);
 }
 
-// last_statusは終了ステータスを格納する変数
-// syntax_errorは構文エラーがあるかどうかを格納する変数
 void	interpret_cmd(char *line, int *last_status)
 {
 	t_token	*tok;

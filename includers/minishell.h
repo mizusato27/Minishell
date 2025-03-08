@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 13:25:11 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:55:54 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define ER_PIPE "pipe error"
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_RESET_REDIR "reset_redirect error"
+# define ER_OVERFLOW "overflow"
 
 # define OPERATORS "|\n"
 # define METAS "|<> \t\n"
@@ -287,9 +288,10 @@ int							ft_close(int fildes);
 int							ft_dup2(int fildes, int fildes2);
 // ft_pipe.c
 int							ft_pipe(int pipefd[2]);
+// ft_strncpy_ex.c
+size_t						ft_strncpy_ex(char *dst, char *src,
+								size_t n, size_t dstsize);
 // utils.c
-char						*ft_strncat(char *restrict s1,
-								const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
 bool						is_blank(char c);

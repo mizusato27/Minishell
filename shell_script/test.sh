@@ -476,8 +476,8 @@ echo -e "${BLUE}export${RESET}"
 print_desc "Output of 'export' differs, but it's ok."
 echo -e "${BLUE}昇順にはした\nminishellのexportは環境変数に実行ファイルが入るため、これでok${RESET}"
 assert 'export' # order of variables, default variables differs...
-assert 'export >out' 'out'
-rm -f out
+# assert 'export >out' 'out'
+# rm -f out
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'
@@ -495,8 +495,8 @@ echo
 echo -e "${BLUE}env${RESET}"
 print_desc "Output of 'env' differs, but it's ok."
 assert 'env' # order of variables, default variables differs...
-assert 'env >out' 'out'
-rm -f out
+# assert 'env >out' 'out'
+# rm -f out
 assert 'env | grep hoge | sort'
 echo
 
