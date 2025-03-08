@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 02:22:39 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/08 12:28:46 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <unistd.h>
-# include <limits.h>
 
 # ifndef PATH_MAX
 #  define PATH_MAX 10000
@@ -134,12 +134,12 @@ struct						s_map
 // g_envmap: 環境変数を格納するマップ
 // g_sig: シグナルの種類
 typedef struct s_context	t_context;
-struct 						s_context
+struct						s_context
 {
 	bool					g_rl_intr;
 	bool					g_syntax_error;
 	int						g_status;
-	t_map 					*g_envmap;
+	t_map					*g_envmap;
 	volatile sig_atomic_t	g_sig;
 };
 extern t_context			g_ctx;
@@ -199,7 +199,8 @@ void						expand(t_node *node);
 void						expand_quote_removal(t_node *node);
 // special_param.c
 int							is_special_param(char *str);
-void						expand_special_param_str(char **dst, char **rest, char *ptr);
+void						expand_special_param_str(char **dst, char **rest,
+								char *ptr);
 // variable.c
 int							is_variable(char *str);
 void						expand_var_str(char **dst, char **rest, char *ptr);
@@ -224,7 +225,8 @@ void						parse_error(const char *location, t_token **rest,
 void						fatal_error(const char *msg);
 void						assert_error(const char *msg);
 void						xperror(const char *location);
-void						builtin_error(const char *func, const char *name, const char *err);
+void						builtin_error(const char *func, const char *name,
+								const char *err);
 
 // -------------------- PARSE --------------------
 // parse_redir.c
@@ -247,7 +249,8 @@ void						process_parent_pipe(t_node *node);
 
 // -------------------- REDIRECT --------------------
 // here_document.c
-int							read_here_document(const char *delimiter, bool is_quoted);
+int							read_here_document(const char *delimiter,
+								bool is_quoted);
 // open_file.c
 int							open_redirect_file(t_node *node);
 // redirect.c
@@ -258,9 +261,9 @@ int							stash_fd(int fd);
 
 // -------------------- SIGNAL --------------------
 // reset_signal.c
-void	reset_signal(void);
-//signal.c
-void	setup_signal(void);
+void						reset_signal(void);
+// signal.c
+void						setup_signal(void);
 
 // -------------------- TOKENIZE --------------------
 // token.c
@@ -285,7 +288,8 @@ int							ft_dup2(int fildes, int fildes2);
 // ft_pipe.c
 int							ft_pipe(int pipefd[2]);
 // utils.c
-char						*ft_strncat(char *restrict s1, const char *restrict s2, size_t n);
+char						*ft_strncat(char *restrict s1,
+								const char *restrict s2, size_t n);
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
 bool						is_blank(char c);
