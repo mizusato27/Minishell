@@ -321,7 +321,7 @@ assert 'echo "$USER $"'
 # assert 'echo "$USER$$"'  # 本家:PIDの取得 -> 未実装
 assert 'echo "$USER$?"'
 assert 'echo "Hello $USER, your PATH is $PATH"'
-assert 'echo '\''$USER'\''' 
+assert 'echo '\''$USER'\'''
 assert 'echo "$USER"'\''$PATH'\'''
 # assert 'echo "$USER""\$PATH"'  # ダブルクォート内のエスケープ
 assert 'export TEST=value\necho $TEST\nunset TEST\necho $TEST'
@@ -476,6 +476,8 @@ echo -e "${BLUE}export${RESET}"
 print_desc "Output of 'export' differs, but it's ok."
 echo -e "${BLUE}昇順にはした\nminishellのexportは環境変数に実行ファイルが入るため、これでok${RESET}"
 assert 'export' # order of variables, default variables differs...
+assert 'export >out' 'out'
+rm -f out
 assert 'export | grep nosuch | sort'
 assert 'export nosuch\n export | grep nosuch | sort'
 assert 'export nosuch=fuga\n export | grep nosuch | sort'
@@ -493,6 +495,8 @@ echo
 echo -e "${BLUE}env${RESET}"
 print_desc "Output of 'env' differs, but it's ok."
 assert 'env' # order of variables, default variables differs...
+assert 'env >out' 'out'
+rm -f out
 assert 'env | grep hoge | sort'
 echo
 
