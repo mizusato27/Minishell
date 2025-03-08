@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 15:06:55 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:01:07 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,9 +261,8 @@ void						reset_redirect(t_node *redirects);
 int							stash_fd(int fd);
 
 // -------------------- SIGNAL --------------------
-// reset_signal.c
-void						reset_signal(void);
 // signal.c
+void						reset_signal(void);
 void						setup_signal(void);
 
 // -------------------- TOKENIZE --------------------

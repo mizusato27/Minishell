@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
+#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/08 15:03:34 by mizusato         ###   ########.fr        #
+#    Updated: 2025/03/08 16:58:47 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c) \
 			  $(addprefix $(PARSE_DIR)/, parse_redir.c parse_utils.c parse.c) \
 			  $(addprefix $(PIPE_DIR)/, pipe.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
-			  $(addprefix $(SIGNAL_DIR)/, signal.c reset_signal.c) \
+			  $(addprefix $(SIGNAL_DIR)/, signal.c) \
 			  $(addprefix $(TOKENIZE_DIR)/, token.c tokenize.c tokenize_helper.c) \
 			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c ft_strncpy_ex.c utils.c)
 
