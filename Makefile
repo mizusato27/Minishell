@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
+#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/08 16:58:47 by ynihei           ###   ########.fr        #
+#    Updated: 2025/03/09 19:28:55 by mizusato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SRCS		= $(addprefix $(SRCS_DIR)/, main.c) \
 			  $(addprefix $(REDIRECT_DIR)/, here_document.c open_file.c redirect.c stash_fd.c) \
 			  $(addprefix $(SIGNAL_DIR)/, signal.c) \
 			  $(addprefix $(TOKENIZE_DIR)/, token.c tokenize.c tokenize_helper.c) \
-			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_pipe.c ft_strncpy_ex.c utils.c)
+			  $(addprefix $(UTILS_DIR)/, ft_close.c ft_dup2.c ft_isspace.c ft_pipe.c ft_strncpy_ex.c utils.c)
 
 OBJS_DIR 	= objs
 OBJS		= ${SRCS:%.c=$(OBJS_DIR)/%.o}

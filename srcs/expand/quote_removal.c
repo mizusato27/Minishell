@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:41 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/09 19:31:02 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,47 @@ static void	process_removal(char **dst, char **rest, char *ptr)
 	*rest = ptr;
 }
 
+static void	check_space(char **dst, char **rest, char *ptr, char *top)
+{
+	char	*tmp;
+
+	tmp = ptr;
+	if (ft_isspace(*ptr))
+	{
+		while (ft_isspace(*ptr))
+			ptr++;
+		*rest = ptr;
+		if (*ptr == '\0')
+			return ;
+		if (tmp != top)
+			add_char(dst, ' ');
+	}
+	else
+	{
+		add_char(dst, *tmp++);
+		*rest = tmp;
+	}
+}
+
 static void	remove_quote(t_token *token)
 {
 	char	*new_word;
 	char	*word;
+	char	*top;
 
 	if (token == NULL || token->kind != TK_WORD || token->word == NULL)
 		return ;
 	word = token->word;
+	top = word;
 	new_word = ft_calloc(1, sizeof(char));
 	if (new_word == NULL)
 		malloc_error(ER_CALLOC);
-	while (*word && !is_metacharacter(*word))
+	while (*word)
 	{
 		if (*word == SINGLE_QUOTE || *word == DOUBLE_QUOTE)
 			process_removal(&new_word, &word, word);
 		else
-			add_char(&new_word, *word++);
+			check_space(&new_word, &word, word, top);
 	}
 	free(token->word);
 	if (!new_word)

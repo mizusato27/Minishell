@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/09 19:29:20 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,8 @@ void						init_operators(char *operators[7]);
 int							ft_close(int fildes);
 // ft_dup2.c
 int							ft_dup2(int fildes, int fildes2);
+// ft_isspace.c
+bool						ft_isspace(char c);
 // ft_pipe.c
 int							ft_pipe(int pipefd[2]);
 // ft_strncpy_ex.c
