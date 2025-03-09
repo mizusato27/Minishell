@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/09 19:29:20 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/09 23:51:34 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,11 @@ struct						s_context
 extern t_context			g_ctx;
 
 // -------------------- BUILTIN --------------------
+// builtin_utils.c
+int							chdir_ex(char *path);
+int							map_set_value_ex(const char *name, const char *pwd);
+int							process_minus_option(char *old_path, char *current_pwd);
+int							cpy_home_path(char *path, char *arg);
 // builtin.c
 int							exec_builtin(t_node *node);
 bool						is_builtin(t_node *node);

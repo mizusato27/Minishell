@@ -511,6 +511,7 @@ echo
 echo -e "${BLUE}cd${RESET}"
 assert 'cd'
 assert 'cd -'
+assert 'cd --'
 assert 'cd $HOME'
 assert 'cd ~'
 assert 'cd .'
@@ -520,6 +521,8 @@ assert 'cd /tmp'
 assert 'cd /tmp/'
 assert 'cd /tmp///'
 assert 'cd /../../../././.././'
+assert 'cd\ncd /tmp\ncd -'
+assert 'cd\ncd /tmp\ncd --'
 assert 'cd src'
 # assert 'cd |'
 

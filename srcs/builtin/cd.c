@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/09 21:54:56 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/09 23:40:06 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	cpy_dir_path(char *path, char *arg)
-{
-	char	*home_dir_path;
-
-	if (arg == NULL || ft_strcmp(arg, "~") == 0)
-	{
-		home_dir_path = map_get_value(g_ctx.g_envmap, "HOME");
-		if (home_dir_path == NULL)
-		{
-			builtin_error("cd", NULL, "HOME not set");
-			return (-1);
-		}
-		ft_strlcpy(path, home_dir_path, PATH_MAX);
-	}
-	else
-		ft_strlcpy(path, arg, PATH_MAX);
-	return (0);
-}
 
 static void	consume_dot_path(char *new_pwd, char **rest, int elm_len)
 {
@@ -105,29 +86,24 @@ static char	*get_new_pwd(char *old_pwd, char *path)
 
 int	builtin_cd(char **argv)
 {
+	char	*current_pwd;
 	char	*old_pwd;
 	char	*new_pwd;
 	char	path[PATH_MAX];
 
-	old_pwd = map_get_value(g_ctx.g_envmap, "PWD");
-	if (map_set_value(g_ctx.g_envmap, "OLDPWD", old_pwd) < 0)
-	{
-		builtin_error("cd", NULL, "map_set");
+	current_pwd = map_get_value(g_ctx.g_envmap, "PWD");
+	old_pwd = map_get_value(g_ctx.g_envmap, "OLDPWD");
+	if (argv[1] && ft_strcmp(argv[1], "-") == 0)
+		return (process_minus_option(old_pwd, current_pwd));
+	if (map_set_value_ex("OLDPWD", current_pwd) < 0)
 		return (1);
-	}
-	if (cpy_dir_path(path, argv[1]) < 0)
+	if (cpy_home_path(path, argv[1]) < 0)
 		return (1);
-	if (chdir(path) < 0)
-	{
-		builtin_error("cd", NULL, "chdir");
+	if (chdir_ex(path) < 0)
 		return (1);
-	}
-	new_pwd = get_new_pwd(old_pwd, path);
-	if (map_set_value(g_ctx.g_envmap, "PWD", new_pwd) < 0)
-	{
-		builtin_error("cd", NULL, "map_set");
+	new_pwd = get_new_pwd(current_pwd, path);
+	if (map_set_value_ex("PWD", new_pwd) < 0)
 		return (1);
-	}
 	free(new_pwd);
 	return (0);
 }
