@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/09 21:54:56 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	cpy_dir_path(char *path, char *arg)
 {
 	char	*home_dir_path;
 
-	if (arg == NULL)
+	if (arg == NULL || ft_strcmp(arg, "~") == 0)
 	{
 		home_dir_path = map_get_value(g_ctx.g_envmap, "HOME");
 		if (home_dir_path == NULL)
