@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/09 23:40:06 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/10 00:35:21 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int	builtin_cd(char **argv)
 	old_pwd = map_get_value(g_ctx.g_envmap, "OLDPWD");
 	if (argv[1] && ft_strcmp(argv[1], "-") == 0)
 		return (process_minus_option(old_pwd, current_pwd));
-	if (map_set_value_ex("OLDPWD", current_pwd) < 0)
-		return (1);
 	if (cpy_home_path(path, argv[1]) < 0)
 		return (1);
 	if (chdir_ex(path) < 0)
+		return (1);
+	if (map_set_value_ex("OLDPWD", current_pwd) < 0)
 		return (1);
 	new_pwd = get_new_pwd(current_pwd, path);
 	if (map_set_value_ex("PWD", new_pwd) < 0)
