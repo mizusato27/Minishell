@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/09 23:51:34 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:26:47 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
@@ -98,17 +98,14 @@ struct						s_node
 {
 	t_node_kind				kind;
 	t_node					*next;
-	// CMD
 	t_token					*args;
 	t_node					*redirects;
-	// REDIR
 	int						targetfd;
 	t_token					*filename;
 	t_token					*delimiter;
 	bool					is_delim_quoted;
 	int						filefd;
 	int						stashed_targetfd;
-	// PIPELINE
 	int						inpipe[2];
 	int						outpipe[2];
 	t_node					*command;
@@ -151,7 +148,8 @@ extern t_context			g_ctx;
 // builtin_utils.c
 int							chdir_ex(char *path);
 int							map_set_value_ex(const char *name, const char *pwd);
-int							process_minus_option(char *old_path, char *current_pwd);
+int							process_minus_option(char *old_path,
+								char *current_pwd);
 int							cpy_home_path(char *path, char *arg);
 // builtin.c
 int							exec_builtin(t_node *node);
@@ -297,8 +295,8 @@ bool						ft_isspace(char c);
 // ft_pipe.c
 int							ft_pipe(int pipefd[2]);
 // ft_strncpy_ex.c
-size_t						ft_strncpy_ex(char *dst, char *src,
-								size_t n, size_t dstsize);
+size_t						ft_strncpy_ex(char *dst, char *src, size_t n,
+								size_t dstsize);
 // utils.c
 char						*ft_strncpy(char *dest, char *src, size_t n);
 int							ft_strcmp(const char *s1, const char *s2);
