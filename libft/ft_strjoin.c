@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 10:42:24 by mizusato          #+#    #+#             */
-/*   Updated: 2024/05/02 23:13:19 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:10:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 	char	*start_str;
 
-	// if (!s1)
-	// {
-	// 	str = ft_strdup(s2);
-	// 	return (str);
-	// }
-	// if (!s2)
-	// {
-	// 	str = ft_strdup(s1);
-	// 	return (str);
-	// }
 	if (!s1 || !s2)
 		return (NULL);
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
@@ -55,6 +45,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 }
 /*
 #include <stdio.h>
+
 int	main(int argc, char **argv)
 {
 	char	*str;

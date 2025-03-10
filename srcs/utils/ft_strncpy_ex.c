@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy_ex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 19:34:06 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/06 18:10:52 by ynihei           ###   ########.fr       */
+/*   Created: 2025/03/08 14:28:09 by mizusato          #+#    #+#             */
+/*   Updated: 2025/03/08 14:55:38 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+size_t	ft_strncpy_ex(char *dst, char *src, size_t n, size_t dstsize)
 {
-	char	*dst;
-	size_t	len;
+	size_t	i;
 
-	len = ft_strlen(s1);
-	dst = (char *)malloc((len + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	ft_strlcpy(dst, s1, len + 1);
-	return (dst);
+	i = 0;
+	while (src[i] && n > i && i < dstsize - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	while (n > i && src[i])
+		i++;
+	return (i);
 }

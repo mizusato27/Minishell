@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   map_get_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 19:34:06 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/06 18:10:52 by ynihei           ###   ########.fr       */
+/*   Created: 2025/03/08 02:14:10 by ynihei            #+#    #+#             */
+/*   Updated: 2025/03/08 02:14:33 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+// map_get_valueはマップから値を取得する関数
+char	*map_get_value(t_map *map, const char *name)
 {
-	char	*dst;
-	size_t	len;
+	t_item	*cur;
 
-	len = ft_strlen(s1);
-	dst = (char *)malloc((len + 1) * sizeof(char));
-	if (!dst)
+	if (name == NULL)
 		return (NULL);
-	ft_strlcpy(dst, s1, len + 1);
-	return (dst);
+	cur = map->item_head.next;
+	while (cur)
+	{
+		if (ft_strcmp(cur->name, name) == 0)
+			return (cur->value);
+		cur = cur->next;
+	}
+	return (NULL);
 }

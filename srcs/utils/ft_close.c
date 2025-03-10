@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 19:34:06 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/06 18:10:52 by ynihei           ###   ########.fr       */
+/*   Created: 2025/03/01 02:05:52 by mizusato          #+#    #+#             */
+/*   Updated: 2025/03/04 23:20:40 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_close(int fildes)
 {
-	char	*dst;
-	size_t	len;
-
-	len = ft_strlen(s1);
-	dst = (char *)malloc((len + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	ft_strlcpy(dst, s1, len + 1);
-	return (dst);
+	if (fildes < 0)
+		return (-1);
+	if (close(fildes) < 0)
+		fatal_error(ER_CLOSE);
+	return (0);
 }

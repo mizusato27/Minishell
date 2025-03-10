@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 19:34:06 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/06 18:10:52 by ynihei           ###   ########.fr       */
+/*   Created: 2025/03/02 22:57:11 by mizusato          #+#    #+#             */
+/*   Updated: 2025/03/02 22:57:13 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_pipe(int pipefd[2])
 {
-	char	*dst;
-	size_t	len;
-
-	len = ft_strlen(s1);
-	dst = (char *)malloc((len + 1) * sizeof(char));
-	if (!dst)
-		return (NULL);
-	ft_strlcpy(dst, s1, len + 1);
-	return (dst);
+	if (pipe(pipefd) < 0)
+		fatal_error(ER_PIPE);
+	return (0);
 }
