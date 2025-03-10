@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/10 15:31:47 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/10 17:43:27 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,26 @@ static char	*find_executable(const char *filename)
 	return (NULL);
 }
 
-// int			exec_nonbuiltin(t_node *node) __attribute__((noreturn));
+void	free_arg(char **argv)
+{
+	int	i;
+
+	if (!argv)
+		return ;
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}
+
 int	exec_nonbuiltin(t_node *node)
 {
 	char	*path;
 	char	**argv;
+	char	**envp;
 
 	setup_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
@@ -73,8 +88,10 @@ int	exec_nonbuiltin(t_node *node)
 		path = find_executable(path);
 	if (path == NULL || access(path, F_OK) < 0)
 		not_found_cmd(argv[0], ER_ACCESS, ERROR_CMD);
-	execve(path, argv, get_environ(g_ctx.g_envmap));
-	free(argv);
+	envp = get_environ(g_ctx.g_envmap);
+	execve(path, argv, envp);
+	free_arg(argv);
+	free_arg(envp);
 	reset_redirect(node->command->redirects);
 	write(STDERR_FILENO, ER_EXEC, 14);
 	exit(ERROR_CMD);
