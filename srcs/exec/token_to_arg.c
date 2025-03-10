@@ -6,30 +6,11 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:17:38 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:38:48 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/10 11:28:38 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static void	*ft_realloc(void *ptr, size_t new_size)
-// {
-// 	void	*new_ptr;
-
-// 	if (ptr == NULL)
-// 	{
-// 		new_ptr = malloc(new_size);
-// 		if (new_ptr == NULL)
-// 			malloc_error(ER_MALLOC);
-// 		return (new_ptr);
-// 	}
-// 	new_ptr = malloc(new_size);
-// 	if (new_ptr == NULL)
-// 		malloc_error(ER_MALLOC);
-// 	ft_memcpy(new_ptr, ptr, new_size);
-// 	free(ptr);
-// 	return (new_ptr);
-// }
 
 static void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
