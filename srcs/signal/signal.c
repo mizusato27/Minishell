@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 17:11:20 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:02:33 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	exec_handler(int signum)
 }
 
 //指定したシグナルを設定する（無視するか、指定されたハンドラを設定する）
-//SIG_IGNはシグナルを無視
-static	void	setup_signal_handlers(int signum, void (*handler)(int))
+// SIG_IGNはシグナルを無視
+static void	setup_signal_handlers(int signum, void (*handler)(int))
 {
 	struct sigaction	sa;
 
@@ -53,6 +53,7 @@ int	reset_prompt(void)
 		g_ctx.g_rl_intr = true;
 		rl_replace_line("", 0);
 		rl_done = 1;
+		g_ctx.g_status = 130;
 		return (0);
 	}
 	return (0);
@@ -72,7 +73,7 @@ void	setup_signal(void)
 }
 
 //指定されたシグナルをデフォルトの動作にリセットする
-//SIGQUIT および SIGINT のシグナル動作をリセット
+// SIGQUIT および SIGINT のシグナル動作をリセット
 void	reset_signal(void)
 {
 	setup_signal_handlers(SIGQUIT, SIG_DFL);
