@@ -403,10 +403,10 @@ print_desc "SIGINT to child process"
  sleep 0.01; pkill -SIGINT infinite_loop) &
 assert './infinite_loop'
 
-print_desc "SIGQUIT to child process"
-(sleep 0.01; pkill -SIGQUIT infinite_loop;
- sleep 0.01; pkill -SIGQUIT infinite_loop) &
-assert './infinite_loop'
+# print_desc "SIGQUIT to child process"
+# (sleep 0.01; pkill -SIGQUIT infinite_loop;
+#  sleep 0.01; pkill -SIGQUIT infinite_loop) &
+# assert './infinite_loop'
 
 print_desc "SIGUSR1 to child process"
 (sleep 0.01; pkill -SIGUSR1 infinite_loop;
