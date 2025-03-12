@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42tokyo.>       +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 08:30:28 by mizusato          #+#    #+#             */
-/*   Updated: 2024/04/22 14:05:03 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/12 20:48:14 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ size_t	ft_strlcat(char *dest, const char *src, size_t dstsize)
 	size_t	max;
 	size_t	i;
 
+	if (!src)
+		return (0);
 	len_src = ft_strlen(src);
-	if (!dest && dstsize == 0)
+	if (!dest)
 		return (len_src);
 	len_dest = ft_strlen(dest);
 	if (dstsize <= len_dest)
