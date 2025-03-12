@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:13 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/01 01:40:10 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/12 21:59:59 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	stash_fd(int fd)
 		return (-1);
 	}
 	new_fd = ft_dup2(fd, new_fd);
+	printf("");
 	ft_close(fd);
 	return (new_fd);
 }
