@@ -6,13 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:00 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:33:01 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//"KEY=VALUE" の形式の文字列を受け取り、キーと値を分割して設定する関数
 static void	handle_no_equal(char **name, char **value, const char *string,
 		bool allow_empty_value)
 {
@@ -31,9 +30,6 @@ static void	handle_no_equal(char **name, char **value, const char *string,
 	}
 }
 
-// "=" がある場合の処理
-// nameには"="の前の文字列をコピー
-// valueには"="の後の文字列をコピー
 static void	handle_with_equal(char **name, char **value, const char *string,
 		char *name_end)
 {

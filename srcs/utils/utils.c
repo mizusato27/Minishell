@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 08:27:33 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 14:22:44 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/14 10:36:34 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[i]);
 }
 
-//空白文字化のチェック
 bool	is_blank(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n');

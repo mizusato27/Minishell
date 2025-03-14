@@ -6,15 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/10 17:43:27 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:37:43 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
-// lsが来たときの例: /bin:/usr/binの中から最初の「:」までを取り出す
-//そこにlsをくっつけて、そのパスが実行可能かどうかを確認する
 static void	construct_path(char path[PATH_MAX], const char *filename, char *env,
 		char *end)
 {
@@ -30,8 +27,6 @@ static void	construct_path(char path[PATH_MAX], const char *filename, char *env,
 	ft_strlcat(path, filename, PATH_MAX);
 }
 
-//:はディレクトリの終わりを指す
-// PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
 static char	*find_executable(const char *filename)
 {
 	char	path[PATH_MAX];

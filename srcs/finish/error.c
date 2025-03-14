@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/06 18:15:42 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:34:14 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	perror_prefix(void)
 	write(STDERR_FILENO, ERROR_PREFIX, ft_strlen(ERROR_PREFIX));
 }
 
-//コマンドがなかったときに、エラーメッセージを表示して終了
 void	not_found_cmd(const char *cmd, const char *msg, int status)
 {
 	perror_prefix();
@@ -28,7 +27,6 @@ void	not_found_cmd(const char *cmd, const char *msg, int status)
 	exit(status);
 }
 
-//構文エラーがある場合に単語の最後までスキップ
 void	tokenize_error(const char *location, int *i, char *line)
 {
 	g_ctx.g_syntax_error = true;

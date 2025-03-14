@@ -6,14 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:36:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//制御演算子かどうかのチェック
-// j < sizeof(operators) / sizeof(*operators)は制御演算子の数だけチェック
 t_token	*operator(int *i, char *line)
 {
 	size_t	j;
@@ -38,7 +36,6 @@ t_token	*operator(int *i, char *line)
 	return (NULL);
 }
 
-//文字列をトークンに分割
 static	int	parse_word_length(char *line)
 {
 	char	quote_flag;
@@ -67,8 +64,6 @@ static	int	parse_word_length(char *line)
 	return (j);
 }
 
-//単語を取得
-//メタ文字（tokenの終わりを示す文字）まで続ける
 t_token	*word(int *i, char *line)
 {
 	char	*word;
@@ -91,7 +86,6 @@ static	t_token	*init_tokenize(t_token *head, int *i)
 	return (head);
 }
 
-// head.nextに最初のトークンを格納
 t_token	*tokenize(char *arg)
 {
 	t_token	head;
@@ -119,18 +113,3 @@ t_token	*tokenize(char *arg)
 	token->next = new_token(NULL, TK_EOF);
 	return (head.next);
 }
-
-// int	main(void)
-// {
-// 	char *s = "   ls -a || grep a;";
-// 	t_token *token = tokenize(s);
-// 	t_token *tmp;
-
-// 	tmp = token;
-// 	while (tmp)
-// 	{
-// 		printf("word:%s,type:%d\n", tmp->word, tmp->kind);
-// 		tmp = tmp->next;
-// 	}
-// 	free_token(token);
-// }
