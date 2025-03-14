@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:13:54 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:50:39 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	reset_prompt(void)
 	else if (g_sig == SIGINT)
 	{
 		g_sig = 0;
-		g_rl_intr = true;
+		// g_rl_intr = true;
 		rl_replace_line("", 0);
 		rl_done = 1;
 		g_status = 130;
@@ -65,13 +65,17 @@ int	reset_prompt(void)
 // SIGQUIT を無視し、SIGINT を適切に処理する
 // readline の出力先を標準エラー出力に設定
 // isattyはファイルディスクリプタが端末かどうかを判定する
-void	setup_signal(void)
+int	setup_signal(void)
 {
 	rl_outstream = stderr;
 	if (isatty(STDIN_FILENO))
+	{
 		rl_event_hook = reset_prompt;
+		return (1);
+	}
 	setup_signal_handlers(SIGQUIT, SIG_IGN);
 	setup_signal_handlers(SIGINT, exec_handler);
+	return (0);
 }
 
 //指定されたシグナルをデフォルトの動作にリセットする

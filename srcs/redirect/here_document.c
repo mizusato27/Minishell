@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/14 11:04:24 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:49:16 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	put_heredoc_line(char *line, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
-static int	is_fin_process(char *line, const char *delim)
+static int	is_fin_process(char *line, const char *delim, int flag)
 {
 	if (line == NULL)
 		return (1);
-	else if (g_rl_intr)
+	else if (flag == 1)
 		return (1);
 	else if (ft_strcmp(line, delim) == 0)
 		return (1);
@@ -53,17 +53,18 @@ static char	*expand_here_document(char *line, bool is_quoted)
 	return (new_str);
 }
 
-int	read_here_document(const char *delimiter, bool is_quoted)
+int	read_here_document(const char *delimiter, bool is_quoted, int flag)
 {
 	int		pipe_fd[2];
 	char	*line;
+	bool	rl_intr;
 
 	ft_pipe(pipe_fd);
-	g_rl_intr = false;
+	rl_intr = false;
 	while (1)
 	{
 		line = readline("> ");
-		if (is_fin_process(line, delimiter))
+		if (is_fin_process(line, delimiter, flag))
 		{
 			free(line);
 			break ;
@@ -73,7 +74,7 @@ int	read_here_document(const char *delimiter, bool is_quoted)
 		free(line);
 	}
 	ft_close(pipe_fd[1]);
-	if (g_rl_intr)
+	if (rl_intr)
 	{
 		ft_close(pipe_fd[0]);
 		return (-1);

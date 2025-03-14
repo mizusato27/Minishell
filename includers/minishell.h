@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:26 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:48:14 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ struct							s_node
 	int							inpipe[2];
 	int							outpipe[2];
 	t_node						*command;
+	int							rl_flag;
 };
 
 typedef struct s_map			t_map;
@@ -141,7 +142,7 @@ struct							s_map
 // extern t_context				g_ctx;
 
 extern int						g_status;
-extern bool						g_rl_intr;
+// extern bool						g_rl_intr;
 extern bool						g_syntax_error;
 extern volatile sig_atomic_t	g_sig;
 extern t_map					*g_envmap;
@@ -196,7 +197,7 @@ int								map_set_from_string(t_map *map,
 // exec_no_builtin.c
 int								exec_nonbuiltin(t_node *node);
 // exec.c
-void							interpret_cmd(char *line, int *stat_loc);
+void							interpret_cmd(char *line, int *last_status, int flag);
 // token_to_arg.c
 char							**token_list_to_argv(t_token *tok);
 
@@ -262,9 +263,9 @@ void							process_parent_pipe(t_node *node);
 // -------------------- REDIRECT --------------------
 // here_document.c
 int								read_here_document(const char *delimiter,
-									bool is_quoted);
+									bool is_quoted, int flag);
 // open_file.c
-int								open_redirect_file(t_node *node);
+int								open_redirect_file(t_node *node, int flag);
 // redirect.c
 void							setup_redirect(t_node *redirects);
 void							reset_redirect(t_node *redirects);
@@ -274,7 +275,7 @@ int								stash_fd(int fd);
 // -------------------- SIGNAL --------------------
 // signal.c
 void							reset_signal(void);
-void							setup_signal(void);
+int								setup_signal(void);
 
 // -------------------- TOKENIZE --------------------
 // token.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 15:46:33 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	execute_cmd(t_node *node)
 	pid_t	pid;
 	int		cmd_status;
 
-	if (open_redirect_file(node) < 0)
+	if (open_redirect_file(node, node->rl_flag) < 0)
 		return (ERROR_OPEN_REDIR);
 	if (node->next == NULL && is_builtin(node))
 		cmd_status = exec_builtin(node);
@@ -83,7 +83,7 @@ static int	execute_cmd(t_node *node)
 	return (cmd_status);
 }
 
-void	interpret_cmd(char *line, int *last_status)
+void	interpret_cmd(char *line, int *last_status, int flag)
 {
 	t_token	*tok;
 	t_node	*node;
@@ -96,6 +96,7 @@ void	interpret_cmd(char *line, int *last_status)
 	else
 	{
 		node = parse(tok);
+		node->rl_flag = flag;
 		if (g_syntax_error)
 			*last_status = ERROR_PARSE;
 		else

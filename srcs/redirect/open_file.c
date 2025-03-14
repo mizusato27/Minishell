@@ -6,13 +6,13 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:07 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/02 18:10:55 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/14 15:47:47 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	process_open_file(t_node *node)
+static int	process_open_file(t_node *node, int flag)
 {
 	int	fd;
 
@@ -25,7 +25,7 @@ static int	process_open_file(t_node *node)
 		fd = open(node->filename->word, O_CREAT | O_WRONLY | O_APPEND,
 				0644);
 	else if (node->kind == ND_REDIR_HEREDOC)
-		fd = read_here_document(node->delimiter->word, node->is_delim_quoted);
+		fd = read_here_document(node->delimiter->word, node->is_delim_quoted, flag);
 	else
 		assert_error(ER_FILE);
 	if (fd < 0)
@@ -37,23 +37,23 @@ static int	process_open_file(t_node *node)
 	return (fd);
 }
 
-int	open_redirect_file(t_node *node)
+int	open_redirect_file(t_node *node, int flag)
 {
 	if (node == NULL)
 		return (0);
 	if (node->kind == ND_PIPELINE)
 	{
-		if (open_redirect_file(node->command) < 0)
+		if (open_redirect_file(node->command, flag) < 0)
 			return (-1);
-		if (open_redirect_file(node->next) < 0)
+		if (open_redirect_file(node->next, flag) < 0)
 			return (-1);
 		return (0);
 	}
 	else if (node->kind == ND_SIMPLE_CMD)
-		return (open_redirect_file(node->redirects));
-	node->filefd = process_open_file(node);
+		return (open_redirect_file(node->redirects, flag));
+	node->filefd = process_open_file(node, flag);
 	if (node->filefd < 0)
 		return (-1);
 	node->filefd = stash_fd(node->filefd);
-	return (open_redirect_file(node->next));
+	return (open_redirect_file(node->next, flag));
 }
