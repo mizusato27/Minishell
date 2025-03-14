@@ -6,21 +6,24 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/10 11:25:59 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:38 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_context	g_ctx = {};
+bool		g_syntax_error;
+bool		g_rl_intr;
+int			g_status = 0;
+t_map		*g_envmap;
 
 int	main(void)
 {
 	char	*line;
 
+	g_status = 0;
 	setup_signal();
 	initenv();
-	g_ctx.g_status = 0;
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -28,8 +31,8 @@ int	main(void)
 			break ;
 		if (*line)
 			add_history(line);
-		interpret_cmd(line, &g_ctx.g_status);
+		interpret_cmd(line, &g_status);
 		free(line);
 	}
-	exit(g_ctx.g_status);
+	exit(g_status);
 }

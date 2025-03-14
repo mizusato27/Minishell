@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/10 17:43:27 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	exec_nonbuiltin(t_node *node)
 		path = find_executable(path);
 	if (path == NULL || access(path, F_OK) < 0)
 		not_found_cmd(argv[0], ER_ACCESS, ERROR_CMD);
-	envp = get_environ(g_ctx.g_envmap);
+	envp = get_environ(g_envmap);
 	execve(path, argv, envp);
 	free_arg(argv);
 	free_arg(envp);

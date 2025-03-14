@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/12 23:51:15 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	interpret_cmd(char *line, int *last_status)
 	tok = tokenize(line);
 	if (at_eof(tok))
 		;
-	else if (g_ctx.g_syntax_error)
+	else if (g_syntax_error)
 		*last_status = ERROR_TOKENIZE;
 	else
 	{
 		node = parse(tok);
-		if (g_ctx.g_syntax_error)
+		if (g_syntax_error)
 			*last_status = ERROR_PARSE;
 		else
 		{

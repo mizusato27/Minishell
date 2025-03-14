@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/10 00:35:21 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	builtin_cd(char **argv)
 	char	*new_pwd;
 	char	path[PATH_MAX];
 
-	current_pwd = map_get_value(g_ctx.g_envmap, "PWD");
-	old_pwd = map_get_value(g_ctx.g_envmap, "OLDPWD");
+	current_pwd = map_get_value(g_envmap, "PWD");
+	old_pwd = map_get_value(g_envmap, "OLDPWD");
 	if (argv[1] && ft_strcmp(argv[1], "-") == 0)
 		return (process_minus_option(old_pwd, current_pwd));
 	if (cpy_home_path(path, argv[1]) < 0)

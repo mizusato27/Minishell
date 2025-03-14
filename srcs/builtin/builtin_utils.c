@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 23:30:40 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/09 23:53:19 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	chdir_ex(char *path)
 
 int	map_set_value_ex(const char *name, const char *pwd)
 {
-	if (map_set_value(g_ctx.g_envmap, name, pwd) < 0)
+	if (map_set_value(g_envmap, name, pwd) < 0)
 	{
 		builtin_error("cd", NULL, "map_set");
 		return (-1);
@@ -64,7 +64,7 @@ static int	cpy_dir_path(char *path, char *arg)
 	if (arg == NULL || ft_strcmp(arg, "~") == 0
 		|| ft_strcmp(arg, "--") == 0)
 	{
-		home_dir_path = map_get_value(g_ctx.g_envmap, "HOME");
+		home_dir_path = map_get_value(g_envmap, "HOME");
 		if (home_dir_path == NULL)
 		{
 			builtin_error("cd", NULL, "HOME not set");
@@ -85,7 +85,7 @@ int	cpy_home_path(char *path, char *arg)
 		return (cpy_dir_path(path, NULL));
 	if (arg[0] != '~')
 		return (cpy_dir_path(path, arg));
-	home_dir_path = map_get_value(g_ctx.g_envmap, "HOME");
+	home_dir_path = map_get_value(g_envmap, "HOME");
 	if (home_dir_path == NULL)
 	{
 		builtin_error("cd", NULL, "HOME not set");

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:25:55 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_token	*word(int *i, char *line)
 static	t_token	*init_tokenize(t_token *head, int *i)
 {
 	*i = 0;
-	g_ctx.g_syntax_error = false;
+	g_syntax_error = false;
 	head->next = NULL;
 	return (head);
 }

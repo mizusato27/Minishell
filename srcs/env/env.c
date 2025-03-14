@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ void	initenv(void)
 {
 	extern char	**environ;
 
-	g_ctx.g_envmap = map_new();
-	envmap_init(g_ctx.g_envmap, environ);
+	g_envmap = map_new();
+	envmap_init(g_envmap, environ);
 }

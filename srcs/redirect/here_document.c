@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 11:04:24 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	is_fin_process(char *line, const char *delim)
 {
 	if (line == NULL)
 		return (1);
-	else if (g_ctx.g_rl_intr)
+	else if (g_rl_intr)
 		return (1);
 	else if (ft_strcmp(line, delim) == 0)
 		return (1);
@@ -59,7 +59,7 @@ int	read_here_document(const char *delimiter, bool is_quoted)
 	char	*line;
 
 	ft_pipe(pipe_fd);
-	g_ctx.g_rl_intr = false;
+	g_rl_intr = false;
 	while (1)
 	{
 		line = readline("> ");
@@ -73,7 +73,7 @@ int	read_here_document(const char *delimiter, bool is_quoted)
 		free(line);
 	}
 	ft_close(pipe_fd[1]);
-	if (g_ctx.g_rl_intr)
+	if (g_rl_intr)
 	{
 		ft_close(pipe_fd[0]);
 		return (-1);
