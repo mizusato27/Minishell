@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/14 11:04:24 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:28:13 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_fin_process(char *line, const char *delim)
 	return (0);
 }
 
-static char	*expand_here_document(char *line, bool is_quoted)
+static char	*expand_here_document(char *line, bool is_quoted, int *status)
 {
 	char	*new_str;
 	char	*ptr;
@@ -45,7 +45,7 @@ static char	*expand_here_document(char *line, bool is_quoted)
 		if (is_variable(ptr))
 			expand_var_str(&new_str, &ptr, ptr);
 		else if (is_special_param(ptr))
-			expand_special_param_str(&new_str, &ptr, ptr);
+			expand_special_param_str(&new_str, &ptr, ptr, status);
 		else
 			add_char(&new_str, *ptr++);
 	}
@@ -53,7 +53,7 @@ static char	*expand_here_document(char *line, bool is_quoted)
 	return (new_str);
 }
 
-int	read_here_document(const char *delimiter, bool is_quoted)
+int	read_here_document(const char *delimiter, bool is_quoted, int *status)
 {
 	int		pipe_fd[2];
 	char	*line;
@@ -68,7 +68,7 @@ int	read_here_document(const char *delimiter, bool is_quoted)
 			free(line);
 			break ;
 		}
-		line = expand_here_document(line, is_quoted);
+		line = expand_here_document(line, is_quoted, status);
 		put_heredoc_line(line, pipe_fd[1]);
 		free(line);
 	}

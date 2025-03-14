@@ -6,7 +6,7 @@
 /*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/07 15:20:33 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/14 14:20:00 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	add_char(char **s, char c)
 	*s = new;
 }
 
-void	expand(t_node *node)
+void	expand(t_node *node, int *status)
 {
-	expand_variable(node);
+	expand_variable(node, status);
 	expand_quote_removal(node);
 }

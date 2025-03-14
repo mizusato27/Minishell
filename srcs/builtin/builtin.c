@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/09 01:54:07 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:40:55 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtin(t_node *node)
+int	exec_builtin(t_node *node, int *last_status)
 {
 	int		status;
 	char	**argv;
@@ -21,7 +21,7 @@ int	exec_builtin(t_node *node)
 	setup_redirect(node->command->redirects);
 	argv = token_list_to_argv(node->command->args);
 	if (ft_strcmp(argv[0], "exit") == 0)
-		status = builtin_exit(argv);
+		status = builtin_exit(argv, last_status);
 	else if (ft_strcmp(argv[0], "export") == 0)
 		status = builtin_export(argv);
 	else if (ft_strcmp(argv[0], "pwd") == 0)

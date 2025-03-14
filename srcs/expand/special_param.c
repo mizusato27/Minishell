@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_param.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:49 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/14 11:04:11 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:22:49 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ static void	add_number(char **dst, unsigned int n)
 	add_char(dst, '0' + (n % 10));
 }
 
-void	expand_special_param_str(char **dst, char **rest, char *ptr)
+void	expand_special_param_str(char **dst, char **rest, char *ptr, int *status)
 {
+	int tmp;
+
+	tmp = *status;
 	if (!is_special_param(ptr))
 		assert_error("Expected special parameter");
 	ptr += 2;
-	add_number(dst, g_status);
+	add_number(dst, tmp);
 	*rest = ptr;
 }

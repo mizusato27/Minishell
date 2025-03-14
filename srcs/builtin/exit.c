@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:58:17 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:04:11 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:36:32 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static bool	string_to_long(char *s, long *result)
 	return (convert_to_long(s, i, sign, result));
 }
 
-int	builtin_exit(char **argv)
+int	builtin_exit(char **argv, int *status)
 {
 	long	res;
 	char	*num;
 
 	if (argv[1] == NULL)
-		exit(g_status);
+		exit(*status);
 	if (argv[2])
 	{
 		xperror("exit: too many arguments");

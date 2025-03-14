@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:39:23 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static pid_t	execute_pipe(t_node *node)
+static pid_t	execute_pipe(t_node *node, int *status)
 {
 	pid_t	pid;
 
@@ -27,13 +27,13 @@ static pid_t	execute_pipe(t_node *node)
 		reset_signal();
 		process_child_pipe(node);
 		if (is_builtin(node))
-			exit(exec_builtin(node));
+			exit(exec_builtin(node, status));
 		else
 			exec_nonbuiltin(node);
 	}
 	process_parent_pipe(node);
 	if (node->next)
-		return (execute_pipe(node->next));
+		return (execute_pipe(node->next, status));
 	return (pid);
 }
 
@@ -66,18 +66,18 @@ static int	wait_pipe(pid_t pid)
 	return (status);
 }
 
-static int	execute_cmd(t_node *node)
+static int	execute_cmd(t_node *node, int *status)
 {
 	pid_t	pid;
 	int		cmd_status;
 
-	if (open_redirect_file(node) < 0)
+	if (open_redirect_file(node, status) < 0)
 		return (ERROR_OPEN_REDIR);
 	if (node->next == NULL && is_builtin(node))
-		cmd_status = exec_builtin(node);
+		cmd_status = exec_builtin(node, status);
 	else
 	{
-		pid = execute_pipe(node);
+		pid = execute_pipe(node, status);
 		cmd_status = wait_pipe(pid);
 	}
 	return (cmd_status);
@@ -100,8 +100,8 @@ void	interpret_cmd(char *line, int *last_status)
 			*last_status = ERROR_PARSE;
 		else
 		{
-			expand(node);
-			*last_status = execute_cmd(node);
+			expand(node, last_status);
+			*last_status = execute_cmd(node, last_status);
 		}
 		free_node(node);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:26 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/14 14:39:04 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ struct							s_map
 // };
 // extern t_context				g_ctx;
 
-extern int						g_status;
+// extern int						g_status;
 extern bool						g_rl_intr;
 extern bool						g_syntax_error;
 extern volatile sig_atomic_t	g_sig;
@@ -155,7 +155,7 @@ int								process_minus_option(char *old_path,
 									char *current_pwd);
 int								cpy_home_path(char *path, char *arg);
 // builtin.c
-int								exec_builtin(t_node *node);
+int								exec_builtin(t_node *node, int *status);
 bool							is_builtin(t_node *node);
 // cd.c
 int								builtin_cd(char **argv);
@@ -164,7 +164,7 @@ int								builtin_echo(char **argv);
 // env.c
 int								builtin_env(void);
 // exit.c
-int								builtin_exit(char **argv);
+int								builtin_exit(char **argv, int *status);
 // export.c
 int								builtin_export(char **argv);
 // pwd.c
@@ -203,19 +203,19 @@ char							**token_list_to_argv(t_token *tok);
 // -------------------- EXPAND --------------------
 // expand.c
 void							add_char(char **s, char c);
-void							expand(t_node *node);
+void							expand(t_node *node, int *status);
 // quote_removal.c
 void							expand_quote_removal(t_node *node);
 // special_param.c
 int								is_special_param(char *str);
-void							expand_special_param_str(char **dst,
-									char **rest, char *ptr);
+void							expand_special_param_str(char **dst, char **rest,
+									char *ptr, int *status);
 // variable.c
 int								is_variable(char *str);
 void							expand_var_str(char **dst, char **rest,
 									char *ptr);
-void							add_quote(char **dst, char **rest, char *ptr);
-void							expand_variable(t_node *node);
+void							add_quote(char **dst, char **rest, char *ptr, int * status);
+void							expand_variable(t_node *node, int *status);
 
 // -------------------- FINISH --------------------
 // destructor.c
@@ -262,9 +262,9 @@ void							process_parent_pipe(t_node *node);
 // -------------------- REDIRECT --------------------
 // here_document.c
 int								read_here_document(const char *delimiter,
-									bool is_quoted);
+									bool is_quoted, int *status);
 // open_file.c
-int								open_redirect_file(t_node *node);
+int								open_redirect_file(t_node *node, int *status);
 // redirect.c
 void							setup_redirect(t_node *redirects);
 void							reset_redirect(t_node *redirects);
@@ -274,7 +274,7 @@ int								stash_fd(int fd);
 // -------------------- SIGNAL --------------------
 // signal.c
 void							reset_signal(void);
-void							setup_signal(void);
+void							setup_signal(int *status);
 
 // -------------------- TOKENIZE --------------------
 // token.c
