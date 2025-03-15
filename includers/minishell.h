@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 15:37:37 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 17:45:32 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,16 +132,10 @@ struct							s_map
 };
 
 // g_rl_intr: readlineの割り込みフラグ
-// syntax_error: 構文エラーが発生したかどうかのフラグ
-// g_status: 最後に実行したコマンドの終了ステータス
-// g_envmap: 環境変数を格納するマップ
 // g_sig: シグナルの種類
 
-// extern int						g_status;
 extern bool						g_rl_intr;
-extern bool						g_syntax_error;
 extern volatile sig_atomic_t	g_sig;
-// extern t_map					*g_envmap;
 
 // -------------------- BUILTIN --------------------
 // builtin_utils.c
@@ -216,7 +210,7 @@ int								is_variable(char *str);
 void							expand_var_str(t_map *envmap, char **dst,
 									char **rest, char *ptr);
 void							add_quote(t_map *envmap, char **dst,
-									char **rest, char *ptr, int *status);
+									char **rest, int *status);
 void							expand_variable(t_map *envmap, t_node *node,
 									int *status);
 
@@ -231,9 +225,10 @@ void							not_found_cmd(const char *location,
 									const char *msg, int status);
 void							malloc_error(char *msg);
 void							tokenize_error(const char *location, int *j,
-									char *line);
+									char *line, bool *syntax_error);
 void							parse_error(const char *location,
-									t_token **rest, t_token *tok);
+									t_token **rest, t_token *tok,
+									bool *syntax_error);
 // error2.c
 void							fatal_error(const char *msg);
 void							assert_error(const char *msg);
@@ -254,7 +249,7 @@ bool							is_ctrl_operator(t_token *tok);
 t_node							*new_node(t_node_kind kind);
 void							add_node(t_node **node, t_node *elm);
 // parse.c
-t_node							*parse(t_token *tok);
+t_node							*parse(t_token *tok, bool *syntax_error);
 
 // -------------------- PIPE --------------------
 // pipe.c
@@ -288,7 +283,7 @@ bool							at_eof(t_token *tok);
 t_token							*token_dup(t_token *tok);
 bool							equal_operators(t_token *tok, char *op);
 // tokenize.c
-t_token							*tokenize(char *arg);
+t_token							*tokenize(char *arg, bool *syntax_error);
 t_token							*new_token(char *word, t_token_kind kind);
 // tokenize_helper.c
 bool							is_metacharacter(char c);

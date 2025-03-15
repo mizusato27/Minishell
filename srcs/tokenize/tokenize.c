@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 17:21:42 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 16:41:19 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*operator(int *i, char *line)
 }
 
 //文字列をトークンに分割
-static	int	parse_word_length(char *line)
+static	int	parse_word_length(char *line, bool *syntax_error)
 {
 	char	quote_flag;
 	int		j;
@@ -55,7 +55,7 @@ static	int	parse_word_length(char *line)
 				j++;
 			if (line[j] == '\0')
 			{
-				tokenize_error("Unclosed quote", &j, line);
+				tokenize_error("Unclosed quote", &j, line, syntax_error);
 				break ;
 			}
 			else
@@ -69,12 +69,12 @@ static	int	parse_word_length(char *line)
 
 //単語を取得
 //メタ文字（tokenの終わりを示す文字）まで続ける
-t_token	*word(int *i, char *line)
+t_token	*word(int *i, char *line, bool *syntax_error)
 {
 	char	*word;
 	int		j;
 
-	j = parse_word_length(line);
+	j = parse_word_length(line, syntax_error);
 	word = malloc(j + 1);
 	if (word == NULL)
 		malloc_error(ER_MALLOC);
@@ -83,22 +83,21 @@ t_token	*word(int *i, char *line)
 	return (new_token(word, TK_WORD));
 }
 
-static	t_token	*init_tokenize(t_token *head, int *i)
+static	t_token	*init_tokenize(t_token *head)
 {
-	*i = 0;
-	g_syntax_error = false;
 	head->next = NULL;
 	return (head);
 }
 
 // head.nextに最初のトークンを格納
-t_token	*tokenize(char *arg)
+t_token	*tokenize(char *arg, bool *syntax_error)
 {
 	t_token	head;
 	t_token	*token;
 	int		i;
 
-	token = init_tokenize(&head, &i);
+	i = 0;
+	token = init_tokenize(&head);
 	while (arg[i])
 	{
 		while (arg[i] && is_blank(arg[i]))
@@ -108,10 +107,10 @@ t_token	*tokenize(char *arg)
 		else if (is_operator(&arg[i]))
 			token->next = operator(&i, arg + i);
 		else if (!is_metacharacter(arg[i]) && arg[i])
-			token->next = word(&i, arg + i);
+			token->next = word(&i, arg + i, syntax_error);
 		else
 		{
-			tokenize_error("Unexpected Token", &i, arg);
+			tokenize_error("Unexpected Token", &i, arg, syntax_error);
 			return (NULL);
 		}
 		token = token->next;

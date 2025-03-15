@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 10:56:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 16:42:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	not_found_cmd(const char *cmd, const char *msg, int status)
 }
 
 //構文エラーがある場合に単語の最後までスキップ
-void	tokenize_error(const char *location, int *i, char *line)
+void	tokenize_error(const char *location, int *i, char *line,
+		bool *syntax_error)
 {
-	g_syntax_error = true;
+	*syntax_error = true;
 	perror_prefix();
 	write(2, "syntax error near ", 18);
 	write(2, location, ft_strlen(location));
@@ -40,9 +41,10 @@ void	tokenize_error(const char *location, int *i, char *line)
 		(*i)++;
 }
 
-void	parse_error(const char *location, t_token **rest, t_token *tok)
+void	parse_error(const char *location, t_token **rest, t_token *tok,
+		bool *syntax_error)
 {
-	g_syntax_error = true;
+	*syntax_error = true;
 	perror_prefix();
 	write(2, "syntax error near unexpected token `", 37);
 	if (tok->word)

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:38:57 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/15 15:36:13 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 17:43:35 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ void	expand_var_str(t_map *envmap, char **dst, char **rest, char *ptr)
 	*rest = ptr;
 }
 
-void	add_quote(t_map *envmap, char **dst, char **rest, char *ptr,
+void	add_quote(t_map *envmap, char **dst, char **rest,
 		int *status)
 {
 	char	type_of_quote;
 	int		flag;
+	char	*ptr;
 
+	ptr = *rest;
 	flag = 0;
 	type_of_quote = *ptr;
 	if (type_of_quote == DOUBLE_QUOTE)
@@ -85,7 +87,7 @@ static void	expand_var_token(t_map *envmap, t_token *tok, int *status)
 	while (*ptr && !is_metacharacter(*ptr))
 	{
 		if (*ptr == SINGLE_QUOTE || *ptr == DOUBLE_QUOTE)
-			add_quote(envmap, &new_str, &ptr, ptr, status);
+			add_quote(envmap, &new_str, &ptr, status);
 		else if (is_variable(ptr))
 			expand_var_str(envmap, &new_str, &ptr, ptr);
 		else if (is_special_param(ptr))

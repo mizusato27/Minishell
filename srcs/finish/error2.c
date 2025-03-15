@@ -38,8 +38,8 @@ void	assert_error(const char *msg)
 	exit(255);
 }
 
-//perrorとは、errnoに格納されたエラーコードに対応するエラーメッセージを出力する関数
-//errnoは、エラーが発生したときにエラーの種類を示すための変数
+// perrorとは、errnoに格納されたエラーコードに対応するエラーメッセージを出力する関数
+// errnoは、エラーが発生したときにエラーの種類を示すための変数
 void	xperror(const char *location)
 {
 	perror_prefix();

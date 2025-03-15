@@ -47,8 +47,8 @@ t_node	*parse_redir_append(t_token **rest, t_token *tok)
 
 static bool	check_quote(char *delim)
 {
-	if (ft_strchr(delim, SINGLE_QUOTE) == NULL
-		&& ft_strchr(delim, DOUBLE_QUOTE) == NULL)
+	if (ft_strchr(delim, SINGLE_QUOTE) == NULL && ft_strchr(delim,
+			DOUBLE_QUOTE) == NULL)
 		return (false);
 	return (true);
 }

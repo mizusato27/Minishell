@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 15:23:19 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 16:47:03 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,18 @@ void	interpret_cmd(t_map *envmap, char *line, int *last_status)
 {
 	t_token	*tok;
 	t_node	*node;
+	bool	syntax_error;
 
-	tok = tokenize(line);
+	syntax_error = false;
+	tok = tokenize(line, &syntax_error);
 	if (at_eof(tok))
 		;
-	else if (g_syntax_error)
+	else if (syntax_error)
 		*last_status = ERROR_TOKENIZE;
 	else
 	{
-		node = parse(tok);
-		if (g_syntax_error)
+		node = parse(tok, &syntax_error);
+		if (syntax_error)
 			*last_status = ERROR_PARSE;
 		else
 		{
