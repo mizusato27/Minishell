@@ -31,9 +31,10 @@ static void	add_number(char **dst, unsigned int n)
 	add_char(dst, '0' + (n % 10));
 }
 
-void	expand_special_param_str(char **dst, char **rest, char *ptr, int *status)
+void	expand_special_param_str(char **dst, char **rest, char *ptr,
+		int *status)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = *status;
 	if (!is_special_param(ptr))

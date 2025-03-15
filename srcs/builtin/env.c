@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 16:57:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:13:51 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ static void	print_env(t_item *cursor)
 		printf("%s=%s\n", cursor->name, cursor->value);
 }
 
-int	builtin_env(void)
+int	builtin_env(t_map *envmap)
 {
 	t_item	*cursor;
 
-	cursor = g_envmap->item_head.next;
+	cursor = envmap->item_head.next;
 	print_env(cursor);
 	printf("_=/usr/bin/env\n");
 	return (0);

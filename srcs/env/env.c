@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:18:09 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,12 @@ static	t_map	*map_new(void)
 // initenvは環境変数を初期化する関数
 // environは環境変数を格納する配列
 // externをつけることで、他のファイルからも参照できる
-void	initenv(void)
+t_map	*initenv(void)
 {
 	extern char	**environ;
+	t_map		*envmap;
 
-	g_envmap = map_new();
-	envmap_init(g_envmap, environ);
+	envmap = map_new();
+	envmap_init(envmap, environ);
+	return (envmap);
 }

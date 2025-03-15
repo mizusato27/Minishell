@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:50 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:13:28 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,25 @@ static char	*get_new_pwd(char *old_pwd, char *path)
 	return (result);
 }
 
-int	builtin_cd(char **argv)
+int	builtin_cd(t_map *envmap, char **argv)
 {
 	char	*current_pwd;
 	char	*old_pwd;
 	char	*new_pwd;
 	char	path[PATH_MAX];
 
-	current_pwd = map_get_value(g_envmap, "PWD");
-	old_pwd = map_get_value(g_envmap, "OLDPWD");
+	current_pwd = map_get_value(envmap, "PWD");
+	old_pwd = map_get_value(envmap, "OLDPWD");
 	if (argv[1] && ft_strcmp(argv[1], "-") == 0)
-		return (process_minus_option(old_pwd, current_pwd));
-	if (cpy_home_path(path, argv[1]) < 0)
+		return (process_minus_option(envmap, old_pwd, current_pwd));
+	if (cpy_home_path(envmap, path, argv[1]) < 0)
 		return (1);
 	if (chdir_ex(path) < 0)
 		return (1);
-	if (map_set_value_ex("OLDPWD", current_pwd) < 0)
+	if (map_set_value_ex(envmap, "OLDPWD", current_pwd) < 0)
 		return (1);
 	new_pwd = get_new_pwd(current_pwd, path);
-	if (map_set_value_ex("PWD", new_pwd) < 0)
+	if (map_set_value_ex(envmap, "PWD", new_pwd) < 0)
 		return (1);
 	free(new_pwd);
 	return (0);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 21:00:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 14:40:55 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:20:17 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtin(t_node *node, int *last_status)
+int	exec_builtin(t_map *envmap, t_node *node, int *last_status)
 {
 	int		status;
 	char	**argv;
@@ -23,17 +23,17 @@ int	exec_builtin(t_node *node, int *last_status)
 	if (ft_strcmp(argv[0], "exit") == 0)
 		status = builtin_exit(argv, last_status);
 	else if (ft_strcmp(argv[0], "export") == 0)
-		status = builtin_export(argv);
+		status = builtin_export(envmap, argv);
 	else if (ft_strcmp(argv[0], "pwd") == 0)
-		status = builtin_pwd();
+		status = builtin_pwd(envmap);
 	else if (ft_strcmp(argv[0], "echo") == 0)
 		status = builtin_echo(argv);
 	else if (ft_strcmp(argv[0], "cd") == 0)
-		status = builtin_cd(argv);
+		status = builtin_cd(envmap, argv);
 	else if (ft_strcmp(argv[0], "unset") == 0)
-		status = builtin_unset(argv);
+		status = builtin_unset(envmap, argv);
 	else if (ft_strcmp(argv[0], "env") == 0)
-		status = builtin_env();
+		status = builtin_env(envmap);
 	else
 		builtin_error(argv[0], NULL, "command not found");
 	free_argv(argv);

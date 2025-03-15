@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/14 14:28:13 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:27:09 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	is_fin_process(char *line, const char *delim)
 	return (0);
 }
 
-static char	*expand_here_document(char *line, bool is_quoted, int *status)
+static char	*expand_here_document(t_map *envmap, char *line, bool is_quoted,
+		int *status)
 {
 	char	*new_str;
 	char	*ptr;
@@ -43,7 +44,7 @@ static char	*expand_here_document(char *line, bool is_quoted, int *status)
 	while (*ptr)
 	{
 		if (is_variable(ptr))
-			expand_var_str(&new_str, &ptr, ptr);
+			expand_var_str(envmap, &new_str, &ptr, ptr);
 		else if (is_special_param(ptr))
 			expand_special_param_str(&new_str, &ptr, ptr, status);
 		else
@@ -53,7 +54,8 @@ static char	*expand_here_document(char *line, bool is_quoted, int *status)
 	return (new_str);
 }
 
-int	read_here_document(const char *delimiter, bool is_quoted, int *status)
+int	read_here_document(t_map *envmap, const char *delimiter, bool is_quoted,
+		int *status)
 {
 	int		pipe_fd[2];
 	char	*line;
@@ -68,7 +70,7 @@ int	read_here_document(const char *delimiter, bool is_quoted, int *status)
 			free(line);
 			break ;
 		}
-		line = expand_here_document(line, is_quoted, status);
+		line = expand_here_document(envmap, line, is_quoted, status);
 		put_heredoc_line(line, pipe_fd[1]);
 		free(line);
 	}

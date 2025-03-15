@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 09:51:24 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:18:24 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t	map_len(t_map *map, bool count_null_value)
 }
 
 // xgetenvは環境変数の値を取得する関数
-char	*xgetenv(const char *name)
+char	*xgetenv(t_map *envmap, const char *name)
 {
-	return (map_get_value(g_envmap, name));
+	return (map_get_value(envmap, name));
 }

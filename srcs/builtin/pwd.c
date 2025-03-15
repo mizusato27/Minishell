@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:37:37 by mizusato          #+#    #+#             */
-/*   Updated: 2025/02/27 15:37:38 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:21:46 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static int	is_equal_inode(const char *path1, const char *path2)
 	return (0);
 }
 
-int	builtin_pwd(void)
+int	builtin_pwd(t_map *envmap)
 {
 	char	*pwd;
 	char	cwd[PATH_MAX];
 
-	pwd = xgetenv("PWD");
+	pwd = xgetenv(envmap, "PWD");
 	if (pwd == NULL || !is_equal_inode(pwd, "."))
 	{
 		if (getcwd(cwd, PATH_MAX) == NULL)

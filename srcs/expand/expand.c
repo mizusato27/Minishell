@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:28:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 14:20:00 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:23:48 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	add_char(char **s, char c)
 	*s = new;
 }
 
-void	expand(t_node *node, int *status)
+void	expand(t_map *envmap, t_node *node, int *status)
 {
-	expand_variable(node, status);
+	expand_variable(envmap, node, status);
 	expand_quote_removal(node);
 }

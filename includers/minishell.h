@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 14:39:04 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:37:37 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_SYNTAX_ERROR "syntax error"
 # define ERROR_PREFIX "minishell: "
+# define ERROR_BAD_CHAR \
+	"Variable must starts with alphabetic \
+character or underscore."
 
 # define OPERATORS "|\n"
 # define METAS "|<> \t\n"
@@ -133,89 +136,89 @@ struct							s_map
 // g_status: 最後に実行したコマンドの終了ステータス
 // g_envmap: 環境変数を格納するマップ
 // g_sig: シグナルの種類
-// typedef struct s_context		t_context;
-// struct							s_context
-// {
-
-// };
-// extern t_context				g_ctx;
 
 // extern int						g_status;
 extern bool						g_rl_intr;
 extern bool						g_syntax_error;
 extern volatile sig_atomic_t	g_sig;
-extern t_map					*g_envmap;
+// extern t_map					*g_envmap;
 
 // -------------------- BUILTIN --------------------
 // builtin_utils.c
 int								chdir_ex(char *path);
-int								map_set_value_ex(const char *name,
-									const char *pwd);
-int								process_minus_option(char *old_path,
-									char *current_pwd);
-int								cpy_home_path(char *path, char *arg);
+int								map_set_value_ex(t_map *envmap,
+									const char *name, const char *pwd);
+int								process_minus_option(t_map *envmap,
+									char *old_path, char *current_pwd);
+int								cpy_home_path(t_map *envmap, char *path,
+									char *arg);
 // builtin.c
-int								exec_builtin(t_node *node, int *status);
+int								exec_builtin(t_map *envmap, t_node *node,
+									int *status);
 bool							is_builtin(t_node *node);
 // cd.c
-int								builtin_cd(char **argv);
+int								builtin_cd(t_map *envmap, char **argv);
 // echo.c
 int								builtin_echo(char **argv);
 // env.c
-int								builtin_env(void);
+int								builtin_env(t_map *envmap);
 // exit.c
 int								builtin_exit(char **argv, int *status);
 // export.c
-int								builtin_export(char **argv);
+int								builtin_export(t_map *envmap, char **argv);
 // pwd.c
-int								builtin_pwd(void);
+int								builtin_pwd(t_map *envmap);
 // unset.c
-int								builtin_unset(char **argv);
+int								builtin_unset(t_map *envmap, char **argv);
 
 // -------------------- ENV --------------------
 // env.c
-void							initenv(void);
-char							**get_environ(t_map *map);
+t_map							*initenv(void);
+char							**get_environ(t_map *envmap);
 // map_get_value.c
-char							*map_get_value(t_map *map, const char *name);
+char							*map_get_value(t_map *envmap, const char *name);
 // map_set_value.c
-int								map_set_value(t_map *map, const char *name,
+int								map_set_value(t_map *envmap, const char *name,
 									const char *value);
 // map_helper.c
-char							*xgetenv(const char *name);
+char							*xgetenv(t_map *envmap, const char *name);
 bool							is_alpha_under(char c);
 bool							is_alpha_num_under(char c);
 bool							is_identifier(const char *s);
-size_t							map_len(t_map *map, bool count_null_value);
+size_t							map_len(t_map *envmap, bool count_null_value);
 // map.c
-int								map_set_from_string(t_map *map,
+int								map_set_from_string(t_map *envmap,
 									const char *string, bool allow_empty_value);
 // void						map_printall(t_map *map);
 
 // -------------------- EXEC --------------------
 // exec_no_builtin.c
-int								exec_nonbuiltin(t_node *node);
+int								exec_nonbuiltin(t_map *envmap, t_node *node);
 // exec.c
-void							interpret_cmd(char *line, int *stat_loc);
+void							interpret_cmd(t_map *envmap, char *line,
+									int *stat_loc);
 // token_to_arg.c
 char							**token_list_to_argv(t_token *tok);
 
 // -------------------- EXPAND --------------------
 // expand.c
 void							add_char(char **s, char c);
-void							expand(t_node *node, int *status);
+void							expand(t_map *envmap, t_node *node,
+									int *status);
 // quote_removal.c
 void							expand_quote_removal(t_node *node);
 // special_param.c
 int								is_special_param(char *str);
-void							expand_special_param_str(char **dst, char **rest,
-									char *ptr, int *status);
+void							expand_special_param_str(char **dst,
+									char **rest, char *ptr, int *status);
 // variable.c
 int								is_variable(char *str);
-void							expand_var_str(char **dst, char **rest,
-									char *ptr);
-void							add_quote(char **dst, char **rest, char *ptr, int * status);
-void							expand_variable(t_node *node, int *status);
+void							expand_var_str(t_map *envmap, char **dst,
+									char **rest, char *ptr);
+void							add_quote(t_map *envmap, char **dst,
+									char **rest, char *ptr, int *status);
+void							expand_variable(t_map *envmap, t_node *node,
+									int *status);
 
 // -------------------- FINISH --------------------
 // destructor.c
@@ -261,10 +264,12 @@ void							process_parent_pipe(t_node *node);
 
 // -------------------- REDIRECT --------------------
 // here_document.c
-int								read_here_document(const char *delimiter,
-									bool is_quoted, int *status);
+int								read_here_document(t_map *envmap,
+									const char *delimiter, bool is_quoted,
+									int *status);
 // open_file.c
-int								open_redirect_file(t_node *node, int *status);
+int								open_redirect_file(t_map *envmap, t_node *node,
+									int *status);
 // redirect.c
 void							setup_redirect(t_node *redirects);
 void							reset_redirect(t_node *redirects);

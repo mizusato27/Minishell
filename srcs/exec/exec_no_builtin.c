@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 19:21:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 11:18:03 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/15 15:19:27 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void	construct_path(char path[PATH_MAX], const char *filename, char *env,
 
 //:はディレクトリの終わりを指す
 // PATHに指定されたディレクトリを順番に探索して、実行可能なファイルがあればそのパスを返す
-static char	*find_executable(const char *filename)
+static char	*find_executable(t_map *envmap, const char *filename)
 {
 	char	path[PATH_MAX];
 	char	*env;
 	char	*path_end;
 	char	*result;
 
-	env = xgetenv("PATH");
+	env = xgetenv(envmap, "PATH");
 	if (!env)
 		return (NULL);
 	while (*env)
@@ -75,7 +75,7 @@ void	free_arg(char **argv)
 	free(argv);
 }
 
-int	exec_nonbuiltin(t_node *node)
+int	exec_nonbuiltin(t_map *envmap, t_node *node)
 {
 	char	*path;
 	char	**argv;
@@ -85,10 +85,10 @@ int	exec_nonbuiltin(t_node *node)
 	argv = token_list_to_argv(node->command->args);
 	path = argv[0];
 	if (ft_strchr(path, '/') == NULL)
-		path = find_executable(path);
+		path = find_executable(envmap, path);
 	if (path == NULL || access(path, F_OK) < 0)
 		not_found_cmd(argv[0], ER_ACCESS, ERROR_CMD);
-	envp = get_environ(g_envmap);
+	envp = get_environ(envmap);
 	execve(path, argv, envp);
 	free_arg(argv);
 	free_arg(envp);

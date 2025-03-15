@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/14 14:49:41 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/15 15:32:28 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	reset_prompt(void)
 		g_rl_intr = true;
 		rl_replace_line("", 0);
 		rl_done = 1;
-		// *status = 130;
 		return (0);
 	}
 	return (0);
@@ -72,7 +71,7 @@ void	setup_signal(int *status)
 	{
 		rl_event_hook = reset_prompt;
 		*status = 130;
-	} 
+	}
 	setup_signal_handlers(SIGQUIT, SIG_IGN);
 	setup_signal_handlers(SIGINT, exec_handler);
 }
