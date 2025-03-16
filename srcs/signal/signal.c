@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 15:32:28 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 00:00:06 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ static void	setup_signal_handlers(int signum, void (*handler)(int))
 }
 
 // シグナルの状態をチェックし、必要な処理を行う
-// SIG_INTは Ctr+C
 // rl_replace_line("", 0); // 入力行をクリア
 // rl_done = 1;            // readline ループを終了
-// g_rl_intr = true; 割り込み操作
 // rl_event_hookの関係により、status 0 を返す
 int	reset_prompt(void)
 {
@@ -51,8 +49,6 @@ int	reset_prompt(void)
 		return (0);
 	else if (g_sig == SIGINT)
 	{
-		g_sig = 0;
-		g_rl_intr = true;
 		rl_replace_line("", 0);
 		rl_done = 1;
 		return (0);

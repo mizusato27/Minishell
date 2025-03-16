@@ -6,14 +6,11 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 17:10:36 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/16 23:57:32 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// bool	g_syntax_error;
-bool	g_rl_intr;
 
 int	main(void)
 {
@@ -26,6 +23,7 @@ int	main(void)
 	envmap = initenv();
 	while (1)
 	{
+		g_sig = 0;
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;

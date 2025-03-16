@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/15 15:27:09 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 00:11:27 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static void	put_heredoc_line(char *line, int fd)
 	ft_putchar_fd('\n', fd);
 }
 
-static int	is_fin_process(char *line, const char *delim)
+static int	is_fin_process(char *line, const char *delim, bool *rl_intr)
 {
 	if (line == NULL)
 		return (1);
-	else if (g_rl_intr)
+	else if (*rl_intr)
 		return (1);
 	else if (ft_strcmp(line, delim) == 0)
 		return (1);
@@ -59,13 +59,19 @@ int	read_here_document(t_map *envmap, const char *delimiter, bool is_quoted,
 {
 	int		pipe_fd[2];
 	char	*line;
+	bool	rl_intr;
 
 	ft_pipe(pipe_fd);
-	g_rl_intr = false;
+	rl_intr = false;
 	while (1)
 	{
 		line = readline("> ");
-		if (is_fin_process(line, delimiter))
+		if (g_sig == SIGINT)
+		{
+			rl_intr = true;
+			*status = 130;
+		}
+		if (is_fin_process(line, delimiter, &rl_intr))
 		{
 			free(line);
 			break ;
@@ -75,7 +81,7 @@ int	read_here_document(t_map *envmap, const char *delimiter, bool is_quoted,
 		free(line);
 	}
 	ft_close(pipe_fd[1]);
-	if (g_rl_intr)
+	if (rl_intr)
 	{
 		ft_close(pipe_fd[0]);
 		return (-1);

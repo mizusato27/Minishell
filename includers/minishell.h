@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 17:45:32 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/16 23:59:49 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,7 @@ struct							s_map
 	t_item						item_head;
 };
 
-// g_rl_intr: readlineの割り込みフラグ
 // g_sig: シグナルの種類
-
-extern bool						g_rl_intr;
 extern volatile sig_atomic_t	g_sig;
 
 // -------------------- BUILTIN --------------------
