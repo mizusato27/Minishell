@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/17 13:32:58 by mizusato         ###   ########.fr       */
+/*   Updated: 2025/03/17 13:51:50 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 volatile sig_atomic_t	g_sig;
 
-// シグナルハンドラ関数
-// 受信したシグナル番号をグローバル変数 'sig' に保存する
 void	exec_handler(int signum)
 {
 	g_sig = signum;
 }
 
-//指定したシグナルを設定する（無視するか、指定されたハンドラを設定する）
-// SIG_IGNはシグナルを無視
 static void	setup_signal_handlers(int signum, void (*handler)(int))
 {
 	struct sigaction	sa;
@@ -34,10 +30,6 @@ static void	setup_signal_handlers(int signum, void (*handler)(int))
 		fatal_error("sigaction");
 }
 
-// シグナルの状態をチェックし、必要な処理を行う
-// rl_replace_line("", 0); // 入力行をクリア
-// rl_done = 1;            // readline ループを終了
-// rl_event_hookの関係により、status 0 を返す
 int	reset_prompt(void)
 {
 	if (g_sig == 0)
@@ -51,10 +43,6 @@ int	reset_prompt(void)
 	return (0);
 }
 
-// 必要なシグナル設定を行う
-// SIGQUIT を無視し、SIGINT を適切に処理する
-// readline の出力先を標準エラー出力に設定
-// isattyはファイルディスクリプタが端末かどうかを判定する
 void	setup_signal(void)
 {
 	rl_outstream = stderr;
@@ -64,8 +52,6 @@ void	setup_signal(void)
 	setup_signal_handlers(SIGINT, exec_handler);
 }
 
-//指定されたシグナルをデフォルトの動作にリセットする
-// SIGQUIT および SIGINT のシグナル動作をリセット
 void	reset_signal(void)
 {
 	setup_signal_handlers(SIGQUIT, SIG_DFL);

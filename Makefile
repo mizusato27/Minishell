@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+         #
+#    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/17 13:34:02 by mizusato         ###   ########.fr        #
+#    Updated: 2025/03/17 13:45:11 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ CC			= cc
 # LDFLAGS     = -lreadline
 ## macOS用
 # RLDIR		= $(shell brew --prefix readline)
-CFLAGS		= -Wall -Wextra -Werror -I includers/ -I$(RLDIR)/include
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -I includers/ -I$(RLDIR)/include
 LDFLAGS		= -L$(RLDIR)/lib -lreadline
 
 LIBFT		= libft/libft.a

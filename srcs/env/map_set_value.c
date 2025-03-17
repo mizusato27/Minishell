@@ -6,13 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:34:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:23 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 13:51:02 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// item_newは新しいアイテムを作成する関数
 static	t_item	*item_new(char *name, char *value)
 {
 	t_item	*item;
@@ -25,7 +24,6 @@ static	t_item	*item_new(char *name, char *value)
 	return (item);
 }
 
-// 新しいアイテムを作成してマップに追加する関数
 static void	map_add_item(t_map *map, const char *name, const char *value)
 {
 	t_item	*new_item;
@@ -40,7 +38,6 @@ static void	map_add_item(t_map *map, const char *name, const char *value)
 	map->item_head.next = new_item;
 }
 
-// map_update_itemはアイテムの値を更新する関数
 static void	map_update_item(t_item *item, const char *value)
 {
 	free(item->value);
@@ -54,8 +51,6 @@ static void	map_update_item(t_item *item, const char *value)
 	}
 }
 
-//直接キーと値を設定する関数
-//キーが存在しない場合は新しいアイテムを作成し、キーが存在する場合は値を更新する
 int	map_set_value(t_map *map, const char *name, const char *value)
 {
 	t_item	*cur;

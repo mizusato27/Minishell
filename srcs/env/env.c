@@ -6,14 +6,12 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 23:35:03 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/15 15:18:09 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 13:50:13 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// item_get_stringはアイテムを文字列に変換する関数
-// +2 for '=' and '\0'
 static	char	*item_connect_equals(t_item *item)
 {
 	size_t	strsize;
@@ -34,8 +32,6 @@ static	char	*item_connect_equals(t_item *item)
 	return (string);
 }
 
-// get_environは環境変数を取得する関数
-// 環境変数は「変数名=値」の形式で格納されている
 char	**get_environ(t_map *map)
 {
 	size_t	i;
@@ -62,8 +58,6 @@ char	**get_environ(t_map *map)
 	return (environ);
 }
 
-// envmap_initは環境変数を初期化する関数
-// SHLVLシェルの深さ
 static void	envmap_init(t_map *map, char **ep)
 {
 	char	cwd[PATH_MAX];
@@ -84,7 +78,6 @@ static void	envmap_init(t_map *map, char **ep)
 		map_set_value(map, "OLDPWD", NULL);
 }
 
-// map_newは新しいマップを作成する関数
 static	t_map	*map_new(void)
 {
 	t_map	*map;
@@ -95,9 +88,6 @@ static	t_map	*map_new(void)
 	return (map);
 }
 
-// initenvは環境変数を初期化する関数
-// environは環境変数を格納する配列
-// externをつけることで、他のファイルからも参照できる
 t_map	*initenv(void)
 {
 	extern char	**environ;
