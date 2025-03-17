@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_document.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/17 10:57:18 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 13:31:40 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ static int	is_fin_process(char *line, const char *delim, bool *rl_intr)
 {
 	if (line == NULL)
 		return (1);
-	else if (*rl_intr)
+	else if (g_sig == SIGINT)
+	{
+		*rl_intr = true;
 		return (1);
+	}
 	else if (ft_strcmp(line, delim) == 0)
 		return (1);
 	return (0);
@@ -66,8 +69,6 @@ int	read_here_document(t_map *envmap, const char *delimiter, bool is_quoted,
 	while (1)
 	{
 		line = readline("> ");
-		if (g_sig == SIGINT)
-			rl_intr = true;
 		if (is_fin_process(line, delimiter, &rl_intr))
 		{
 			free(line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/17 10:56:06 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 13:38:36 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@
 # define ER_SETUP_REDIR "setup_redirect error"
 # define ER_SYNTAX_ERROR "syntax error"
 # define ERROR_PREFIX "minishell: "
-# define ERROR_BAD_CHAR \
-	"Variable must starts with alphabetic \
-character or underscore."
+# define ERROR_BAD_CHAR "bad para."
 
 # define OPERATORS "|\n"
 # define METAS "|<> \t\n"

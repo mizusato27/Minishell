@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mizusato <mizusato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/17 10:52:34 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 13:32:58 by mizusato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_sig = 0;
+volatile sig_atomic_t	g_sig;
 
 // シグナルハンドラ関数
 // 受信したシグナル番号をグローバル変数 'sig' に保存する
