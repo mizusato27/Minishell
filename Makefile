@@ -6,7 +6,7 @@
 #    By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/16 19:59:21 by ynihei            #+#    #+#              #
-#    Updated: 2025/03/17 13:55:34 by ynihei           ###   ########.fr        #
+#    Updated: 2025/03/17 13:56:15 by ynihei           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,6 @@ ${LIBFT}:
 ${NAME}:	${OBJS} ${LIBFT}
 			${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LDFLAGS} -o ${NAME}
 
-# 依存するソースファイルを個別にオブジェクトファイルへコンパイル
 $(OBJS_DIR)/%.o:	%.c
 			mkdir -p $(dir $@)
 			${CC} ${CFLAGS} -c $< -o $@
