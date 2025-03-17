@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:23:43 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/16 23:57:32 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 11:01:45 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 	t_map	*envmap;
 
 	status = 0;
-	setup_signal(&status);
+	setup_signal();
 	envmap = initenv();
 	while (1)
 	{
@@ -30,6 +30,8 @@ int	main(void)
 		if (*line)
 			add_history(line);
 		interpret_cmd(envmap, line, &status);
+		if (g_sig == SIGINT)
+			status = 130;
 		free(line);
 	}
 	exit(status);

@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 22:43:20 by mizusato          #+#    #+#             */
-/*   Updated: 2025/03/17 00:11:27 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 10:57:18 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int	read_here_document(t_map *envmap, const char *delimiter, bool is_quoted,
 	{
 		line = readline("> ");
 		if (g_sig == SIGINT)
-		{
 			rl_intr = true;
-			*status = 130;
-		}
 		if (is_fin_process(line, delimiter, &rl_intr))
 		{
 			free(line);

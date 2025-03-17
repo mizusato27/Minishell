@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 09:04:56 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/17 00:00:06 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 10:52:34 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ static void	setup_signal_handlers(int signum, void (*handler)(int))
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	if (handler == SIG_IGN)
-		sa.sa_handler = SIG_IGN;
-	else if (handler == SIG_DFL)
-		sa.sa_handler = SIG_DFL;
-	else
-		sa.sa_handler = handler;
+	sa.sa_handler = handler;
 	if (sigaction(signum, &sa, NULL) < 0)
 		fatal_error("sigaction");
 }
@@ -60,14 +55,11 @@ int	reset_prompt(void)
 // SIGQUIT を無視し、SIGINT を適切に処理する
 // readline の出力先を標準エラー出力に設定
 // isattyはファイルディスクリプタが端末かどうかを判定する
-void	setup_signal(int *status)
+void	setup_signal(void)
 {
 	rl_outstream = stderr;
 	if (isatty(STDIN_FILENO))
-	{
 		rl_event_hook = reset_prompt;
-		*status = 130;
-	}
 	setup_signal_handlers(SIGQUIT, SIG_IGN);
 	setup_signal_handlers(SIGINT, exec_handler);
 }

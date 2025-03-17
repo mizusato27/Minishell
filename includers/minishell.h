@@ -6,7 +6,7 @@
 /*   By: ynihei <ynihei@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 15:30:52 by ynihei            #+#    #+#             */
-/*   Updated: 2025/03/16 23:59:49 by ynihei           ###   ########.fr       */
+/*   Updated: 2025/03/17 10:56:06 by ynihei           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ int								stash_fd(int fd);
 // -------------------- SIGNAL --------------------
 // signal.c
 void							reset_signal(void);
-void							setup_signal(int *status);
+void							setup_signal(void);
 
 // -------------------- TOKENIZE --------------------
 // token.c
